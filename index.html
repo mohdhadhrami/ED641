@@ -90,11 +90,16 @@ body{font-family:'Noto Sans Arabic',sans-serif;direction:rtl;background:var(--bg
 .mtab{flex:1;min-width:110px;padding:13px 8px;text-align:center;font-family:inherit;font-size:12.5px;font-weight:700;color:var(--text-dim);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;white-space:nowrap}
 .mtab.active{color:var(--accent-pale);border-bottom-color:var(--accent);background:var(--accent-bg)}
 .mtab:hover:not(.active){color:var(--text-muted)}
-.anav{display:flex;overflow-x:auto;gap:0;background:var(--bg-anav);border-bottom:1px solid var(--border-divider);padding:0 6px;scrollbar-width:none;position:sticky;top:46px;z-index:15}
+
+/* SPSS sub-nav: horizontal scroll with phase section labels */
+.anav{display:flex;overflow-x:auto;gap:5px;background:var(--bg-anav);border-bottom:1px solid var(--border-divider);padding:8px 8px;scrollbar-width:none;position:sticky;top:46px;z-index:15;align-items:center}
 .anav::-webkit-scrollbar{display:none}
-.anav-btn{white-space:nowrap;padding:10px 12px;font-family:inherit;font-size:11.5px;font-weight:600;color:var(--text-dim);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;flex-shrink:0}
-.anav-btn.active{color:var(--accent-pale);border-bottom-color:var(--accent)}
-.tma-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:4px;vertical-align:middle}
+.anav-section{padding:5px 10px;border-radius:7px;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;white-space:nowrap;letter-spacing:.3px;background:var(--ps)}
+.anav-btn{display:flex;align-items:center;gap:7px;white-space:nowrap;padding:7px 11px;font-family:inherit;font-size:12px;font-weight:600;color:var(--text-soft);background:var(--bg-card);border:1px solid var(--border-soft);border-radius:9px;cursor:pointer;transition:all .2s;flex-shrink:0}
+.anav-btn:hover{background:var(--bg-card-hover);color:var(--text-strong)}
+.anav-btn.active{border-color:var(--ps);background:color-mix(in srgb,var(--ps) 18%,var(--bg-card));color:var(--text-strong)}
+.anav-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;background:var(--ps);color:#fff;font-size:11px;font-weight:800;flex-shrink:0}
+.tma-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:3px;vertical-align:middle}
 
 /* ════════ LAYOUT ════════ */
 .content{max-width:880px;margin:0 auto;padding:18px 14px 70px}
@@ -106,9 +111,10 @@ body{font-family:'Noto Sans Arabic',sans-serif;direction:rtl;background:var(--bg
 /* ════════ CARDS ════════ */
 .card{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:14px;margin-bottom:18px;overflow:hidden;box-shadow:var(--shadow-card)}
 .card-hdr{padding:16px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border-divider);flex-wrap:wrap}
-.card-ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:.5px}
+.card-ico{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:.5px}
 .card-title{font-size:16px;font-weight:700;color:var(--text-strong)}
 .card-sub{font-size:11px;color:var(--text-dim);margin-top:2px}
+.card-phase-tag{font-size:10.5px;font-weight:700;color:#fff;padding:2px 9px;border-radius:999px;margin-right:auto}
 .sec{padding:15px 18px;border-bottom:1px solid var(--border-divider)}
 .sec:last-child{border-bottom:none}
 .sec-lbl{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
@@ -118,16 +124,16 @@ body{font-family:'Noto Sans Arabic',sans-serif;direction:rtl;background:var(--bg
 .steps{display:flex;flex-direction:column;gap:8px}
 .step{display:flex;gap:10px;align-items:flex-start}
 .sn{min-width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#0ea5e9);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-top:2px}
-.st{font-size:13px;color:var(--text-soft);line-height:1.7}
+.st{font-size:13px;color:var(--text-soft);line-height:1.75}
 .st strong{color:var(--text-strong)}
-.path{font-family:'Courier New',monospace;background:var(--code-bg);color:var(--accent-pale);padding:2px 7px;border-radius:4px;font-size:12px;direction:ltr;display:inline-block}
+.path{font-family:'Courier New',monospace;background:var(--code-bg);color:var(--accent-pale);padding:2px 7px;border-radius:4px;font-size:12px;direction:ltr;display:inline-block;unicode-bidi:isolate}
 .tick{color:#10b981;font-weight:700}
 
 /* ════════ OPTIONS ════════ */
 .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:8px}
 .opt{background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.22);border-radius:8px;padding:9px 11px}
 .opt-n{font-size:12px;font-weight:700;color:#10b981;margin-bottom:2px}
-.opt-d{font-size:11px;color:var(--text-dim);line-height:1.5}
+.opt-d{font-size:11px;color:var(--text-dim);line-height:1.55}
 :root[data-theme="light"] .opt{background:#ecfdf5}
 :root[data-theme="light"] .opt-n{color:#047857}
 :root[data-theme="light"] .opt-d{color:#475569}
@@ -145,13 +151,13 @@ body{font-family:'Noto Sans Arabic',sans-serif;direction:rtl;background:var(--bg
 .fml-txt{font-size:13px;color:var(--text-primary);line-height:2.1;direction:rtl}
 .v{color:#d97706;font-weight:600}
 :root[data-theme="dark"] .v{color:#fbbf24}
-.s{color:#059669;font-family:monospace;background:rgba(16,185,129,.12);padding:1px 5px;border-radius:3px;direction:ltr;display:inline-block;font-weight:600}
+.s{color:#059669;font-family:monospace;background:rgba(16,185,129,.12);padding:1px 5px;border-radius:3px;direction:ltr;display:inline-block;font-weight:600;unicode-bidi:isolate}
 :root[data-theme="dark"] .s{color:#34d399}
 .d{color:#dc2626;font-weight:700}
 :root[data-theme="dark"] .d{color:#f87171}
 
 /* ════════ ALERTS ════════ */
-.alert{border-radius:8px;padding:10px 13px;font-size:12.5px;line-height:1.7;margin-top:10px;border:1px solid}
+.alert{border-radius:8px;padding:10px 13px;font-size:12.5px;line-height:1.75;margin-top:10px;border:1px solid}
 .al-y{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.3);color:#d97706}
 .al-g{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.3);color:#047857}
 .al-b{background:rgba(99,102,241,.08);border-color:rgba(99,102,241,.3);color:var(--accent-light)}
@@ -165,40 +171,41 @@ body{font-family:'Noto Sans Arabic',sans-serif;direction:rtl;background:var(--bg
 .q-cards{display:grid;gap:12px}
 .qcard{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow-card)}
 .qcard-name{font-size:15px;font-weight:700;color:var(--text-strong)}
-.qcard-en{font-size:11px;color:var(--text-dim);margin-top:2px}
+.qcard-en{font-size:11px;color:var(--text-dim);margin-top:2px;direction:ltr;unicode-bidi:isolate;text-align:right}
 .q-metas{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;margin-bottom:11px}
 .q-type{padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;border:1px solid}
 .q-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:7px}
 .q-cell{background:var(--bg-cell);border-radius:7px;padding:8px 10px}
 .q-cell-lbl{font-size:10px;color:var(--text-dim);margin-bottom:3px;font-weight:700}
-.q-cell-val{font-size:12px;color:var(--text-soft);line-height:1.55}
+.q-cell-val{font-size:12px;color:var(--text-soft);line-height:1.6}
 
 /* ════════ TIMELINE ════════ */
 .phase{margin-bottom:24px}
 .phase-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.phase-num{width:42px;height:42px;border-radius:12px;background:var(--pc);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.phase-num{width:44px;height:44px;border-radius:12px;background:var(--ps);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;flex-shrink:0;box-shadow:0 4px 14px rgba(0,0,0,.18)}
 .phase-title{font-size:16px;font-weight:700;color:var(--text-strong);line-height:1.35}
-.phase-weeks{font-size:11.5px;color:var(--pc);font-weight:700;margin-top:2px}
+.phase-weeks{font-size:11.5px;color:var(--ps);font-weight:700;margin-top:2px}
 .tl-cards{display:flex;flex-direction:column;gap:9px}
-.tl-card{background:var(--bg-card);border:1px solid var(--border-soft);border-right:4px solid var(--pc);border-radius:11px;box-shadow:var(--shadow-card);overflow:hidden}
+.tl-card{background:var(--bg-card);border:1px solid var(--border-soft);border-right:4px solid var(--ps);border-radius:11px;box-shadow:var(--shadow-card);overflow:hidden}
 .tl-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 15px;cursor:pointer;user-select:none}
-.tl-names{display:flex;flex-direction:column;gap:2px}
+.tl-head-l{display:flex;align-items:center;gap:11px;min-width:0}
+.tl-order{width:30px;height:30px;border-radius:8px;background:var(--ps);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tl-names{display:flex;flex-direction:column;gap:2px;min-width:0}
 .tl-ar{font-size:14.5px;font-weight:700;color:var(--text-strong)}
-.tl-en{font-size:11.5px;color:var(--text-dim);font-family:'Courier New',monospace;direction:ltr}
-.tl-arrow{color:var(--pc);font-size:14px;transition:transform .25s;flex-shrink:0}
+.tl-en{font-size:11.5px;color:var(--text-dim);font-family:'Courier New',monospace;direction:ltr;unicode-bidi:isolate}
+.tl-arrow{color:var(--ps);font-size:14px;transition:transform .25s;flex-shrink:0}
 .tl-card.open .tl-arrow{transform:rotate(180deg)}
 .tl-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
-.tl-body-inner{padding:0 15px 13px}
-.tl-desc{font-size:13px;color:var(--text-soft);line-height:1.9;padding-top:11px;border-top:1px dashed var(--border-soft)}
-.tl-note{margin-top:9px;background:var(--bg-cell);border-radius:7px;padding:8px 11px;font-size:12.5px;color:var(--text-soft);line-height:1.7}
-.tl-note b{color:var(--pc)}
+.tl-body-inner{padding:0 15px 13px 60px}
+.tl-desc{font-size:13px;color:var(--text-soft);line-height:1.95;padding-top:11px;border-top:1px dashed var(--border-soft)}
+@media (max-width:480px){.tl-body-inner{padding:0 15px 13px}}
 
 /* ════════ CONCEPTS ════════ */
 .con-grid{display:grid;gap:10px}
 .con-item{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:11px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;box-shadow:var(--shadow-card)}
 .con-num{min-width:33px;height:33px;border-radius:9px;background:linear-gradient(135deg,var(--accent),#0ea5e9);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0}
 .con-term{font-weight:700;font-size:14px;color:var(--text-strong);margin-bottom:4px}
-.con-def{color:var(--text-muted);font-size:13px;line-height:1.8}
+.con-def{color:var(--text-muted);font-size:13px;line-height:1.85}
 .golden{background:var(--accent-bg);border:1px solid var(--border-soft);border-radius:11px;padding:18px;margin-top:14px}
 .golden-title{font-weight:700;font-size:14px;color:var(--accent-pale);margin-bottom:12px}
 .golden-row{font-size:13px;color:var(--text-soft);line-height:2.3}
@@ -208,26 +215,27 @@ body{font-family:'Noto Sans Arabic',sans-serif;direction:rtl;background:var(--bg
 .exp-card{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:14px;box-shadow:var(--shadow-card);overflow:hidden}
 .exp-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 17px;cursor:pointer;user-select:none;background:linear-gradient(90deg,var(--accent-bg),transparent)}
 .exp-head-l{display:flex;align-items:center;gap:11px;min-width:0}
-.exp-num{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--accent),#0ea5e9);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0}
+.exp-num{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--accent),#0ea5e9);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:.5px}
 .exp-title{font-size:14.5px;font-weight:700;color:var(--text-strong);line-height:1.5}
+.exp-tag{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--accent-pale);margin-top:2px}
 .exp-arrow{color:var(--accent);font-size:14px;transition:transform .25s;flex-shrink:0}
 .exp-card.open .exp-arrow{transform:rotate(180deg)}
 .exp-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
-.exp-body-inner{padding:0 17px 16px;font-size:13.5px;color:var(--text-soft);line-height:1.95}
+.exp-body-inner{padding:0 17px 16px;font-size:13.5px;color:var(--text-soft);line-height:2}
 .exp-body-inner p{margin:10px 0}
 .exp-body-inner b{color:var(--text-strong)}
-.exp-body-inner h4{color:var(--accent-pale);font-size:13.5px;font-weight:700;margin:12px 0 4px}
+.exp-body-inner h4{color:var(--accent-pale);font-size:13.5px;font-weight:700;margin:14px 0 4px}
 
 /* ════════ QUIZ ════════ */
 .quiz-cards{display:grid;gap:10px}
 .qz{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:11px;padding:14px 16px;cursor:pointer;transition:all .25s;box-shadow:var(--shadow-card)}
 .qz.open{background:var(--accent-bg);border-color:var(--accent)}
 .qz-q{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.qz-txt{font-size:13.5px;font-weight:600;line-height:1.6;color:var(--text-primary)}
+.qz-txt{font-size:13.5px;font-weight:600;line-height:1.65;color:var(--text-primary)}
 .qz.open .qz-txt{color:var(--accent-pale)}
 .qz-arr{font-size:16px;transition:transform .25s;flex-shrink:0;color:var(--text-dim)}
 .qz.open .qz-arr{transform:rotate(180deg)}
-.qz-a{margin-top:11px;padding:11px 13px;background:var(--bg-cell);border-radius:7px;border-right:3px solid var(--accent);font-size:13px;color:var(--text-muted);line-height:1.85}
+.qz-a{margin-top:11px;padding:11px 13px;background:var(--bg-cell);border-radius:7px;border-right:3px solid var(--accent);font-size:13px;color:var(--text-muted);line-height:1.9}
 
 /* ════════ FOOTER ════════ */
 footer{text-align:center;padding:18px;color:var(--text-dim);font-size:11px;border-top:1px solid var(--border-divider)}
@@ -240,6 +248,7 @@ footer a{color:var(--accent-pale);text-decoration:none}
   .theme-btn{width:38px;height:38px;font-size:16px}
   .mtab{min-width:100px;font-size:12px;padding:12px 6px}
   .content{padding:16px 12px 60px}
+  .phase-num{width:40px;height:40px;font-size:17px}
 }
 </style>
 </head>
@@ -285,7 +294,7 @@ footer a{color:var(--accent-pale);text-decoration:none}
 
 <section id="timeline" class="panel">
   <div class="content">
-    <div class="lead">يبدأ المقرر بـ <b>وصف البيانات وتجهيزها</b>، ثم <b>اختبار الفروق بين المجموعات</b>، وينتهي بـ <b>التنبؤ بالعلاقات</b>. اضغط أي أداة لعرض وصفها.</div>
+    <div class="lead">يبدأ المقرر بـ <b>وصف البيانات وتجهيزها</b>، ثم <b>اختبار الفروق بين المجموعات</b>، وينتهي بـ <b>التنبؤ بالعلاقات</b> — ثلاث مراحل و13 أداة بترتيبها. اضغط أي أداة لعرض وصفها.</div>
     <div id="timeline-content"></div>
   </div>
 </section>
@@ -306,7 +315,9 @@ footer a{color:var(--accent-pale);text-decoration:none}
         <span style="color:#0ea5e9;font-weight:700">مجموعتان مستقلتان؟</span> ← اختبار T المستقل<br>
         <span style="color:#8b5cf6;font-weight:700">نفس المجموعة قبلي/بعدي؟</span> ← اختبار T المرتبط<br>
         <span style="color:#10b981;font-weight:700">3 شُعب أو أكثر؟</span> ← ANOVA + Tukey<br>
-        <span style="color:#8b5cf6;font-weight:700">علاقة بين متغيرين كميين؟</span> ← ارتباط بيرسون<br>
+        <span style="color:#c79234;font-weight:700">متغيران مستقلان معاً؟</span> ← تحليل التباين الثنائي<br>
+        <span style="color:#8b5cf6;font-weight:700">ضبط متغير دخيل (قبلي)؟</span> ← ANCOVA<br>
+        <span style="color:#3b82f6;font-weight:700">علاقة بين متغيرين كميين؟</span> ← ارتباط بيرسون<br>
         <span style="color:#ef4444;font-weight:700">تنبؤ بمتغير من آخر؟</span> ← انحدار خطي بسيط<br>
         <span style="color:var(--accent);font-weight:700">اتساق فقرات المقياس؟</span> ← ألفا كرونباخ
       </div>
@@ -316,7 +327,7 @@ footer a{color:var(--accent-pale);text-decoration:none}
 
 <section id="explain" class="panel">
   <div class="content">
-    <div class="lead">شروحات تفصيلية موسّعة لأهم المفاهيم — اضغط عنوان الشرح لعرض المحتوى الكامل.</div>
+    <div class="lead">شروحات تفصيلية موسّعة + أسئلة وأجوبة لكل اختبار. اضغط أي بطاقة لفتح المحتوى الكامل.</div>
     <div class="exp-grid" id="explain-grid"></div>
   </div>
 </section>
@@ -326,7 +337,7 @@ footer a{color:var(--accent-pale);text-decoration:none}
     <p style="color:var(--text-dim);font-size:12px;text-align:center;margin-bottom:14px">اضغط على السؤال لإظهار الإجابة</p>
     <div class="quiz-cards" id="quiz-cards"></div>
     <div class="alert al-g" style="margin-top:16px">
-      💡 <strong>نصيحة الامتحان:</strong> الأسئلة الأكثر شيوعاً تتمحور حول: شروط التطبيق، تفسير Sig، الفرق بين Levene وT، ومعنى R² في الانحدار.
+      💡 <strong>نصيحة الامتحان:</strong> الأشيع: شروط التطبيق، تفسير Sig، الفرق بين Levene وT، ومعنى R²، ومتى يُستخدم التحليل البعدي.
     </div>
   </div>
 </section>
@@ -348,7 +359,6 @@ function toggleTheme(){
   const next = current === 'dark' ? 'light' : 'dark';
   applyTheme(next);
   try { localStorage.setItem(THEME_KEY, next); } catch(e) {}
-  // recompute open expandables
   requestAnimationFrame(recomputeOpenHeights);
 }
 (function initTheme(){
@@ -364,53 +374,98 @@ function recomputeOpenHeights(){
 }
 window.addEventListener('resize', recomputeOpenHeights);
 
-// ════════ DATA: TESTS ════════
+// ════════ PHASES (timeline + sub-nav) ════════
+const PHASES = [
+  {num:1, color:"#1c4a82", title:"التحليل الوصفي والتحقق من البيانات", weeks:"الأسابيع 2 – 3", label:"المرحلة 1"},
+  {num:2, color:"#c79234", title:"اختبار الفرضيات والمقارنة بين المتوسطات", weeks:"الأسابيع 4 – 11", label:"المرحلة 2"},
+  {num:3, color:"#2e7d6b", title:"أدوات التنبؤ", weeks:"الأسبوع 12", label:"المرحلة 3"}
+];
+const ENRICH_COLOR = "#8b5cf6";
+
+// ════════ DATA: TESTS (13 + 1 enrichment) ════════
 const TESTS = [
+  // ─── Phase 1 ───
   {
-    id:"desc", name:"الإحصاء الوصفي + الرسوم", en:"Descriptive Statistics & Charts",
-    type:"وصفي", color:"#3b82f6", tma:["tma1","tma2"],
+    id:"freq", order:1, phase:1,
+    name:"التكرارات والإحصاء الوصفي", en:"Frequencies & Descriptive Statistics",
+    type:"وصفي", tma:["tma1","tma2"],
     when:"تلخيص البيانات وتوزيعها — أول خطوة دائماً",
     vars:"أي متغيرات كمية أو نوعية",
     cond:"لا شروط — يسبق كل التحليلات",
-    sig:"المتوسط والانحراف — لا توجد قيمة Sig هنا",
+    sig:"متوسطات وتكرارات — لا توجد قيمة Sig",
+    tlDesc:"لفهم توزيع البيانات ومعرفة القيم الأكثر شيوعاً، وخطوة أساسية لفحص سلامة البيانات.",
     steps:[
       {t:"<span class='path'>Analyze → Descriptive Statistics → Frequencies</span>"},
-      {t:"انقل المتغيرات إلى <strong>Variable(s)</strong>"},
-      {t:"اضغط <strong>Statistics</strong> ← فعّل: <span class='tick'>Mean · Std. Deviation · Min · Max · Skewness · Kurtosis</span>"},
-      {t:"اضغط <strong>Charts</strong> ← فعّل: <span class='tick'>Bar charts</span> أو <span class='tick'>Histograms</span> — لاستخراج الرسوم البيانية للتكليف"},
-      {t:"اضغط <strong>Continue → OK</strong>"}
+      {t:"انقل المتغيرات إلى <strong>Variable(s)</strong> وتأكد من تفعيل <strong>Display frequency tables</strong>"},
+      {t:"<strong>Statistics</strong> ← فعّل: <span class='tick'>Mean · Median · Mode · Std. Deviation · Range · Min · Max · Skewness · Kurtosis</span>"},
+      {t:"<strong>Charts</strong> ← فعّل: <span class='tick'>Bar charts</span> (للاسمي/الرتبي) أو <span class='tick'>Histograms</span> (للكمي) — مطلوبة للتكليف"},
+      {t:"<strong>Continue → OK</strong>"}
     ],
     opts:[
       {n:"✅ Mean + Std. Deviation", d:"المتوسط والانحراف المعياري"},
       {n:"✅ Skewness + Kurtosis", d:"الالتواء والتفلطح لفحص الطبيعية"},
-      {n:"✅ Bar Charts", d:"رسوم شريطية لمتوسطات المحاور — مطلوبة في التكليف"},
-      {n:"✅ Histograms", d:"توزيع البيانات بصرياً"}
+      {n:"✅ Bar / Pie Charts", d:"للاسمي والرتبي — مطلوبة في التكليف"},
+      {n:"✅ Histograms", d:"توزيع البيانات الكمية بصرياً"}
     ],
     read:[
+      {c:"Frequency", m:"عدد الحالات في كل فئة", q:"العد المطلق"},
+      {c:"Percent", m:"نسبة الفئة من الكل", q:"يشمل المفقودة"},
+      {c:"Valid Percent", m:"النسبة بعد استبعاد المفقودة", q:"الأهم في كتابة النتائج"},
       {c:"Mean", m:"المتوسط الحسابي", q:"قارنه بمنتصف المقياس (3 في ليكرت الخماسي)"},
-      {c:"Std. Deviation", m:"الانحراف المعياري", q:"قريب من 0 = تجانس | كبير = تشتت"},
-      {c:"Skewness", m:"الالتواء", q:"بين ±1 يُقبل توزيعياً"},
-      {c:"Kurtosis", m:"التفلطح", q:"بين ±3 توزيع مقبول"}
+      {c:"Skewness / Kurtosis", m:"الالتواء / التفلطح", q:"بين ±1 يُقبل توزيعياً"}
     ],
     fmls:[{
       lbl:"نموذج وصف المحاور",
       txt:"أظهرت نتائج الإحصاء الوصفي أن متوسط استجابات أفراد العينة على محور <span class='v'>[اسم المحور]</span> بلغ <span class='s'>(M = __, SD = __)</span>، وقد جاء هذا المتوسط <span class='v'>[مرتفعاً/متوسطاً/منخفضاً]</span> على مقياس ليكرت الخماسي، مما يشير إلى <span class='v'>[التفسير]</span>."
     }],
-    alerts:[{type:"b", txt:"💡 لاستخراج الرسم البياني مباشرةً: Graphs → Chart Builder → اختر Bar → اسحب المتغير → OK"}]
+    alerts:[{type:"b", txt:"💡 لاستخراج الرسم البياني مباشرةً: Graphs → Chart Builder → اختر Bar → اسحب المتغير → OK. واستخدم التكرارات أولاً لفحص القيم الشاذة والمفقودة."}]
   },
   {
-    id:"reliability", name:"الثبات — ألفا كرونباخ", en:"Cronbach's Alpha",
-    type:"ثبات", color:"#6366f1", tma:["tma1","tma2"],
+    id:"normality", order:2, phase:1,
+    name:"التوزيع الطبيعي", en:"Normality Test — K-S / Shapiro-Wilk",
+    type:"افتراض", tma:["tma1","tma2"],
+    when:"شرط يُفحص قبل أي اختبار معلمي (T أو ANOVA)",
+    vars:"المتغير الكمي التابع",
+    cond:"لا شروط مسبقة",
+    sig:"Sig > 0.05 = توزيع طبيعي ✓ | Sig ≤ 0.05 = غير طبيعي",
+    tlDesc:"للتحقق من اتباع الدرجات للمنحنى الجرسي، وهو شرط للاختبارات البارامترية.",
+    steps:[
+      {t:"<span class='path'>Analyze → Descriptive Statistics → Explore</span>"},
+      {t:"انقل المتغير إلى <strong>Dependent List</strong>"},
+      {t:"<strong>Plots</strong> ← فعّل <span class='tick'>Normality plots with tests</span>"},
+      {t:"<strong>Continue → OK</strong>"}
+    ],
+    opts:[
+      {n:"Shapiro-Wilk", d:"✅ للعينات الصغيرة n < 50 — أكثر دقة"},
+      {n:"Kolmogorov-Smirnov", d:"✅ للعينات الكبيرة n ≥ 50"}
+    ],
+    read:[
+      {c:"Sig > 0.05", m:"توزيع طبيعي", q:"✅ تابع مع الاختبارات المعلمية (T · ANOVA)"},
+      {c:"Sig ≤ 0.05", m:"ليس طبيعياً", q:"⚠️ استخدم بدائل: سبيرمان / مان-ويتني"},
+      {c:"Skewness / Kurtosis", m:"الالتواء والتفلطح", q:"بين ±1 (وأحياناً ±2) مقبول"},
+      {c:"Q-Q Plot", m:"الفحص البصري", q:"النقاط قريبة من الخط المائل ← طبيعي"}
+    ],
+    fmls:[{
+      lbl:"نموذج اجتياز الاختبار",
+      txt:"أشارت نتائج اختبار <span class='s'>Shapiro-Wilk</span> إلى أن بيانات المتغير تتوزع توزيعاً طبيعياً <span class='s'>(W = __, p = __)</span>، مما يُجيز استخدام الاختبارات الإحصائية المعلمية."
+    }],
+    alerts:[{type:"b", txt:"💡 عند n > 30 يمكن الاستناد إلى مبرهنة النهاية المركزية وقبول الطبيعية تقريبياً."}]
+  },
+  {
+    id:"reliability", order:3, phase:1,
+    name:"معامل الثبات — ألفا كرونباخ", en:"Cronbach's Alpha",
+    type:"ثبات", tma:["tma1","tma2"],
     when:"التحقق من اتساق فقرات المقياس",
     vars:"فقرات المقياس (ترتيبية أو فترية)",
     cond:"فقرات تقيس نفس البُعد",
     sig:"α ≥ 0.70 مقبول | ≥ 0.80 جيد | ≥ 0.90 ممتاز",
+    tlDesc:"للتأكد من اتساق أداة القياس واستقرار نتائجها عند الإعادة.",
     steps:[
       {t:"<span class='path'>Analyze → Scale → Reliability Analysis</span>"},
-      {t:"انقل جميع فقرات المحور إلى <strong>Items</strong>"},
-      {t:"تأكد أن النموذج = <span class='tick'>Alpha</span>"},
-      {t:"اضغط <strong>Statistics</strong> ← فعّل: <span class='tick'>Scale if item deleted · Corrected Item-Total · Descriptives for Scale</span>"},
-      {t:"اضغط <strong>Continue → OK</strong>"}
+      {t:"انقل فقرات المحور إلى <strong>Items</strong>"},
+      {t:"النموذج = <span class='tick'>Alpha</span>"},
+      {t:"<strong>Statistics</strong> ← <span class='tick'>Scale if item deleted · Corrected Item-Total · Descriptives for Scale</span>"},
+      {t:"<strong>Continue → OK</strong>"}
     ],
     opts:[
       {n:"✅ Scale if item deleted", d:"الأهم — يُظهر ألفا لو حُذفت كل فقرة"},
@@ -429,44 +484,112 @@ const TESTS = [
     alerts:[{type:"g", txt:"💡 للتجزئة النصفية (Split-Half): نفس المسار ← غيّر النموذج من Alpha إلى Split-Half"}]
   },
   {
-    id:"normality", name:"التوزيع الطبيعي", en:"Normality Test — K-S / Shapiro-Wilk",
-    type:"افتراض", color:"#f59e0b", tma:["tma1","tma2"],
-    when:"شرط يُفحص قبل أي اختبار معلمي (T أو ANOVA)",
-    vars:"المتغير الكمي التابع",
+    id:"levene", order:4, phase:1,
+    name:"تجانس التباين", en:"Homogeneity of Variance (Levene's Test)",
+    type:"افتراض", tma:["tma1","tma2"],
+    when:"قبل اختبارات المقارنة (ت المستقلة وANOVA) للتأكد من تساوي تباينات المجموعات",
+    vars:"تابع كمي + مستقل تصنيفي",
     cond:"لا شروط مسبقة",
-    sig:"Sig > 0.05 = توزيع طبيعي ✓ | Sig ≤ 0.05 = غير طبيعي",
+    sig:"Sig > 0.05 ← تباينات متجانسة ✓",
+    tlDesc:"للتأكد من تساوي التباينات قبل اختبارات المقارنة (T و ANOVA).",
     steps:[
-      {t:"<span class='path'>Analyze → Descriptive Statistics → Explore</span>"},
-      {t:"انقل المتغير إلى <strong>Dependent List</strong>"},
-      {t:"اضغط <strong>Plots</strong> ← فعّل <span class='tick'>Normality plots with tests</span>"},
-      {t:"اضغط <strong>Continue → OK</strong>"}
+      {t:"ضمن <strong>ت للعينات المستقلة</strong>: يظهر Levene تلقائياً في جدول <span class='path'>Independent Samples Test</span>"},
+      {t:"ضمن <strong>ANOVA</strong>: <span class='path'>Analyze → Compare Means → One-Way ANOVA → Options → فعّل Homogeneity of variance test</span>"}
     ],
     opts:[
-      {n:"Shapiro-Wilk", d:"✅ للعينات الصغيرة n < 50 — أكثر دقة"},
-      {n:"Kolmogorov-Smirnov", d:"✅ للعينات الكبيرة n ≥ 50"}
+      {n:"✅ Homogeneity of variance test", d:"داخل Options في ANOVA"},
+      {n:"✅ تلقائي في T", d:"يُقرأ ضمن مخرجات Independent T مباشرةً"}
     ],
     read:[
-      {c:"Sig > 0.05", m:"توزيع طبيعي", q:"✅ تابع مع الاختبارات المعلمية (T · ANOVA)"},
-      {c:"Sig ≤ 0.05", m:"ليس طبيعياً", q:"⚠️ استخدم بدائل: سبيرمان / مان-ويتني"}
+      {c:"Levene Sig > 0.05", m:"تباينات متجانسة", q:"تابع التحليل المعلمي / اقرأ صف <em>Equal variances assumed</em>"},
+      {c:"Levene Sig ≤ 0.05", m:"تباينات غير متجانسة", q:"اقرأ صف <em>Equal variances not assumed</em> في T، أو استخدم Welch في ANOVA"}
     ],
     fmls:[{
-      lbl:"نموذج اجتياز الاختبار",
-      txt:"أشارت نتائج اختبار <span class='s'>Shapiro-Wilk</span> إلى أن بيانات المتغير تتوزع توزيعاً طبيعياً <span class='s'>(W = __, p = __)</span>، مما يُجيز استخدام الاختبارات الإحصائية المعلمية."
+      lbl:"الصياغة عند تحقق التجانس",
+      txt:"أشارت نتائج اختبار ليفين (Levene's Test) إلى تجانس التباين بين المجموعات <span class='s'>(F = __, p > .05)</span>، مما يستوفي شرط تجانس التباين اللازم لإجراء <span class='v'>[اختبار ت / تحليل التباين]</span>."
     }],
-    alerts:[{type:"b", txt:"💡 عند n > 30 يمكن الاستناد إلى مبرهنة النهاية المركزية وقبول الطبيعية تقريبياً."}]
+    alerts:[{type:"y", txt:"⚠️ خرق الشرط (Sig ≤ 0.05) يستوجب البدائل: صف عدم التجانس في T، أو Welch ANOVA."}]
   },
   {
-    id:"t1", name:"ت للعينة الواحدة", en:"One-Sample T-Test",
-    type:"معلمي", color:"#0ea5e9", tma:["tma1","tma2"],
+    id:"corr", order:5, phase:1,
+    name:"معامل الارتباط", en:"Pearson / Spearman Correlation",
+    type:"معلمي", tma:["tma1"],
+    when:"قياس قوة العلاقة بين متغيرين كميين (TMA1)",
+    vars:"متغيران كميان (بيرسون) أو رتبيان (سبيرمان)",
+    cond:"بيرسون: توزيع طبيعي + فترية | سبيرمان: بلا شروط",
+    sig:"Sig < 0.05 ← ارتباط دال | * عند 0.05 | ** عند 0.01",
+    tlDesc:"لقياس قوة واتجاه العلاقة بين متغيرين (مثل ساعات المذاكرة والتحصيل).",
+    steps:[
+      {t:"<span class='path'>Analyze → Correlate → Bivariate</span>"},
+      {t:"انقل المتغيرين إلى <strong>Variables</strong>"},
+      {t:"اختر: <span class='tick'>Pearson</span> (طبيعي) أو <span class='tick'>Spearman</span> (رتبي/غير طبيعي)"},
+      {t:"فعّل <span class='tick'>Flag significant correlations</span>"},
+      {t:"<strong>OK</strong>"}
+    ],
+    opts:[
+      {n:"✅ Pearson", d:"للبيانات الكمية ذات التوزيع الطبيعي"},
+      {n:"✅ Spearman", d:"للبيانات الرتبية أو غير الطبيعية"},
+      {n:"✅ Flag significant", d:"يضع * و ** على الارتباطات الدالة"}
+    ],
+    read:[
+      {c:"r = 0.00 – 0.19", m:"لا ارتباط أو ضعيف جداً", q:"—"},
+      {c:"r = 0.20 – 0.39", m:"ضعيف", q:"—"},
+      {c:"r = 0.40 – 0.59", m:"متوسط", q:"—"},
+      {c:"r = 0.60 – 0.79", m:"قوي", q:"—"},
+      {c:"r = 0.80 – 1.00", m:"قوي جداً", q:"—"}
+    ],
+    fmls:[{
+      lbl:"TMA1: نتيجة لا ارتباط دال",
+      txt:"أشارت نتائج معامل ارتباط بيرسون إلى عدم وجود علاقة ارتباطية دالة إحصائياً بين <span class='v'>[الكفاءة الرقمية للمعلم]</span> و<span class='v'>[استخدام منصة نور]</span> <span class='s'>(r = -0.035, p = .787)</span>، وعليه يُقبل الفرض الصفري بعدم وجود علاقة ذات دلالة إحصائية بين المتغيرين."
+    }],
+    alerts:[{type:"y", txt:"⚠️ النجمة (*) تعني دال عند 0.05 والنجمتان (**) تعنيان دال عند 0.01."}]
+  },
+  {
+    id:"chi", order:6, phase:1,
+    name:"مربع كاي", en:"Chi-Square Test",
+    type:"غير معلمي", tma:[],
+    when:"العلاقة بين متغيرين نوعيين (اسمي × اسمي)",
+    vars:"متغيران اسميان أو رتبيان",
+    cond:"تكرار متوقع ≥ 5 في كل خلية",
+    sig:"Sig < 0.05 ← علاقة دالة",
+    tlDesc:"اختبار لا معلمي لتحليل العلاقة بين المتغيرات النوعية (الاسمية/الرتبية).",
+    steps:[
+      {t:"<span class='path'>Analyze → Descriptive Statistics → Crosstabs</span>"},
+      {t:"ضع متغيراً في <strong>Row(s)</strong> وآخر في <strong>Column(s)</strong>"},
+      {t:"<strong>Statistics</strong> ← <span class='tick'>Chi-square + Phi and Cramer's V</span>"},
+      {t:"<strong>Cells</strong> ← <span class='tick'>Observed + Expected + Row %</span>"},
+      {t:"<strong>Continue → OK</strong>"}
+    ],
+    opts:[
+      {n:"✅ Chi-square", d:"الاختبار الرئيسي"},
+      {n:"✅ Cramer's V", d:"قوة العلاقة: 0.1 ضعيفة | 0.3 متوسطة | 0.5 قوية"},
+      {n:"✅ Expected Count", d:"تأكد لا توجد خلية < 5"}
+    ],
+    read:[
+      {c:"Pearson Chi-Square + Sig", m:"دلالة العلاقة", q:"< 0.05 ← علاقة دالة بين المتغيرين"},
+      {c:"Cramer's V", m:"قوة العلاقة", q:"0.1 ضعيفة | 0.3 متوسطة | 0.5 قوية"}
+    ],
+    fmls:[{
+      lbl:"نموذج الكتابة",
+      txt:"أشارت نتائج اختبار مربع كاي إلى وجود علاقة دالة إحصائياً بين <span class='v'>[المتغير أ]</span> و<span class='v'>[المتغير ب]</span> <span class='s'>(χ²(df) = __, p = __)</span>، وأشار معامل كرامر V إلى أن قوة العلاقة <span class='v'>[ضعيفة/متوسطة/قوية]</span> <span class='s'>(V = __)</span>."
+    }]
+  },
+
+  // ─── Phase 2 ───
+  {
+    id:"t1", order:7, phase:2,
+    name:"ت للعينة الواحدة", en:"One-Sample T-Test",
+    type:"معلمي", tma:["tma1","tma2"],
     when:"مقارنة متوسط العينة بقيمة معيارية (3 في ليكرت)",
     vars:"متغير كمي واحد",
     cond:"توزيع طبيعي | بيانات كمية | n ≥ 30",
     sig:"Sig < 0.05 ← فروق دالة عن القيمة المعيارية",
+    tlDesc:"لمقارنة متوسط عينة بقيمة مرجعية (Test Value).",
     steps:[
       {t:"<span class='path'>Analyze → Compare Means → One-Sample T Test</span>"},
       {t:"انقل المتغير إلى <strong>Test Variable(s)</strong>"},
       {t:"في <strong>Test Value</strong> اكتب: <span class='tick'>3</span> (منتصف ليكرت الخماسي)"},
-      {t:"اضغط <strong>OK</strong>"}
+      {t:"<strong>OK</strong>"}
     ],
     opts:[
       {n:"Test Value = 3", d:"منتصف مقياس ليكرت الخماسي"},
@@ -484,18 +607,20 @@ const TESTS = [
     ]
   },
   {
-    id:"t2", name:"ت للمجموعات المستقلة", en:"Independent Samples T-Test",
-    type:"معلمي", color:"#0ea5e9", tma:["tma1","tma2"],
+    id:"t2", order:8, phase:2,
+    name:"ت للمجموعات المستقلة", en:"Independent Samples T-Test",
+    type:"معلمي", tma:["tma1","tma2"],
     when:"مقارنة مجموعتين منفصلتين تماماً (ذكور/إناث)",
     vars:"مستقل اسمي (فئتان) + تابع كمي",
     cond:"توزيع طبيعي | تجانس التباين (Levene > 0.05)",
     sig:"Sig < 0.05 ← فروق دالة بين المجموعتين",
+    tlDesc:"لمقارنة متوسطي مجموعتين منفصلتين (ذكور/إناث).",
     steps:[
       {t:"<span class='path'>Analyze → Compare Means → Independent-Samples T Test</span>"},
       {t:"انقل الدرجة/المحور (كمي) إلى <strong>Test Variable(s)</strong>"},
       {t:"انقل الجنس/التصنيف إلى <strong>Grouping Variable</strong>"},
-      {t:"اضغط <strong>Define Groups</strong> ← <span class='tick'>Group 1 = 1</span> | <span class='tick'>Group 2 = 2</span>"},
-      {t:"اضغط <strong>Continue → OK</strong>"}
+      {t:"<strong>Define Groups</strong> ← <span class='tick'>Group 1 = 1</span> | <span class='tick'>Group 2 = 2</span>"},
+      {t:"<strong>Continue → OK</strong>"}
     ],
     opts:[
       {n:"⚠️ الخطوة الأولى: Levene", d:"يحدد أي صف تقرأ قبل أي شيء آخر"},
@@ -515,18 +640,20 @@ const TESTS = [
     alerts:[{type:"y", txt:"⚠️ TMA1: t = -0.80, Sig = 0.426 ← لا فروق دالة بين الجنسين في استخدام منصة نور. تم قبول الفرض الصفري."}]
   },
   {
-    id:"t3", name:"ت للعينات المرتبطة", en:"Paired Samples T-Test",
-    type:"معلمي", color:"#8b5cf6", tma:["tma2"],
+    id:"t3", order:9, phase:2,
+    name:"ت للعينات المرتبطة", en:"Paired Samples T-Test",
+    type:"معلمي", tma:["tma2"],
     when:"مقارنة نفس المجموعة في قياسين (قبلي/بعدي)",
     vars:"قياسان للمتغير نفسه — نفس الأفراد",
     cond:"توزيع طبيعي للفروق | نفس الأشخاص",
     sig:"Sig < 0.05 ← تحسّن/تراجع دال",
+    tlDesc:"لمقارنة نفس المجموعة في حالتين (قبلي/بعدي).",
     steps:[
       {t:"<span class='path'>Analyze → Compare Means → Paired-Samples T Test</span>"},
       {t:"اختر متغير القياس القبلي في <strong>Variable 1</strong>"},
       {t:"اختر متغير القياس البعدي في <strong>Variable 2</strong>"},
-      {t:"اضغط السهم لنقلهما كزوج واحد إلى <strong>Paired Variables</strong>"},
-      {t:"اضغط <strong>OK</strong>"}
+      {t:"انقلهما كزوج إلى <strong>Paired Variables</strong>"},
+      {t:"<strong>OK</strong>"}
     ],
     opts:[
       {n:"Variable 1 = القبلي", d:"الدرجة قبل التدخل/البرنامج"},
@@ -542,19 +669,21 @@ const TESTS = [
     }]
   },
   {
-    id:"anova", name:"تحليل التباين الأحادي", en:"One-Way ANOVA",
-    type:"معلمي", color:"#10b981", tma:["tma2"],
+    id:"anova", order:10, phase:2,
+    name:"تحليل التباين الأحادي", en:"One-Way ANOVA",
+    type:"معلمي", tma:["tma2"],
     when:"مقارنة 3 شُعب/مجموعات فأكثر (TMA2)",
     vars:"مستقل اسمي (3+ فئات) + تابع كمي",
     cond:"توزيع طبيعي | تجانس التباين | استقلالية",
-    sig:"F Sig < 0.05 ← يتبعه Tukey فوراً",
+    sig:"F Sig < 0.05 ← يتبعه Post Hoc",
+    tlDesc:"لمقارنة متوسطات ثلاث مجموعات أو أكثر لمتغير مستقل واحد.",
     steps:[
       {t:"<span class='path'>Analyze → Compare Means → One-Way ANOVA</span>"},
-      {t:"انقل درجات التحصيل إلى <strong>Dependent List</strong>"},
-      {t:"انقل رقم الشعبة (1/2/3) إلى <strong>Factor</strong>"},
-      {t:"اضغط <strong>Options</strong> ← فعّل: <span class='tick'>Descriptive + Homogeneity of variance test</span>"},
-      {t:"اضغط <strong>Post Hoc</strong> ← فعّل: <span class='tick'>Tukey</span> ← <strong>Continue</strong>"},
-      {t:"اضغط <strong>OK</strong>"}
+      {t:"درجات التحصيل إلى <strong>Dependent List</strong>"},
+      {t:"رقم الشعبة (1/2/3) إلى <strong>Factor</strong>"},
+      {t:"<strong>Options</strong> ← <span class='tick'>Descriptive + Homogeneity of variance test</span>"},
+      {t:"<strong>Post Hoc</strong> ← <span class='tick'>Tukey</span> ← <strong>Continue</strong>"},
+      {t:"<strong>OK</strong>"}
     ],
     opts:[
       {n:"✅ Descriptive Statistics", d:"متوسطات كل شعبة — ضروري للكتابة"},
@@ -573,78 +702,86 @@ const TESTS = [
     alerts:[{type:"b", txt:"💡 إذا كانت Levene Sig ≤ 0.05 استخدم Welch ANOVA بدلاً من ANOVA الكلاسيكي."}]
   },
   {
-    id:"chi", name:"مربع كاي", en:"Chi-Square Test",
-    type:"غير معلمي", color:"#f59e0b", tma:[],
-    when:"العلاقة بين متغيرين نوعيين (اسمي × اسمي)",
-    vars:"متغيران اسميان أو رتبيان",
-    cond:"تكرار متوقع ≥ 5 في كل خلية",
-    sig:"Sig < 0.05 ← علاقة دالة",
+    id:"twoway", order:11, phase:2,
+    name:"تحليل التباين الثنائي", en:"Two-Way ANOVA",
+    type:"معلمي", tma:[],
+    when:"دراسة أثر متغيرين مستقلين معاً على متغير تابع وكشف التفاعل بينهما",
+    vars:"مستقلان اسميان + تابع كمي",
+    cond:"توزيع طبيعي | تجانس التباين | استقلالية",
+    sig:"أثر رئيس لكل عامل (Sig) + أثر تفاعل (Sig) + η²",
+    tlDesc:"لدراسة أثر متغيرين مستقلين معاً على متغير تابع.",
     steps:[
-      {t:"<span class='path'>Analyze → Descriptive Statistics → Crosstabs</span>"},
-      {t:"ضع متغيراً في <strong>Row(s)</strong> وآخر في <strong>Column(s)</strong>"},
-      {t:"اضغط <strong>Statistics</strong> ← فعّل: <span class='tick'>Chi-square + Phi and Cramer's V</span>"},
-      {t:"اضغط <strong>Cells</strong> ← فعّل: <span class='tick'>Observed + Expected + Row %</span>"},
-      {t:"اضغط <strong>Continue → OK</strong>"}
+      {t:"<span class='path'>Analyze → General Linear Model → Univariate</span>"},
+      {t:"التابع الكمي إلى <strong>Dependent Variable</strong>"},
+      {t:"المتغيرين المستقلين إلى <strong>Fixed Factor(s)</strong>"},
+      {t:"<strong>Post Hoc</strong> ← <span class='tick'>Tukey</span> للعامل ذي 3+ فئات"},
+      {t:"<strong>Options</strong> ← <span class='tick'>Descriptive + Homogeneity tests + Estimates of effect size</span>"},
+      {t:"<strong>Plots</strong> ← ضع عاملاً على المحور وآخر كخطوط <span class='tick'>(Separate Lines)</span> لرسم التفاعل ← <strong>OK</strong>"}
     ],
     opts:[
-      {n:"✅ Chi-square", d:"الاختبار الرئيسي"},
-      {n:"✅ Cramer's V", d:"قوة العلاقة: 0.1 ضعيفة | 0.3 متوسطة | 0.5 قوية"},
-      {n:"✅ Expected Count", d:"تأكد لا توجد خلية < 5"}
+      {n:"✅ Descriptive", d:"متوسطات كل خلية تقاطع"},
+      {n:"✅ Homogeneity (Levene)", d:"تجانس التباين"},
+      {n:"✅ Estimates of effect size", d:"يُظهر η² الجزئي"},
+      {n:"✅ Profile Plots", d:"رسم التفاعل بصرياً"}
     ],
     read:[
-      {c:"Pearson Chi-Square + Sig", m:"دلالة العلاقة", q:"< 0.05 ← علاقة دالة بين المتغيرين"},
-      {c:"Cramer's V", m:"قوة العلاقة", q:"0.1 ضعيفة | 0.3 متوسطة | 0.5 قوية"}
+      {c:"Main Effect (لكل عامل)", m:"الأثر الرئيس", q:"Sig < 0.05 ← أثر دال"},
+      {c:"Interaction (A * B)", m:"أثر التفاعل", q:"Sig < 0.05 ← يوجد تفاعل بين العاملين"},
+      {c:"Partial Eta Squared", m:"حجم الأثر", q:"> 0.14 كبير | 0.06 متوسط | 0.01 صغير"}
     ],
     fmls:[{
-      lbl:"نموذج الكتابة",
-      txt:"أشارت نتائج اختبار مربع كاي إلى وجود علاقة دالة إحصائياً بين <span class='v'>[المتغير أ]</span> و<span class='v'>[المتغير ب]</span> <span class='s'>(χ²(df) = __, p = __)</span>، وأشار معامل كرامر V إلى أن قوة العلاقة <span class='v'>[ضعيفة/متوسطة/قوية]</span> <span class='s'>(V = __)</span>."
-    }]
-  },
-  {
-    id:"corr", name:"معامل الارتباط", en:"Pearson / Spearman Correlation",
-    type:"معلمي", color:"#8b5cf6", tma:["tma1"],
-    when:"قياس قوة العلاقة بين متغيرين كميين (TMA1)",
-    vars:"متغيران كميان (بيرسون) أو رتبيان (سبيرمان)",
-    cond:"بيرسون: توزيع طبيعي + فترية | سبيرمان: بلا شروط",
-    sig:"Sig < 0.05 ← ارتباط دال | * = 0.05 | ** = 0.01",
-    steps:[
-      {t:"<span class='path'>Analyze → Correlate → Bivariate</span>"},
-      {t:"انقل المتغيرين إلى <strong>Variables</strong>"},
-      {t:"اختر: <span class='tick'>Pearson</span> (طبيعي) أو <span class='tick'>Spearman</span> (رتبي/غير طبيعي)"},
-      {t:"فعّل <span class='tick'>Flag significant correlations</span>"},
-      {t:"اضغط <strong>OK</strong>"}
-    ],
-    opts:[
-      {n:"✅ Pearson", d:"للبيانات الكمية ذات التوزيع الطبيعي"},
-      {n:"✅ Spearman", d:"للبيانات الرتبية أو غير الطبيعية"},
-      {n:"✅ Flag significant", d:"يضع * و ** على الارتباطات الدالة"}
-    ],
-    read:[
-      {c:"r = 0.00–0.19", m:"لا ارتباط أو ضعيف جداً", q:"—"},
-      {c:"r = 0.20–0.39", m:"ضعيف", q:"—"},
-      {c:"r = 0.40–0.59", m:"متوسط", q:"—"},
-      {c:"r = 0.60–0.79", m:"قوي", q:"—"},
-      {c:"r = 0.80–1.00", m:"قوي جداً", q:"—"}
-    ],
-    fmls:[{
-      lbl:"TMA1: نتيجة لا ارتباط دال",
-      txt:"أشارت نتائج معامل ارتباط بيرسون إلى عدم وجود علاقة ارتباطية دالة إحصائياً بين <span class='v'>[الكفاءة الرقمية للمعلم]</span> و<span class='v'>[استخدام منصة نور]</span> <span class='s'>(r = -0.035, p = .787)</span>، وعليه يُقبل الفرض الصفري بعدم وجود علاقة ذات دلالة إحصائية بين المتغيرين."
+      lbl:"الصياغة الأكاديمية",
+      txt:"أظهر تحليل التباين الثنائي وجود أثر رئيس دال لـ<span class='v'>[العامل الأول]</span> <span class='s'>(F = __, p = __)</span> ولـ<span class='v'>[العامل الثاني]</span> <span class='s'>(F = __, p = __)</span>، كما <span class='v'>[وُجد/لم يوجد]</span> أثر تفاعل دال بينهما <span class='s'>(F = __, p = __)</span>، وبلغ حجم الأثر <span class='s'>(η² = __)</span>."
     }],
-    alerts:[{type:"y", txt:"⚠️ TMA1: r = -0.035, Sig = 0.787 ← لا ارتباط دال. النجمة (*) تعني دال عند 0.05 والنجمتان (**) تعنيان دال عند 0.01."}]
+    alerts:[{type:"b", txt:"💡 ابدأ بقراءة أثر التفاعل؛ فإن كان دالاً فسِّر الآثار الرئيسة بحذر لأن أثر كل عامل يتوقف على مستويات الآخر."}]
   },
   {
-    id:"reg", name:"الانحدار الخطي البسيط", en:"Simple Linear Regression",
-    type:"تنبؤي", color:"#ef4444", tma:["tma2"],
-    when:"التنبؤ بالتحصيل من خلال متغير مستقل (TMA2)",
+    id:"posthoc", order:12, phase:2,
+    name:"التحليل البعدي", en:"Post Hoc Tests (Tukey / Scheffé)",
+    type:"بعدي", tma:["tma2"],
+    when:"بعد ANOVA دالة لتحديد أي أزواج المجموعات تختلف تحديداً",
+    vars:"نفس متغيرات ANOVA",
+    cond:"F للـ ANOVA دالة (Sig < 0.05)",
+    sig:"لكل زوج Mean Difference + Sig",
+    tlDesc:"بعد ANOVA لتحديد المجموعات التي بينها فروق دالة تحديداً.",
+    steps:[
+      {t:"ضمن <span class='path'>One-Way ANOVA</span> (أو <span class='path'>GLM → Univariate</span>) اضغط <strong>Post Hoc</strong>"},
+      {t:"اختر <span class='tick'>Tukey</span> (عينات متساوية العدد) أو <span class='tick'>Scheffé</span> (غير متساوية، أكثر تحفظاً)"},
+      {t:"<strong>Continue → OK</strong>"}
+    ],
+    opts:[
+      {n:"✅ Tukey HSD", d:"للمجموعات متساوية العدد"},
+      {n:"✅ Scheffé", d:"غير متساوية — أكثر تحفظاً"},
+      {n:"💡 المقارنة", d:"يمكن تفعيلهما لمقارنة النتائج"}
+    ],
+    read:[
+      {c:"Multiple Comparisons", m:"جدول المقارنات الزوجية", q:"لكل زوج (I–J): Mean Difference + Sig"},
+      {c:"Sig < 0.05", m:"فرق دال", q:"تُوضع نجمة (*) بجوار الفرق"},
+      {c:"إشارة الفرق", m:"اتجاه الفرق", q:"تحدد المجموعة الأعلى متوسطاً"}
+    ],
+    fmls:[{
+      lbl:"الصياغة الأكاديمية",
+      txt:"وللكشف عن مصدر الفروق أُجريت المقارنات البعدية باختبار <span class='v'>[توكي/شيفيه]</span>، وتبيّن وجود فروق دالة بين <span class='v'>[المجموعة أ]</span> و<span class='v'>[المجموعة ب]</span> <span class='s'>(فرق المتوسط = __, p = __)</span> لصالح الأعلى متوسطاً، في حين لم تكن الفروق دالة بين <span class='v'>[...]</span> و<span class='v'>[...]</span>."
+    }],
+    alerts:[{type:"y", txt:"⚠️ لا يُجرى التحليل البعدي إلا إذا كانت نتيجة ANOVA دالة (F Sig < 0.05)."}]
+  },
+
+  // ─── Phase 3 ───
+  {
+    id:"reg", order:13, phase:3,
+    name:"الانحدار الخطي البسيط", en:"Simple Linear Regression",
+    type:"تنبؤي", tma:["tma2"],
+    when:"التنبؤ بالتحصيل من متغير مستقل (TMA2)",
     vars:"مستقل كمي (X) + تابع كمي (Y)",
     cond:"خطية العلاقة | طبيعية البواقي | استقلالية",
-    sig:"F Sig < 0.05 ← النموذج دال | R² = نسبة التفسير",
+    sig:"F Sig < 0.05 ← النموذج دال | R² نسبة التفسير",
+    tlDesc:"لمعرفة أثر متغير مستقل على تابع وبناء معادلة تنبؤ.",
     steps:[
       {t:"<span class='path'>Analyze → Regression → Linear</span>"},
-      {t:"انقل التحصيل (التابع) إلى <strong>Dependent</strong>"},
-      {t:"انقل الدافعية أو معامل الذكاء (المستقل) إلى <strong>Independent(s)</strong>"},
-      {t:"اضغط <strong>Statistics</strong> ← فعّل: <span class='tick'>Estimates + Model fit + Descriptives</span>"},
-      {t:"اضغط <strong>Continue → OK</strong>"}
+      {t:"التحصيل (التابع) إلى <strong>Dependent</strong>"},
+      {t:"الدافعية أو معامل الذكاء (المستقل) إلى <strong>Independent(s)</strong>"},
+      {t:"<strong>Statistics</strong> ← <span class='tick'>Estimates + Model fit + Descriptives</span>"},
+      {t:"<strong>Continue → OK</strong>"}
     ],
     opts:[
       {n:"✅ Model Summary", d:"يُظهر R و R² — نسبة التفسير الأهم"},
@@ -663,44 +800,40 @@ const TESTS = [
       {lbl:"معادلة التنبؤ", txt:"يمكن التعبير عن نموذج التنبؤ بالمعادلة: <span class='s'>التحصيل = __ + __ × الدافعية</span><br>حيث الثابت هو قيمة B للـ Constant ومعامل الانحدار هو قيمة B للمتغير المستقل."}
     ],
     alerts:[{type:"b", txt:"💡 TMA2 يتطلب انحداراً لكل متغير مستقل على حدة: (1) الدافعية ← التحصيل (2) معامل الذكاء ← التحصيل."}]
-  }
-];
+  },
 
-// ════════ DATA: TIMELINE ════════
-const TIMELINE = [
+  // ─── Enrichment (outside the 13-step sequence) ───
   {
-    num:1, color:"#3b82f6",
-    title:"التحليل الوصفي والتحقق من جودة البيانات",
-    weeks:"الأسابيع 2 – 3",
-    tools:[
-      {ar:"التكرارات", en:"Frequencies", desc:"فهم توزيع البيانات ومعرفة القيم الأكثر شيوعاً، وخطوة أساسية لفحص سلامة البيانات.", use:"البيانات الاسمية والترتيبية وفحص القيم المفقودة."},
-      {ar:"التوزيع الطبيعي", en:"Normal Distribution", desc:"التحقق من اتباع الدرجات للمنحنى الجرسي عبر Shapiro-Wilk و Kolmogorov-Smirnov.", use:"شرط أساسي للاختبارات البارامترية؛ Sig > 0.05 = طبيعي."},
-      {ar:"الثبات — ألفا كرونباخ", en:"Cronbach's Alpha", desc:"قياس اتساق فقرات المقياس واستقرار نتائجه عند إعادة التطبيق.", use:"المعيار: فوق 0.70 جيد، أقل من 0.60 ضعيف."},
-      {ar:"تجانس التباين", en:"Homogeneity of Variance", desc:"التأكد من تساوي التباينات بين المجموعات عبر اختبار Levene.", use:"القاعدة: Sig > 0.05 = متجانسة."},
-      {ar:"معامل الارتباط", en:"Correlation", desc:"قياس قوة واتجاه العلاقة الخطية بين متغيرين كميين (من -1 إلى +1).", use:"بيرسون للمتغيرات الكمية ذات التوزيع الطبيعي."},
-      {ar:"كاي تربيع", en:"Chi-Square", desc:"اختبار لا معلمي لتحليل العلاقة بين المتغيرات النوعية (اسمية/رتبية).", use:"لا يشترط التوزيع الطبيعي."}
-    ]
-  },
-  {
-    num:2, color:"#10b981",
-    title:"اختبار الفرضيات والمقارنة بين المتوسطات",
-    weeks:"الأسابيع 4 – 11",
-    tools:[
-      {ar:"ت للعينة الواحدة", en:"One-Sample T-Test", desc:"مقارنة متوسط عينة واحدة بقيمة مرجعية (Test Value).", use:"مثال: هل يختلف متوسط الصف عن 50؟"},
-      {ar:"ت للعينات المستقلة", en:"Independent Samples T-Test", desc:"مقارنة متوسطات مجموعتين منفصلتين (ذكور/إناث).", use:"مجموعتان مستقلتان."},
-      {ar:"ت للعينات المرتبطة", en:"Paired Samples T-Test", desc:"مقارنة نفس المجموعة في حالتين (قبلي/بعدي).", use:"نفس الأفراد قبل وبعد."},
-      {ar:"تحليل التباين الأحادي", en:"One-Way ANOVA", desc:"مقارنة متوسطات 3 مجموعات أو أكثر لمتغير مستقل واحد.", use:"3 مجموعات فأكثر."},
-      {ar:"تحليل التباين الثنائي", en:"Two-Way ANOVA", desc:"أثر متغيرين مستقلين معاً على متغير تابع.", use:"يكشف التفاعل."},
-      {ar:"التحليل البعدي", en:"Post Hoc (Tukey / Scheffé)", desc:"تحديد المجموعات التي بينها فروق دالة بعد ANOVA.", use:"Tukey للمتساوية · Scheffé لغير المتساوية."}
-    ]
-  },
-  {
-    num:3, color:"#ef4444",
-    title:"أدوات التنبؤ",
-    weeks:"الأسبوع 12",
-    tools:[
-      {ar:"الانحدار الخطي البسيط", en:"Simple Linear Regression", desc:"معرفة أثر متغير مستقل X على تابع Y وبناء معادلة تنبؤ Y = a + bX.", use:"يعطي معامل B ومعامل التحديد R²."}
-    ]
+    id:"ancova", order:null, phase:null, enrichment:true,
+    name:"تحليل التباين المصاحب", en:"Analysis of Covariance (ANCOVA)",
+    type:"مصاحب", tma:[],
+    when:"مقارنة المتوسطات البعدية بين مجموعات بعد ضبط أثر متغير مصاحب (كالاختبار القبلي)",
+    vars:"مستقل تصنيفي + تابع كمي + مصاحب كمي",
+    cond:"طبيعية التابع | تجانس التباين (Levene) | علاقة خطية بين المصاحب والتابع | استقلالية المصاحب عن المعالجة",
+    sig:"F وSig بعد الضبط + تفسير المتوسطات المعدّلة",
+    tlDesc:"لمقارنة متوسطات المجموعات في القياس البعدي بعد ضبط متغير مصاحب (إثرائي).",
+    steps:[
+      {t:"<span class='path'>Analyze → General Linear Model → Univariate</span>"},
+      {t:"التابع البعدي (POST) إلى <strong>Dependent Variable</strong>"},
+      {t:"المتغير المستقل (المجموعة) إلى <strong>Fixed Factor(s)</strong>"},
+      {t:"المتغير المصاحب (PRE) إلى <strong>Covariate(s)</strong>"},
+      {t:"<strong>Options / EM Means</strong> ← <span class='tick'>Estimated Marginal Means + Compare main effects + Estimates of effect size</span> ← <strong>OK</strong>"}
+    ],
+    opts:[
+      {n:"✅ Covariate = الاختبار القبلي", d:"يضبط الفروق القبلية"},
+      {n:"✅ Estimated Marginal Means", d:"المتوسطات المعدّلة بعد الضبط"},
+      {n:"✅ Effect size (η²)", d:"حجم الأثر الجزئي"}
+    ],
+    read:[
+      {c:"F + Sig (للمستقل)", m:"دلالة الفروق بعد الضبط", q:"Sig < 0.05 ← فروق دالة بعد ضبط المصاحب"},
+      {c:"Adjusted / Estimated Marginal Means", m:"المتوسطات المعدّلة", q:"فسِّرها بدلاً من المتوسطات الخام"},
+      {c:"Error Mean Square", m:"خطأ النموذج", q:"منخفض = جودة ضبط أفضل"}
+    ],
+    fmls:[{
+      lbl:"الصياغة الأكاديمية الجاهزة",
+      txt:"تم استخدام تحليل التباين المصاحب (ANCOVA) لمقارنة متوسطات المجموعات في القياس البعدي بعد ضبط أثر الاختبار القبلي بوصفه متغيراً مصاحباً، بهدف التحكم في الفروق القبلية وتحقيق تقدير أدق للأثر الحقيقي للمتغير المستقل على التابع. وأظهرت النتائج <span class='v'>[وجود/عدم وجود]</span> فروق دالة <span class='s'>(F = __, p = __)</span>، وتُقارَن المجموعات على أساس المتوسطات المعدّلة."
+    }],
+    alerts:[{type:"y", txt:"⚠️ المقارنة الصحيحة على المتوسطات المعدّلة لا الخام؛ وANCOVA شائع وموثوق في البحوث شبه التجريبية."}]
   }
 ];
 
@@ -708,7 +841,7 @@ const TIMELINE = [
 const CONCEPTS = [
   {term:"الفرضية الصفرية H₀", def:"تفترض عدم وجود فروق أو علاقات — نقطة الانطلاق في كل اختبار — نرفضها إذا Sig < 0.05."},
   {term:"مستوى الدلالة (Sig / p-value)", def:"< 0.05 ← نرفض H₀ ونقبل الفرضية البديلة ← يعني وجود أثر حقيقي وليس مجرد صدفة."},
-  {term:"حجم الأثر η²", def:"يوضح الأهمية العملية: > 0.14 كبير | 0.06 متوسط | 0.01 صغير — مختلف عن الدلالة الإحصائية."},
+  {term:"حجم الأثر η²", def:"يوضح الأهمية العملية: > 0.14 كبير | 0.06 متوسط | 0.01 صغير (Cohen 1988)."},
   {term:"معامل التحديد R²", def:"في الانحدار: نسبة التباين في التابع يفسرها المستقل — R²=0.50 يعني 50% مفسَّرة."},
   {term:"مستويات القياس الأربعة", def:"اسمي (فئات) ← ترتيبي (رُتَب) ← فتري (مسافات متساوية) ← نسبي (صفر مطلق) — يحدد نوع الاختبار."},
   {term:"التوزيع الطبيعي", def:"شرط الاختبارات المعلمية — Shapiro-Wilk للصغيرة (n<50) | K-S للكبيرة (n≥50)."},
@@ -718,78 +851,146 @@ const CONCEPTS = [
   {term:"Post-Hoc Tests (توكي)", def:"اختبارات بعدية بعد ANOVA لتحديد أي مجموعتين تختلفان — أشهرها Tukey و Scheffé."}
 ];
 
-// ════════ DATA: EXPLAIN (4) ════════
+// ════════ DATA: EXPLAIN (4 main + 7 Q&A) ════════
 const EXPLAIN = [
   {
+    tag:"شرح موسّع",
     title:"ما الفرق بين المتغير المستقل والتابع والمعدِّل؟",
     body:`
       <p>تُصنف المتغيرات حسب الدور في العلاقة الإحصائية إلى ثلاثة أنواع:</p>
-      <h4>المتغير المستقل (Independent Variable)</h4>
-      <p>المتغير الذي يُعتقد أنه المسبب أو المؤثر، ويتحكم فيه الباحث أو يصنّفه لدراسة أثره. في الدراسات التجريبية غالباً نوعي/تصنيفي (مثل «طريقة التدريس»)، وفي الانحدار يُسمى «المتنبئ» (Predictor) ويُرمز له (X). أمثلة: ضغط الغاز، عدد ساعات الدراسة، نوع المدرسة (حكومية/خاصة).</p>
-      <h4>المتغير التابع (Dependent Variable)</h4>
-      <p>المتغير الذي يمثل النتيجة أو الأثر، ويقيسه الباحث ليرى تأثره بالمستقل. يجب أن يكون كمياً قابلاً للقياس في معظم الاختبارات الاستدلالية (ت، ANOVA)، ويُرمز له (Y). أمثلة: حجم الغاز، التحصيل الدراسي، مستوى الرضا، التفكير العلمي.</p>
-      <h4>المتغير المعدِّل (Moderating Variable)</h4>
-      <p>متغير ثانٍ يختبر ما إذا كان يغيّر قوة أو اتجاه العلاقة بين المستقل والتابع، ويوضّح الظروف التي يتغير فيها الأثر؛ فمثلاً قد تختلف فعالية طريقة تدريس (مستقل) على التحصيل (تابع) باختلاف جنس الطالب (معدِّل). أمثلة: الجنس، البيئة الاجتماعية، المستوى الاقتصادي.</p>
-      <div class="alert al-b" style="margin-top:14px"><b>الخلاصة:</b> المستقل هو «المؤثر»، والتابع هو «المتأثر»، والمعدِّل هو الذي «يعدّل» شكل العلاقة بينهما.</div>
+      <h4>المتغير المستقل (Independent / X / Predictor)</h4>
+      <p>المسبب أو المؤثر، يتحكم فيه الباحث أو يصنّفه لدراسة أثره؛ غالباً نوعي في التجارب (طريقة التدريس)، ويُرمز له (X) في الانحدار. أمثلة: ضغط الغاز، عدد ساعات الدراسة، نوع المدرسة.</p>
+      <h4>المتغير التابع (Dependent / Y)</h4>
+      <p>النتيجة أو الأثر، يقيسه الباحث ليرى تأثره بالمستقل، ويجب أن يكون كمياً قابلاً للقياس في معظم الاختبارات الاستدلالية (ت، ANOVA)، ويُرمز له (Y). أمثلة: حجم الغاز، التحصيل، الرضا، التفكير العلمي.</p>
+      <h4>المتغير المعدِّل (Moderating)</h4>
+      <p>يغيّر قوة أو اتجاه العلاقة بين المستقل والتابع، ويوضّح ظروف تغيّر الأثر؛ فمثلاً قد تختلف فعالية طريقة تدريس على التحصيل باختلاف جنس الطالب. أمثلة: الجنس، البيئة الاجتماعية، المستوى الاقتصادي.</p>
+      <div class="alert al-b" style="margin-top:14px"><b>الخلاصة:</b> المستقل «المؤثر»، والتابع «المتأثر»، والمعدِّل «يعدّل» شكل العلاقة بينهما.</div>
     `
   },
   {
+    tag:"شرح موسّع",
     title:"الفرق بين المتغيرات الاسمية والرتبية والكمية",
     body:`
       <div class="tbl-wrap">
         <table class="tbl">
           <tr><th>المستوى</th><th>التعريف والخصائص</th><th>أمثلة</th><th>التحليل المناسب</th></tr>
-          <tr><td><b>اسمي (Nominal)</b></td><td>أبسط مستويات القياس؛ أرقام كرموز للتصنيف فقط دون معنى كمي ولا ترتيب — «متشابه/مختلف»</td><td>الجنس، اللون، الجنسية، الرقم الجامعي</td><td>التكرارات والنسب والاختبارات غير المعلمية</td></tr>
-          <tr><td><b>رتبي (Ordinal)</b></td><td>يوجد ترتيب بين الفئات لكن الفوارق غير متساوية أو غير معروفة بدقة</td><td>المستوى التعليمي، التقديرات (ضعيف→ممتاز)، درجة الألم</td><td>تقنيات غير معلمية (مثل ويلكوكسون)</td></tr>
-          <tr><td><b>كمي (Scale)</b></td><td>يشمل <b>الفتري (Interval):</b> مسافات متساوية بلا صفر حقيقي (الحرارة، الذكاء)؛ و<b>النسبي (Ratio):</b> مسافات متساوية مع صفر حقيقي يتيح كل العمليات (الوزن، الطول، الزمن، الدخل)</td><td>درجات الحرارة، الوزن، الدخل</td><td>الاختبارات المعلمية</td></tr>
+          <tr><td><b>اسمي (Nominal)</b></td><td>أرقام كرموز للتصنيف فقط، بلا ترتيب — «متشابه/مختلف»</td><td>الجنس، اللون، الجنسية، الرقم الجامعي</td><td>التكرارات والنسب والاختبارات غير المعلمية</td></tr>
+          <tr><td><b>رتبي (Ordinal)</b></td><td>ترتيب بين الفئات لكن الفوارق غير متساوية أو غير معروفة بدقة</td><td>المستوى التعليمي، التقديرات، درجة الألم</td><td>تقنيات لا معلمية (ويلكوكسون)</td></tr>
+          <tr><td><b>كمي (Scale)</b></td><td><b>الفتري (Interval):</b> مسافات متساوية بلا صفر حقيقي (الحرارة، الذكاء)؛ <b>النسبي (Ratio):</b> مع صفر حقيقي يتيح كل العمليات (الوزن، الطول، الزمن، الدخل)</td><td>درجات الحرارة، الوزن، الدخل</td><td>الاختبارات المعلمية</td></tr>
         </table>
       </div>
-      <p><b>لماذا التمييز؟</b> (1) اختيار الاختبار المناسب، (2) دقة التحليل وتجنّب الاستنتاجات الخاطئة، (3) اختيار الرسم البياني (شريطي/دائري للاسمي، خطي للكمي).</p>
+      <p><b>لماذا التمييز؟</b> (1) اختيار الاختبار المناسب، (2) دقة التحليل، (3) اختيار الرسم (شريطي/دائري للاسمي، خطي للكمي).</p>
     `
   },
   {
+    tag:"شرح موسّع",
     title:"الفرق بين التوزيع الطبيعي وغير الطبيعي وكيفية فحصه",
     body:`
       <div class="tbl-wrap">
         <table class="tbl">
-          <tr><th>وجه المقارنة</th><th>التوزيع الطبيعي (Normal)</th><th>غير الطبيعي (Non-Normal)</th></tr>
-          <tr><td><b>الشكل العام</b></td><td>جرسي متماثل حول المتوسط</td><td>انحرافات واضحة، مائل أو متعدد القمم</td></tr>
-          <tr><td><b>النزعة المركزية</b></td><td>يتساوى المتوسط والوسيط والمنوال</td><td>تختلف هذه المقاييس</td></tr>
-          <tr><td><b>الالتواء والتفلطح</b></td><td>قيمتهما صفر أو قريبة منه</td><td>قيم مرتفعة/منخفضة جداً</td></tr>
-          <tr><td><b>الاستخدام</b></td><td>شرط للاختبارات المعلمية (T، ANOVA)</td><td>يستلزم اختبارات لا معلمية أو تحويل البيانات</td></tr>
+          <tr><th>وجه المقارنة</th><th>الطبيعي (Normal)</th><th>غير الطبيعي (Non-Normal)</th></tr>
+          <tr><td>الشكل</td><td>جرسي متماثل حول المتوسط</td><td>مائل أو متعدد القمم</td></tr>
+          <tr><td>النزعة المركزية</td><td>يتساوى المتوسط والوسيط والمنوال</td><td>تختلف هذه المقاييس</td></tr>
+          <tr><td>الالتواء/التفلطح</td><td>صفر أو قريبة منه</td><td>مرتفعة/منخفضة جداً</td></tr>
+          <tr><td>الاستخدام</td><td>شرط للمعلمية (T، ANOVA)</td><td>لا معلمية أو تحويل البيانات</td></tr>
         </table>
       </div>
-      <p><b>علامات عدم الطبيعية:</b> التواء عالٍ (|Skewness| > 1) · تفلطح غير طبيعي (تجاوز Kurtosis لـ ±2) · قيم متطرفة (Outliers) · البيانات الاسمية/الرتبية · عينة صغيرة جداً (< 30).</p>
+      <p><b>علامات عدم الطبيعية:</b> |Skewness| > 1 · تجاوز Kurtosis لـ ±2 · قيم متطرفة · بيانات اسمية/رتبية · عينة < 30.</p>
       <h4>الفحص في SPSS</h4>
-      <p><span class="path">Analyze → Descriptive Statistics → Explore → Plots → فعّل Normality plots with tests</span></p>
-      <p>وتُقرأ النتائج بثلاث طرق:</p>
-      <p><b>1) الاختبارات الإحصائية (الأدق):</b> Shapiro-Wilk (للصغيرة) وKolmogorov-Smirnov — <b>القاعدة: Sig > 0.05 ⟵ طبيعي</b>، وأقل من 0.05 ⟵ غير طبيعي.</p>
-      <p><b>2) الالتواء والتفلطح:</b> يُقبل تربوياً بين (±1) وأحياناً (±2).</p>
-      <p><b>3) الفحص البصري:</b> المدرّج التكراري يقترب من الجرس، ونقاط Q-Q Plot قريبة من الخط المائل.</p>
+      <p><span class="path">Analyze → Descriptive Statistics → Explore → Plots → Normality plots with tests</span></p>
+      <p>ثلاث طرق للقراءة:</p>
+      <p><b>1) الاختبارات (الأدق):</b> Shapiro-Wilk وK-S — <b>Sig > 0.05 ⟵ طبيعي</b>.</p>
+      <p><b>2) الالتواء والتفلطح:</b> بين ±1 (وأحياناً ±2) مقبول.</p>
+      <p><b>3) الفحص البصري:</b> المدرّج جرسي ونقاط Q-Q قرب الخط المائل.</p>
     `
   },
   {
-    title:"استخدام SPSS للتحليل الوصفي واختبار التكرارات (Frequencies)",
+    tag:"شرح موسّع",
+    title:"استخدام SPSS للتحليل الوصفي واختبار التكرارات",
     body:`
       <p>اختبار التكرارات من أهم التحليلات الوصفية؛ لفهم توزيع البيانات ومعرفة الأكثر شيوعاً ونسب الفئات.</p>
       <h4>الخطوات</h4>
       <p>1. <span class="path">Analyze → Descriptive Statistics → Frequencies</span></p>
       <p>2. انقل المتغيرات (مثل الجنس/التخصص) إلى <b>Variable(s)</b> بالسهم.</p>
-      <p>3. تأكد من تفعيل <b>Display frequency tables</b>.</p>
+      <p>3. فعّل <b>Display frequency tables</b>.</p>
       <p>4. اضغط <b>OK</b>.</p>
       <h4>الخيارات الإضافية</h4>
       <p><b>Statistics:</b> النزعة المركزية (Mean, Median, Mode) والتشتت (Std. Deviation, Range, Min/Max).</p>
-      <p><b>Charts:</b> Bar Charts (أعمدة لمقارنة الفئات) · Pie Charts (قطاعات للنسب المئوية).</p>
+      <p><b>Charts:</b> Bar Charts (لمقارنة الفئات) · Pie Charts (للنسب المئوية).</p>
       <h4>متى نستخدمه؟</h4>
       <p>مع البيانات الاسمية (الجنس، التخصص) والرتبية (المستوى التعليمي، درجة الرضا).</p>
-      <h4>تفسير المخرجات (أعمدة الجدول)</h4>
-      <p><b>Frequency:</b> عدد الحالات في كل فئة · <b>Percent:</b> نسبة الفئة من الكل · <b>Valid Percent:</b> النسبة بعد استبعاد المفقودة — <b>الأهم</b> عند كتابة النتائج.</p>
+      <h4>تفسير المخرجات</h4>
+      <p><b>Frequency:</b> عدد الحالات · <b>Percent:</b> نسبة من الكل · <b>Valid Percent:</b> بعد استبعاد المفقودة — <b>الأهم</b>.</p>
       <div class="alert al-g" style="margin-top:14px"><b>نصيحة:</b> استخدم التكرارات في بداية أي تحليل لفحص سلامة البيانات والقيم الشاذة/المفقودة قبل الاختبارات الاستدلالية.</div>
+    `
+  },
+  // ── 6.4.1 Q&A per test ──
+  {
+    tag:"أ · أسئلة وأجوبة",
+    title:"اختبار «ت» للعينة الواحدة — One-Sample T-Test",
+    body:`
+      <p><b>المفهوم الأساسي؟</b> أحد اختبارات «ت» لمقارنة متوسط عينة واحدة بقيمة مرجعية/معيارية محددة مسبقاً (Test Value)، لمعرفة هل يختلف متوسط العينة إحصائياً عنها.</p>
+      <p><b>متى نستخدمه؟</b> عند عدم وجود مجموعة مقارنة أخرى، لمقارنة متوسط العينة بقيمة نظرية/معيارية؛ مثل التأكد هل متوسط درجات صف معيّن يختلف عن درجة النجاح (50).</p>
+      <p><b>الشروط؟</b> بيانات كمية (فترية/نسبية)، توزيع قريب من الطبيعي، واستقلالية الملاحظات.</p>
+      <p><b>ما القيمة المرجعية (Test Value) وكيف تُحدَّد؟</b> القيمة التي نقارن بها متوسط العينة، تُحدَّد بالتوقع النظري أو المقياس المستخدم؛ ففي مقياس 1–5 تكون القيمة المتوسطة النظرية = 3.</p>
+      <p><b>القرار الإحصائي؟</b> Sig < 0.05 ← نرفض الفرض الصفري ونستنتج فرقاً دالاً عن القيمة المفترضة؛ وإذا ≥ 0.05 فلا فرق دال.</p>
+    `
+  },
+  {
+    tag:"ب · أسئلة وأجوبة",
+    title:"اختبار «ت» للعينات المستقلة — Independent Samples T-Test",
+    body:`
+      <p><b>الغرض؟</b> مقارنة متوسطي مجموعتين منفصلتين مستقلتين تماماً، لمعرفة هل يوجد فرق دال في متغير تابع.</p>
+      <p><b>مثال تطبيقي؟</b> مقارنة درجات الذكور بالإناث، أو مجموعة تعلّمت بالطريقة التقليدية بأخرى إلكترونية.</p>
+      <p><b>الخطوات في SPSS؟</b> <span class="path">Analyze → Compare Means → Independent-Samples T Test</span> ← المتغير الكمي في Test Variable والتصنيفي في Grouping Variable مع تعريف المجموعتين.</p>
+      <p><b>ما اختبار ليفين وأهميته؟</b> يتحقق من تجانس التباين قبل قراءة «ت»؛ إذا كانت Sig لليفين > 0.05 فالتباينات متساوية ونقرأ السطر الأول من جدول المخرجات.</p>
+      <p><b>تفسير النتيجة النهائية؟</b> ننظر إلى Sig (2-tailed)؛ < 0.05 ← فروق دالة بين المتوسطين، ثم نقارن المتوسطات لتحديد لصالح أي مجموعة تميل الفروق.</p>
+      <p><b>أهمية حجم الأثر؟</b> يُقاس غالباً بمربع إيتا (η²)، ويبيّن القوة العملية ونسبة التباين المفسَّر؛ فقد تكون النتيجة دالة إحصائياً وتأثيرها الواقعي ضعيف.</p>
+    `
+  },
+  {
+    tag:"ج · أسئلة وأجوبة",
+    title:"تحليل التباين الأحادي — One-Way ANOVA",
+    body:`
+      <p><b>المفهوم ومتى يُستخدم؟</b> اختبار لمقارنة متوسطات ثلاث مجموعات أو أكثر لمتغير مستقل واحد؛ مثل: هل تختلف درجات التحصيل بين طلاب ثلاث مدارس؟</p>
+      <p><b>الشروط؟</b> توزيع طبيعي، تجانس التباين (Levene)، استقلالية العينات، ومتغير تابع كمي.</p>
+      <p><b>القرار الإحصائي؟</b> Sig < 0.05 ← نرفض الفرض الصفري ونقبل البديل (فروق دالة)؛ وإذا > 0.05 فلا فروق دالة.</p>
+    `
+  },
+  {
+    tag:"د · أسئلة وأجوبة",
+    title:"المقارنات البعدية — Post Hoc Tests",
+    body:`
+      <p><b>لماذا نحتاجها بعد ANOVA؟</b> لأن ANOVA تثبت وجود فروق عامة فقط دون تحديد أي المجموعات تختلف؛ فالبعدية تحدد مكان الفروق بين كل زوج.</p>
+      <p><b>Tukey أم Scheffé؟</b> Tukey عند تساوي أحجام العينات، وScheffé عند عدم تساويها (أكثر تحفظاً).</p>
+    `
+  },
+  {
+    tag:"هـ · أسئلة وأجوبة",
+    title:"تحليل التباين المصاحب — ANCOVA",
+    body:`
+      <p><b>ما المقصود وكيف يختلف عن ANOVA؟</b> يجمع التباين والانحدار لمقارنة متوسطات المجموعات بعد ضبط أثر متغير مصاحب (Covariate) دخيل؛ بهدف عزل تأثيره (كالاختبار القبلي) للحصول على تقدير أدق لأثر المستقل.</p>
+      <p><b>مثال يبرره؟</b> مقارنة مجموعتين (تجريبية وضابطة) في الاختبار البعدي مع ضبط أثر القبلي، لضمان أن الفروق تعزى للبرنامج لا للفروق السابقة.</p>
+      <p><b>الشرط الإضافي؟</b> إضافة لشروط ANOVA: علاقة خطية بين المصاحب والتابع، واستقلالية المصاحب عن المعالجة التجريبية.</p>
+    `
+  },
+  {
+    tag:"و · أسئلة وأجوبة",
+    title:"تحليل التباين الثنائي — Two-Way ANOVA",
+    body:`
+      <p><b>متى يُلجأ إليه؟</b> عند دراسة أثر متغيرين مستقلين في وقت واحد على متغير تابع؛ مثل أثر «طريقة التدريس» و«الجنس» معاً على «التحصيل»، مع فحص أثر التفاعل بينهما.</p>
+    `
+  },
+  {
+    tag:"ز · أسئلة وأجوبة",
+    title:"حجم الأثر — Effect Size",
+    body:`
+      <p><b>كيف تُقاس القوة العملية للفروق؟</b> بمربع إيتا (η²)، ويوضح نسبة التباين في التابع التي يفسرها المستقل؛ فالدلالة (Sig) تخبر بوجود الفرق، أما η² فيخبر بمدى قوته وأهميته الواقعية.</p>
     `
   }
 ];
 
-// ════════ DATA: QUIZ (10) ════════
+// ════════ DATA: QUIZ (12) ════════
 const QUIZ = [
   {q:"ما الفرق بين اختبار T للمجموعات المستقلة وتحليل ANOVA؟", a:"T للمقارنة بين مجموعتين فقط (ذكور/إناث)، بينما ANOVA للمقارنة بين 3 مجموعات فأكثر كـ 3 شُعب دراسية في TMA2."},
   {q:"في TMA1، اختبار T أعطى Sig = 0.426 — ماذا يعني؟", a:"Sig > 0.05 ← لا توجد فروق دالة إحصائياً بين الذكور والإناث في استخدام المنصة ← نقبل الفرض الصفري."},
@@ -800,10 +1001,21 @@ const QUIZ = [
   {q:"متى تستخدم Shapiro-Wilk ومتى K-S؟", a:"Shapiro-Wilk للعينات الصغيرة (n < 50) لأنه أدق — K-S للعينات الكبيرة (n ≥ 50)."},
   {q:"كيف تستخرج الرسوم البيانية من SPSS (مطلب TMA1)؟", a:"Analyze → Descriptive Statistics → Frequencies → Charts → Bar charts → Continue → OK."},
   {q:"ما الفرق بين معامل B و Beta في الانحدار؟", a:"B هو معامل الانحدار غير المعياري لبناء معادلة التنبؤ (Y = ثابت + B × X) — Beta المعياري لمقارنة قوة عدة متغيرات."},
-  {q:"ما شروط تطبيق ANOVA للشُعب الثلاث في TMA2؟", a:"(1) توزيع طبيعي في كل مجموعة (2) تجانس التباين Levene Sig > 0.05 (3) استقلالية الملاحظات بين الشُعب."}
+  {q:"ما شروط تطبيق ANOVA للشُعب الثلاث في TMA2؟", a:"(1) توزيع طبيعي في كل مجموعة (2) تجانس التباين Levene Sig > 0.05 (3) استقلالية الملاحظات بين الشُعب."},
+  {q:"متى نستخدم التباين الثنائي بدلاً من الأحادي؟", a:"عند وجود متغيرين مستقلين معاً يؤثران على متغير تابع، ولفحص التفاعل بينهما إضافة إلى الأثر الرئيس لكل عامل."},
+  {q:"ما الفرق بين ANOVA و ANCOVA؟", a:"ANCOVA يضبط أثر متغير مصاحب (كالاختبار القبلي) ويقارن المتوسطات المعدّلة لعزل أثر الفروق الدخيلة عن أثر المستقل."}
 ];
 
-const TC = {"وصفي":"#3b82f6","ثبات":"#6366f1","افتراض":"#f59e0b","معلمي":"#0ea5e9","غير معلمي":"#f59e0b","تنبؤي":"#ef4444"};
+const TC = {
+  "وصفي":"#3b82f6",
+  "ثبات":"#6366f1",
+  "افتراض":"#f59e0b",
+  "معلمي":"#0ea5e9",
+  "غير معلمي":"#f59e0b",
+  "بعدي":"#10b981",
+  "تنبؤي":"#ef4444",
+  "مصاحب":"#8b5cf6"
+};
 const TK = {tma1:{color:"#0ea5e9",label:"TMA1"},tma2:{color:"#10b981",label:"TMA2"}};
 
 // ════════ TAB MANAGEMENT ════════
@@ -845,12 +1057,13 @@ function renderCards(filter){
   TESTS.filter(t => filter === 'الكل' || t.type === filter).forEach(t => {
     const c = TC[t.type] || '#6366f1';
     const th = t.tma.map(k => `<span style="background:${TK[k].color}22;color:${TK[k].color};border:1px solid ${TK[k].color}44;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700">${TK[k].label}</span>`).join(' ');
+    const enrich = t.enrichment ? `<span style="background:${ENRICH_COLOR}22;color:${ENRICH_COLOR};border:1px solid ${ENRICH_COLOR}44;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700">إثرائي</span>` : '';
     cont.innerHTML += `<div class="qcard" style="border-right:4px solid ${c}">
       <div class="qcard-name">${t.name}</div>
       <div class="qcard-en">${t.en}</div>
       <div class="q-metas">
         <span class="q-type" style="background:${c}22;color:${c};border-color:${c}44">${t.type}</span>
-        ${th}
+        ${th} ${enrich}
       </div>
       <div class="q-grid">
         <div class="q-cell"><div class="q-cell-lbl">متى تستخدمه</div><div class="q-cell-val">${t.when}</div></div>
@@ -865,23 +1078,26 @@ function renderCards(filter){
 // ════════ TIMELINE ════════
 function buildTimeline(){
   const cont = document.getElementById('timeline-content');
-  TIMELINE.forEach(phase => {
-    const cards = phase.tools.map(tool => `
+  PHASES.forEach(phase => {
+    const tools = TESTS.filter(t => t.phase === phase.num).sort((a,b) => a.order - b.order);
+    const cards = tools.map(tool => `
       <div class="tl-card">
         <div class="tl-head">
-          <div class="tl-names">
-            <span class="tl-ar">${tool.ar}</span>
-            <span class="tl-en">${tool.en}</span>
+          <div class="tl-head-l">
+            <div class="tl-order">${tool.order}</div>
+            <div class="tl-names">
+              <span class="tl-ar">${tool.name}</span>
+              <span class="tl-en">${tool.en}</span>
+            </div>
           </div>
           <span class="tl-arrow">▾</span>
         </div>
         <div class="tl-body"><div class="tl-body-inner">
-          <div class="tl-desc">${tool.desc}</div>
-          <div class="tl-note"><b>تُستخدم لـ ·</b> ${tool.use}</div>
+          <div class="tl-desc">${tool.tlDesc}</div>
         </div></div>
       </div>`).join('');
     cont.insertAdjacentHTML('beforeend', `
-      <div class="phase" style="--pc:${phase.color}">
+      <div class="phase" style="--ps:${phase.color}">
         <div class="phase-head">
           <div class="phase-num">${phase.num}</div>
           <div>
@@ -892,7 +1108,6 @@ function buildTimeline(){
         <div class="tl-cards">${cards}</div>
       </div>`);
   });
-  // wire up expandables
   document.querySelectorAll('#timeline-content .tl-card').forEach(card => {
     card.querySelector('.tl-head').addEventListener('click', () => {
       const body = card.querySelector('.tl-body');
@@ -906,51 +1121,91 @@ function buildTimeline(){
 function buildGuide(){
   const nav = document.getElementById('anav');
   const cont = document.getElementById('aguide-content');
-  TESTS.forEach((t, i) => {
-    const c = TC[t.type] || '#6366f1';
-    const td = t.tma.length
-      ? t.tma.map(k => `<span class="tma-dot" style="background:${TK[k].color}"></span>${TK[k].label}`).join(' ')
-      : `<span class="tma-dot" style="background:var(--text-faint)"></span>`;
+  let firstId = null;
 
-    const btn = document.createElement('button');
-    btn.className = 'anav-btn' + (i === 0 ? ' active' : '');
-    btn.innerHTML = `${td} ${t.name}`;
-    btn.onclick = () => {
-      document.querySelectorAll('.anav-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.apanel').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('ap_' + t.id).classList.add('active');
-      btn.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
-    };
-    nav.appendChild(btn);
+  PHASES.forEach(phase => {
+    const section = document.createElement('span');
+    section.className = 'anav-section';
+    section.style.setProperty('--ps', phase.color);
+    section.textContent = phase.label;
+    nav.appendChild(section);
 
-    const panel = document.createElement('div');
-    panel.className = 'apanel' + (i === 0 ? ' active' : '');
-    panel.id = 'ap_' + t.id;
-
-    const sh = t.steps.map((s, j) => `<div class="step"><div class="sn">${j+1}</div><div class="st">${s.t}</div></div>`).join('');
-    const oh = t.opts.map(o => `<div class="opt"><div class="opt-n">${o.n}</div><div class="opt-d">${o.d}</div></div>`).join('');
-    const rh = t.read.map(r => `<tr><td>${r.c}</td><td>${r.m}</td><td>${r.q}</td></tr>`).join('');
-    const fh = t.fmls.map(f => `<div class="fml"><div class="fml-lbl">${f.lbl}</div><div class="fml-txt">${f.txt}</div></div>`).join('');
-    const ah = (t.alerts || []).map(a => `<div class="alert al-${a.type}">${a.txt}</div>`).join('');
-    const th2 = t.tma.map(k => `<span class="tma-badge" style="background:${TK[k].color}22;color:${TK[k].color};border-color:${TK[k].color}44">${TK[k].label}</span>`).join(' ');
-
-    panel.innerHTML = `<div class="card">
-      <div class="card-hdr">
-        <div class="card-ico" style="background:linear-gradient(135deg,${c},${c}99)">${t.id.slice(0,2).toUpperCase()}</div>
-        <div>
-          <div class="card-title">${t.name}</div>
-          <div class="card-sub">${t.en}</div>
-          <div style="display:flex;gap:6px;margin-top:6px">${th2}</div>
-        </div>
-      </div>
-      <div class="sec"><div class="sec-lbl">خطوات SPSS</div><div class="steps">${sh}</div></div>
-      <div class="sec"><div class="sec-lbl">أهم الخيارات المُفعَّلة</div><div class="opts">${oh}</div></div>
-      <div class="sec"><div class="sec-lbl">كيف تقرأ النتائج</div><div class="tbl-wrap"><table class="tbl"><tr><th>العمود / القيمة</th><th>المعنى</th><th>ما تبحث عنه</th></tr>${rh}</table></div>${ah}</div>
-      <div class="sec"><div class="sec-lbl">الصياغة الأكاديمية</div>${fh}</div>
-    </div>`;
-    cont.appendChild(panel);
+    const phaseTests = TESTS.filter(t => t.phase === phase.num).sort((a,b) => a.order - b.order);
+    phaseTests.forEach(t => {
+      if (!firstId) firstId = t.id;
+      addNavBtn(nav, t, phase.color, false);
+      addGuidePanel(cont, t, phase, false);
+    });
   });
+
+  // Enrichment (ANCOVA)
+  const enriched = TESTS.filter(t => t.enrichment);
+  if (enriched.length){
+    const eSection = document.createElement('span');
+    eSection.className = 'anav-section';
+    eSection.style.setProperty('--ps', ENRICH_COLOR);
+    eSection.textContent = 'إثرائي';
+    nav.appendChild(eSection);
+    enriched.forEach(t => addNavBtn(nav, t, ENRICH_COLOR, true));
+    enriched.forEach(t => addGuidePanel(cont, t, {color:ENRICH_COLOR, label:'إثرائي'}, true));
+  }
+
+  // Activate first
+  const firstBtn = nav.querySelector('.anav-btn');
+  const firstPanel = document.getElementById('ap_' + firstId);
+  if (firstBtn) firstBtn.classList.add('active');
+  if (firstPanel) firstPanel.classList.add('active');
+}
+
+function addNavBtn(nav, t, color, isEnrichment){
+  const btn = document.createElement('button');
+  btn.className = 'anav-btn';
+  btn.style.setProperty('--ps', color);
+  const numLabel = isEnrichment ? '+' : t.order;
+  btn.innerHTML = `<span class="anav-num">${numLabel}</span><span>${t.name}</span>`;
+  btn.onclick = () => {
+    document.querySelectorAll('.anav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.apanel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('ap_' + t.id).classList.add('active');
+    btn.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+  };
+  nav.appendChild(btn);
+}
+
+function addGuidePanel(cont, t, phase, isEnrichment){
+  const c = TC[t.type] || '#6366f1';
+  const panel = document.createElement('div');
+  panel.className = 'apanel';
+  panel.id = 'ap_' + t.id;
+
+  const sh = t.steps.map((s, j) => `<div class="step"><div class="sn">${j+1}</div><div class="st">${s.t}</div></div>`).join('');
+  const oh = t.opts.map(o => `<div class="opt"><div class="opt-n">${o.n}</div><div class="opt-d">${o.d}</div></div>`).join('');
+  const rh = t.read.map(r => `<tr><td>${r.c}</td><td>${r.m}</td><td>${r.q}</td></tr>`).join('');
+  const fh = t.fmls.map(f => `<div class="fml"><div class="fml-lbl">${f.lbl}</div><div class="fml-txt">${f.txt}</div></div>`).join('');
+  const ah = (t.alerts || []).map(a => `<div class="alert al-${a.type}">${a.txt}</div>`).join('');
+  const th2 = t.tma.map(k => `<span class="tma-badge" style="background:${TK[k].color}22;color:${TK[k].color};border-color:${TK[k].color}44">${TK[k].label}</span>`).join(' ');
+  const phaseTag = isEnrichment
+    ? `<span class="card-phase-tag" style="background:${ENRICH_COLOR}">+ إثرائي</span>`
+    : `<span class="card-phase-tag" style="background:${phase.color}">${t.order} · ${phase.label}</span>`;
+  const idBadge = isEnrichment ? '+' : t.order;
+
+  panel.innerHTML = `<div class="card">
+    <div class="card-hdr">
+      <div class="card-ico" style="background:linear-gradient(135deg,${c},${c}99)">${idBadge}</div>
+      <div style="flex:1;min-width:0">
+        <div class="card-title">${t.name}</div>
+        <div class="card-sub">${t.en}</div>
+        <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">${th2}</div>
+      </div>
+      ${phaseTag}
+    </div>
+    <div class="sec"><div class="sec-lbl">خطوات SPSS</div><div class="steps">${sh}</div></div>
+    <div class="sec"><div class="sec-lbl">أهم الخيارات المُفعَّلة</div><div class="opts">${oh}</div></div>
+    <div class="sec"><div class="sec-lbl">كيف تقرأ النتائج</div><div class="tbl-wrap"><table class="tbl"><tr><th>العمود / القيمة</th><th>المعنى</th><th>ما تبحث عنه</th></tr>${rh}</table></div>${ah}</div>
+    <div class="sec"><div class="sec-lbl">الصياغة الأكاديمية</div>${fh}</div>
+  </div>`;
+  cont.appendChild(panel);
 }
 
 // ════════ CONCEPTS ════════
@@ -974,7 +1229,10 @@ function buildExplain(){
       <div class="exp-head">
         <div class="exp-head-l">
           <div class="exp-num">${i+1}</div>
-          <div class="exp-title">${e.title}</div>
+          <div>
+            <div class="exp-title">${e.title}</div>
+            <div class="exp-tag">${e.tag || 'شرح'}</div>
+          </div>
         </div>
         <span class="exp-arrow">▾</span>
       </div>
