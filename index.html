@@ -1,674 +1,1024 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="light">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<meta name="description" content="الملخص التفاعلي لمقرر ED641 — تطبيقات الكمبيوتر في التحليل الإحصائي · الجامعة العربية المفتوحة، فرع سلطنة عُمان"/>
-<title>الملخص التفاعلي · ED641 — تطبيقات الكمبيوتر في التحليل الإحصائي</title>
+<meta name="description" content="الدليل التفاعلي الشامل لمقرر ED641 — تطبيقات الكمبيوتر في التحليل الإحصائي · الجامعة العربية المفتوحة"/>
+<title>الدليل الشامل · ED641 — التحليلات الإحصائية + SPSS</title>
 <link rel="icon" href="aou-logo.png"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@700&family=Tajawal:wght@300;400;500;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-/* ════════ DESIGN TOKENS ════════ */
-:root{
-  --navy-900:#081428; --navy-800:#0d2240; --navy-700:#13345e; --navy-600:#1c4a82;
-  --gold:#e0b252;      --gold-deep:#c79234; --gold-soft:#f3dca6;
-  --cream:#faf6ec;     --bg:#f4eee0;        --card:#ffffff;
-  --ink:#16202f;       --ink-soft:#46566c;  --line:#e7dfcd;
-  --p1:#1c4a82; --p2:#c79234; --p3:#2e7d6b;
-  --r:18px; --maxw:1080px;
-  --shadow:0 8px 30px rgba(13,34,64,.08),0 2px 8px rgba(13,34,64,.05);
-  --code-bg:rgba(28,74,130,.08); --code-fg:#13345e;
+/* ════════ CSS VARIABLES (THEMES) ════════ */
+:root[data-theme="dark"] {
+  --bg-main:#080d1a;
+  --bg-header:linear-gradient(135deg,#0a1538,#1a1a6e,#0f1c45);
+  --bg-tabs:#0d1224;
+  --bg-anav:#0b1120;
+  --bg-card:rgba(255,255,255,.025);
+  --bg-card-hover:rgba(255,255,255,.04);
+  --bg-cell:rgba(0,0,0,.2);
+  --bg-section-alt:rgba(255,255,255,.015);
+  --border-soft:rgba(255,255,255,.07);
+  --border-divider:rgba(255,255,255,.04);
+  --text-primary:#e2e8f0;
+  --text-strong:#f1f5f9;
+  --text-soft:#cbd5e1;
+  --text-muted:#94a3b8;
+  --text-dim:#475569;
+  --text-faint:#1e293b;
+  --accent:#6366f1;
+  --accent-light:#818cf8;
+  --accent-pale:#a5b4fc;
+  --accent-bg:rgba(99,102,241,.13);
+  --code-bg:rgba(99,102,241,.15);
+  --shadow-card:0 4px 20px rgba(0,0,0,.3);
 }
-:root[data-theme="dark"]{
-  --bg:#070f1d; --card:#0e1c33; --ink:#eaf0f8; --ink-soft:#9fb1c9; --line:#1d3151;
-  --cream:#0c1830;
-  --shadow:0 10px 34px rgba(0,0,0,.45);
-  --code-bg:rgba(224,178,82,.12); --code-fg:#f3dca6;
+:root[data-theme="light"] {
+  --bg-main:#f8fafc;
+  --bg-header:linear-gradient(135deg,#0a2540,#0f3a6b,#0a2540);
+  --bg-tabs:#ffffff;
+  --bg-anav:#f1f5f9;
+  --bg-card:#ffffff;
+  --bg-card-hover:#f8fafc;
+  --bg-cell:#f1f5f9;
+  --bg-section-alt:#f8fafc;
+  --border-soft:#e2e8f0;
+  --border-divider:#f1f5f9;
+  --text-primary:#1e293b;
+  --text-strong:#0f172a;
+  --text-soft:#334155;
+  --text-muted:#475569;
+  --text-dim:#64748b;
+  --text-faint:#94a3b8;
+  --accent:#0a2540;
+  --accent-light:#1e40af;
+  --accent-pale:#3b82f6;
+  --accent-bg:rgba(10,37,64,.08);
+  --code-bg:rgba(10,37,64,.08);
+  --shadow-card:0 2px 10px rgba(0,0,0,.06);
 }
 
 /* ════════ BASE ════════ */
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;min-height:100vh;-webkit-font-smoothing:antialiased;transition:background .3s ease,color .3s ease}
-h1,h2,.display{font-family:'El Messiri',serif}
-a{color:inherit}
-::-webkit-scrollbar{width:9px;height:9px}
-::-webkit-scrollbar-thumb{background:var(--gold-deep);border-radius:6px}
+body{font-family:'Noto Sans Arabic',sans-serif;direction:rtl;background:var(--bg-main);color:var(--text-primary);min-height:100vh;transition:background .25s ease,color .25s ease;line-height:1.7}
+::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:3px;opacity:.5}
 
-/* bilingual isolation */
-.en{font-family:'JetBrains Mono',monospace;direction:ltr;unicode-bidi:isolate;font-weight:500;font-size:.9em;letter-spacing:-.2px}
-code,.code{font-family:'JetBrains Mono',monospace;direction:ltr;unicode-bidi:isolate;background:var(--code-bg);color:var(--code-fg);padding:1px 6px;border-radius:5px;font-size:.84em;font-weight:500}
-.path{font-family:'JetBrains Mono',monospace;direction:ltr;unicode-bidi:isolate;display:inline-block;background:var(--navy-900);color:var(--gold-soft);padding:8px 14px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:inset 0 0 0 1px rgba(224,178,82,.25);max-width:100%;overflow-x:auto}
-
-/* ════════ HERO ════════ */
-.hero{background:linear-gradient(135deg,var(--navy-900),var(--navy-700) 55%,var(--navy-800));color:#fff;position:relative;overflow:hidden;border-bottom:3px solid var(--gold-deep)}
-.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(224,178,82,.16) 1.2px,transparent 1.2px);background-size:24px 24px;opacity:.45;pointer-events:none}
-.hero::after{content:'';position:absolute;top:-40%;left:-10%;width:55%;height:170%;background:radial-gradient(ellipse,rgba(224,178,82,.16),transparent 70%);pointer-events:none}
-.hero-inner{max-width:var(--maxw);margin:0 auto;padding:18px 20px 32px;position:relative}
-.hero-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.brand{display:flex;align-items:center;gap:12px}
-.logo-box{background:#fff;border-radius:12px;padding:8px 12px;display:flex;align-items:center;box-shadow:0 4px 14px rgba(0,0,0,.22)}
-.logo-box img{height:44px;width:auto;display:block}
-.logo-txt{font-family:'El Messiri',serif;font-weight:700;color:var(--navy-800);font-size:22px;letter-spacing:1px}
-.brand-text .uni{font-family:'El Messiri',serif;font-size:15px;font-weight:700;color:#fff;line-height:1.3}
-.brand-text .branch{font-size:12px;color:var(--gold-soft);margin-top:1px}
-.theme-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:#fff;width:44px;height:44px;border-radius:12px;cursor:pointer;font-size:19px;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0;font-family:inherit}
-.theme-btn:hover{background:rgba(255,255,255,.18);transform:translateY(-1px)}
-.hero-body{text-align:center;margin-top:28px}
-.kicker{font-size:13px;letter-spacing:3px;color:var(--gold-soft);font-weight:700;margin-bottom:10px}
-.hero h1{font-size:clamp(24px,5vw,40px);font-weight:700;line-height:1.25;color:#fff}
-.hero-desc{max-width:680px;margin:14px auto 0;color:rgba(255,255,255,.82);font-size:15px;line-height:1.95}
-.instructor{display:inline-flex;align-items:center;gap:10px;margin-top:18px;background:rgba(255,255,255,.07);border:1px solid rgba(224,178,82,.3);padding:7px 16px;border-radius:999px}
-.ins-lbl{font-size:12px;color:rgba(255,255,255,.6)}
-.ins-name{font-size:14px;font-weight:700;color:var(--gold-soft)}
-.badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:20px}
-.badge{padding:6px 14px;border-radius:999px;font-size:12.5px;font-weight:700;border:1px solid;background:rgba(255,255,255,.05)}
-.badge.b1{color:#9cc2ee;border-color:rgba(120,170,230,.5)}
-.badge.b2{color:var(--gold-soft);border-color:rgba(199,146,52,.65)}
-.badge.b3{color:#86d6c4;border-color:rgba(46,125,107,.65)}
+/* ════════ HEADER ════════ */
+.hdr{background:var(--bg-header);padding:24px 18px;text-align:center;border-bottom:1px solid var(--border-soft);position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 0%,rgba(99,102,241,.22),transparent 60%),radial-gradient(ellipse at 70% 100%,rgba(14,165,233,.13),transparent 60%);pointer-events:none}
+.hdr-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;position:relative}
+.logo-box{background:rgba(255,255,255,.95);padding:8px 14px;border-radius:10px;display:flex;align-items:center}
+.logo-box img{height:42px;width:auto;display:block}
+.logo-fallback{font-weight:800;color:#0a2540;font-size:18px;letter-spacing:1px}
+.theme-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;width:42px;height:42px;border-radius:10px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit}
+.theme-btn:hover{background:rgba(255,255,255,.18);transform:scale(1.05)}
+.hdr-badge{font-size:11px;letter-spacing:3px;color:rgba(255,255,255,.55);margin-bottom:8px;position:relative}
+.hdr h1{font-size:clamp(18px,4vw,25px);font-weight:800;color:#fff;position:relative;line-height:1.3}
+.hdr-sub{margin-top:6px;color:rgba(255,255,255,.6);font-size:12px;position:relative}
+.instructor{margin-top:12px;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:6px 14px;border-radius:999px;font-size:12px;color:rgba(255,255,255,.85);position:relative}
+.instructor-label{color:rgba(255,255,255,.55);font-size:11px}
+.instructor-name{font-weight:700}
+.tma-badges{display:flex;gap:6px;justify-content:center;margin-top:12px;position:relative;flex-wrap:wrap}
+.tma-badge{padding:4px 11px;border-radius:999px;font-size:10.5px;font-weight:700;border:1px solid}
 
 /* ════════ TABS ════════ */
-.tabs{position:sticky;top:0;z-index:30;display:flex;gap:2px;background:var(--card);border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none;box-shadow:0 2px 12px rgba(13,34,64,.06)}
-.tabs::-webkit-scrollbar{display:none}
-.tab{flex:1 0 auto;padding:15px 18px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;color:var(--ink-soft);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:.2s;white-space:nowrap}
-.tab:hover{color:var(--navy-600)}
-.tab.active{color:var(--navy-600);border-bottom-color:var(--gold-deep)}
-:root[data-theme="dark"] .tab:hover,:root[data-theme="dark"] .tab.active{color:var(--gold-soft)}
+.main-tabs{display:flex;background:var(--bg-tabs);border-bottom:1px solid var(--border-soft);overflow-x:auto;scrollbar-width:none;position:sticky;top:0;z-index:20}
+.main-tabs::-webkit-scrollbar{display:none}
+.mtab{flex:1;min-width:110px;padding:13px 8px;text-align:center;font-family:inherit;font-size:12.5px;font-weight:700;color:var(--text-dim);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;white-space:nowrap}
+.mtab.active{color:var(--accent-pale);border-bottom-color:var(--accent);background:var(--accent-bg)}
+.mtab:hover:not(.active){color:var(--text-muted)}
+.anav{display:flex;overflow-x:auto;gap:0;background:var(--bg-anav);border-bottom:1px solid var(--border-divider);padding:0 6px;scrollbar-width:none;position:sticky;top:46px;z-index:15}
+.anav::-webkit-scrollbar{display:none}
+.anav-btn{white-space:nowrap;padding:10px 12px;font-family:inherit;font-size:11.5px;font-weight:600;color:var(--text-dim);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;flex-shrink:0}
+.anav-btn.active{color:var(--accent-pale);border-bottom-color:var(--accent)}
+.tma-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:4px;vertical-align:middle}
 
 /* ════════ LAYOUT ════════ */
-.panel{display:none}
-.panel.active{display:block}
-.content{max-width:var(--maxw);margin:0 auto;padding:30px 20px 80px;display:flex;flex-direction:column;gap:16px}
-.section-intro{font-size:15px;color:var(--ink-soft);line-height:2;background:var(--card);border:1px solid var(--line);border-right:4px solid var(--gold-deep);border-radius:14px;padding:16px 20px;box-shadow:var(--shadow)}
-.section-intro b{color:var(--ink)}
+.content{max-width:880px;margin:0 auto;padding:18px 14px 70px}
+.panel{display:none}.panel.active{display:block}
+.apanel{display:none}.apanel.active{display:block}
+.lead{font-size:13.5px;color:var(--text-soft);line-height:2;background:var(--bg-card);border:1px solid var(--border-soft);border-right:4px solid var(--accent);border-radius:11px;padding:13px 16px;margin-bottom:16px;box-shadow:var(--shadow-card)}
+.lead b{color:var(--text-strong)}
 
-/* ════════ ENTRANCE ANIMATION ════════ */
-@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-.stagger.run>*{opacity:0;animation:rise .55s cubic-bezier(.2,.7,.3,1) forwards}
-.stagger.run>*:nth-child(1){animation-delay:.04s}
-.stagger.run>*:nth-child(2){animation-delay:.09s}
-.stagger.run>*:nth-child(3){animation-delay:.14s}
-.stagger.run>*:nth-child(4){animation-delay:.19s}
-.stagger.run>*:nth-child(5){animation-delay:.24s}
-.stagger.run>*:nth-child(6){animation-delay:.29s}
-.stagger.run>*:nth-child(7){animation-delay:.34s}
-.stagger.run>*:nth-child(8){animation-delay:.39s}
-.stagger.run>*:nth-child(9){animation-delay:.44s}
-.stagger.run>*:nth-child(10){animation-delay:.49s}
-.stagger.run>*:nth-child(11){animation-delay:.54s}
-.stagger.run>*:nth-child(12){animation-delay:.59s}
+/* ════════ CARDS ════════ */
+.card{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:14px;margin-bottom:18px;overflow:hidden;box-shadow:var(--shadow-card)}
+.card-hdr{padding:16px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border-divider);flex-wrap:wrap}
+.card-ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:.5px}
+.card-title{font-size:16px;font-weight:700;color:var(--text-strong)}
+.card-sub{font-size:11px;color:var(--text-dim);margin-top:2px}
+.sec{padding:15px 18px;border-bottom:1px solid var(--border-divider)}
+.sec:last-child{border-bottom:none}
+.sec-lbl{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--border-soft)}
 
-/* ════════ TIMELINE / PHASES ════════ */
-.phase{display:flex;flex-direction:column;gap:12px}
-.phase-head{display:flex;align-items:center;gap:14px}
-.phase-num{width:44px;height:44px;border-radius:13px;background:var(--pc);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'El Messiri',serif;font-size:21px;font-weight:700;flex-shrink:0;box-shadow:0 6px 16px rgba(13,34,64,.2)}
-.phase-title{font-family:'El Messiri',serif;font-size:18px;font-weight:700;color:var(--ink);line-height:1.35}
-.phase-weeks{font-size:12.5px;color:var(--pc);font-weight:700;margin-top:2px}
-.tl-cards{display:flex;flex-direction:column;gap:10px}
-.tl-card{background:var(--card);border:1px solid var(--line);border-right:4px solid var(--pc);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
-.tl-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 18px;cursor:pointer;user-select:none}
-.tl-names{display:flex;flex-direction:column;gap:3px}
-.tl-ar{font-size:16px;font-weight:700;color:var(--ink)}
-.tl-en{color:var(--ink-soft)}
-.tl-arrow{color:var(--pc);font-size:15px;transition:transform .3s;flex-shrink:0}
+/* ════════ STEPS ════════ */
+.steps{display:flex;flex-direction:column;gap:8px}
+.step{display:flex;gap:10px;align-items:flex-start}
+.sn{min-width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#0ea5e9);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-top:2px}
+.st{font-size:13px;color:var(--text-soft);line-height:1.7}
+.st strong{color:var(--text-strong)}
+.path{font-family:'Courier New',monospace;background:var(--code-bg);color:var(--accent-pale);padding:2px 7px;border-radius:4px;font-size:12px;direction:ltr;display:inline-block}
+.tick{color:#10b981;font-weight:700}
+
+/* ════════ OPTIONS ════════ */
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:8px}
+.opt{background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.22);border-radius:8px;padding:9px 11px}
+.opt-n{font-size:12px;font-weight:700;color:#10b981;margin-bottom:2px}
+.opt-d{font-size:11px;color:var(--text-dim);line-height:1.5}
+:root[data-theme="light"] .opt{background:#ecfdf5}
+:root[data-theme="light"] .opt-n{color:#047857}
+:root[data-theme="light"] .opt-d{color:#475569}
+
+/* ════════ TABLES ════════ */
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{background:var(--accent-bg);color:var(--accent-pale);font-weight:700;padding:9px 11px;text-align:right;border:1px solid var(--border-soft)}
+.tbl td{padding:8px 11px;border:1px solid var(--border-divider);color:var(--text-soft);vertical-align:top;line-height:1.7}
+.tbl tr:nth-child(even) td{background:var(--bg-section-alt)}
+.tbl-wrap{overflow-x:auto;margin:8px 0}
+
+/* ════════ FORMULAS ════════ */
+.fml{background:var(--accent-bg);border:1px solid var(--border-soft);border-right:4px solid var(--accent);border-radius:10px;padding:13px 15px;margin-bottom:10px}
+.fml-lbl{font-size:10px;color:var(--accent-pale);font-weight:700;margin-bottom:7px;letter-spacing:1px}
+.fml-txt{font-size:13px;color:var(--text-primary);line-height:2.1;direction:rtl}
+.v{color:#d97706;font-weight:600}
+:root[data-theme="dark"] .v{color:#fbbf24}
+.s{color:#059669;font-family:monospace;background:rgba(16,185,129,.12);padding:1px 5px;border-radius:3px;direction:ltr;display:inline-block;font-weight:600}
+:root[data-theme="dark"] .s{color:#34d399}
+.d{color:#dc2626;font-weight:700}
+:root[data-theme="dark"] .d{color:#f87171}
+
+/* ════════ ALERTS ════════ */
+.alert{border-radius:8px;padding:10px 13px;font-size:12.5px;line-height:1.7;margin-top:10px;border:1px solid}
+.al-y{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.3);color:#d97706}
+.al-g{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.3);color:#047857}
+.al-b{background:rgba(99,102,241,.08);border-color:rgba(99,102,241,.3);color:var(--accent-light)}
+:root[data-theme="dark"] .al-y{color:#fcd34d}
+:root[data-theme="dark"] .al-g{color:#6ee7b7}
+:root[data-theme="dark"] .al-b{color:#a5b4fc}
+
+/* ════════ QUICK REFERENCE ════════ */
+.q-filter{display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap}
+.qf-btn{padding:5px 13px;border-radius:999px;border:1px solid;cursor:pointer;font-size:12px;font-family:inherit;transition:all .2s;color:var(--text-primary);font-weight:500;background:var(--bg-card)}
+.q-cards{display:grid;gap:12px}
+.qcard{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow-card)}
+.qcard-name{font-size:15px;font-weight:700;color:var(--text-strong)}
+.qcard-en{font-size:11px;color:var(--text-dim);margin-top:2px}
+.q-metas{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;margin-bottom:11px}
+.q-type{padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;border:1px solid}
+.q-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:7px}
+.q-cell{background:var(--bg-cell);border-radius:7px;padding:8px 10px}
+.q-cell-lbl{font-size:10px;color:var(--text-dim);margin-bottom:3px;font-weight:700}
+.q-cell-val{font-size:12px;color:var(--text-soft);line-height:1.55}
+
+/* ════════ TIMELINE ════════ */
+.phase{margin-bottom:24px}
+.phase-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.phase-num{width:42px;height:42px;border-radius:12px;background:var(--pc);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.phase-title{font-size:16px;font-weight:700;color:var(--text-strong);line-height:1.35}
+.phase-weeks{font-size:11.5px;color:var(--pc);font-weight:700;margin-top:2px}
+.tl-cards{display:flex;flex-direction:column;gap:9px}
+.tl-card{background:var(--bg-card);border:1px solid var(--border-soft);border-right:4px solid var(--pc);border-radius:11px;box-shadow:var(--shadow-card);overflow:hidden}
+.tl-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 15px;cursor:pointer;user-select:none}
+.tl-names{display:flex;flex-direction:column;gap:2px}
+.tl-ar{font-size:14.5px;font-weight:700;color:var(--text-strong)}
+.tl-en{font-size:11.5px;color:var(--text-dim);font-family:'Courier New',monospace;direction:ltr}
+.tl-arrow{color:var(--pc);font-size:14px;transition:transform .25s;flex-shrink:0}
 .tl-card.open .tl-arrow{transform:rotate(180deg)}
-.tl-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
-.tl-body-inner{padding:0 18px 16px}
-.tl-desc{font-size:14px;color:var(--ink-soft);line-height:1.95;padding-top:14px;border-top:1px dashed var(--line)}
-.tl-note{margin-top:12px;background:var(--code-bg);border-radius:10px;padding:10px 14px;font-size:13.5px;color:var(--ink);line-height:1.85}
-.tl-note-lbl{display:inline-block;font-weight:700;color:var(--pc);margin-left:6px}
-
-/* ════════ ACCORDION (SPSS + REVIEW) ════════ */
-.accordion{display:flex;flex-direction:column;gap:14px}
-.acc{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
-.acc.open{border-color:var(--gold-deep)}
-.acc-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;background:none;border:none;cursor:pointer;text-align:right;font-family:'Tajawal',sans-serif}
-.acc-head-l{display:flex;align-items:center;gap:12px;min-width:0}
-.acc-badge{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--navy-700),var(--navy-600));color:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;flex-shrink:0}
-.acc-titles{display:flex;flex-direction:column;gap:2px;min-width:0}
-.acc-ar{font-size:15.5px;font-weight:700;color:var(--ink)}
-.acc-en{color:var(--ink-soft)}
-.acc-q{font-size:15px;font-weight:700;color:var(--ink);line-height:1.6}
-.acc.open .acc-q,.acc.open .acc-ar{color:var(--navy-600)}
-:root[data-theme="dark"] .acc.open .acc-q,:root[data-theme="dark"] .acc.open .acc-ar{color:var(--gold-soft)}
-.acc-arrow{color:var(--gold-deep);font-size:15px;transition:transform .3s;flex-shrink:0}
-.acc.open .acc-arrow{transform:rotate(180deg)}
-.acc-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
-.acc-body-inner{padding:0 18px 18px}
-
-/* SPSS internals */
-.spss-path{margin:4px 0 16px}
-.steps{display:flex;flex-direction:column;gap:11px;margin-bottom:16px}
-.step{display:flex;gap:11px;align-items:flex-start}
-.step-n{width:26px;height:26px;border-radius:50%;background:var(--navy-600);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px}
-.step-t{font-size:14px;color:var(--ink-soft);line-height:1.85}
-.read{background:rgba(46,125,107,.08);border:1px solid rgba(46,125,107,.28);border-radius:11px;padding:12px 15px;font-size:14px;color:var(--ink);line-height:1.9}
-.read-lbl{display:block;font-size:11px;font-weight:700;letter-spacing:1.5px;color:#2e7d6b;margin-bottom:6px}
-:root[data-theme="dark"] .read-lbl{color:#74c7b4}
-
-/* review answer */
-.acc-a{font-size:14px;color:var(--ink-soft);line-height:1.95;background:var(--code-bg);border-radius:11px;padding:12px 15px;border-right:3px solid var(--gold-deep)}
-.review-hint{text-align:center;color:var(--ink-soft);font-size:13px}
+.tl-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.tl-body-inner{padding:0 15px 13px}
+.tl-desc{font-size:13px;color:var(--text-soft);line-height:1.9;padding-top:11px;border-top:1px dashed var(--border-soft)}
+.tl-note{margin-top:9px;background:var(--bg-cell);border-radius:7px;padding:8px 11px;font-size:12.5px;color:var(--text-soft);line-height:1.7}
+.tl-note b{color:var(--pc)}
 
 /* ════════ CONCEPTS ════════ */
-.con-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
-.con-card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--gold-deep);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
-.con-head{display:flex;align-items:center;gap:11px;margin-bottom:10px}
-.con-num{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--navy-700),var(--navy-600));color:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-family:'El Messiri',serif;font-weight:700;font-size:16px;flex-shrink:0}
-.con-term{font-size:15.5px;font-weight:700;color:var(--ink);line-height:1.4}
-.con-def{font-size:14px;color:var(--ink-soft);line-height:1.95}
+.con-grid{display:grid;gap:10px}
+.con-item{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:11px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;box-shadow:var(--shadow-card)}
+.con-num{min-width:33px;height:33px;border-radius:9px;background:linear-gradient(135deg,var(--accent),#0ea5e9);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0}
+.con-term{font-weight:700;font-size:14px;color:var(--text-strong);margin-bottom:4px}
+.con-def{color:var(--text-muted);font-size:13px;line-height:1.8}
+.golden{background:var(--accent-bg);border:1px solid var(--border-soft);border-radius:11px;padding:18px;margin-top:14px}
+.golden-title{font-weight:700;font-size:14px;color:var(--accent-pale);margin-bottom:12px}
+.golden-row{font-size:13px;color:var(--text-soft);line-height:2.3}
 
-/* ════════ GOLDEN RULE ════════ */
-.golden{display:flex;flex-direction:column;gap:10px}
-.g-row{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 18px;box-shadow:var(--shadow);flex-wrap:wrap}
-.g-cond{flex:1;min-width:200px;font-size:14.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:11px}
-.g-q{width:30px;height:30px;border-radius:9px;background:var(--code-bg);color:var(--navy-600);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;font-family:'El Messiri',serif}
-:root[data-theme="dark"] .g-q{color:var(--gold-soft)}
-.g-arrow{color:var(--gold-deep);font-size:20px;font-weight:700;line-height:1}
-.g-test{font-size:14px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--navy-700),var(--navy-600));padding:8px 16px;border-radius:999px;box-shadow:0 4px 12px rgba(13,34,64,.16);white-space:nowrap}
+/* ════════ EXPLAIN ════════ */
+.exp-grid{display:flex;flex-direction:column;gap:14px}
+.exp-card{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:14px;box-shadow:var(--shadow-card);overflow:hidden}
+.exp-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 17px;cursor:pointer;user-select:none;background:linear-gradient(90deg,var(--accent-bg),transparent)}
+.exp-head-l{display:flex;align-items:center;gap:11px;min-width:0}
+.exp-num{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--accent),#0ea5e9);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0}
+.exp-title{font-size:14.5px;font-weight:700;color:var(--text-strong);line-height:1.5}
+.exp-arrow{color:var(--accent);font-size:14px;transition:transform .25s;flex-shrink:0}
+.exp-card.open .exp-arrow{transform:rotate(180deg)}
+.exp-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.exp-body-inner{padding:0 17px 16px;font-size:13.5px;color:var(--text-soft);line-height:1.95}
+.exp-body-inner p{margin:10px 0}
+.exp-body-inner b{color:var(--text-strong)}
+.exp-body-inner h4{color:var(--accent-pale);font-size:13.5px;font-weight:700;margin:12px 0 4px}
 
-/* ════════ EXAM TIP ════════ */
-.tip{background:linear-gradient(135deg,rgba(224,178,82,.16),rgba(199,146,52,.07));border:1px solid var(--gold-deep);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
-.tip-title{font-family:'El Messiri',serif;font-size:16px;font-weight:700;color:var(--gold-deep);margin-bottom:8px;display:flex;align-items:center;gap:8px}
-:root[data-theme="dark"] .tip-title{color:var(--gold-soft)}
-.tip-body{font-size:14px;color:var(--ink);line-height:2.05}
+/* ════════ QUIZ ════════ */
+.quiz-cards{display:grid;gap:10px}
+.qz{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:11px;padding:14px 16px;cursor:pointer;transition:all .25s;box-shadow:var(--shadow-card)}
+.qz.open{background:var(--accent-bg);border-color:var(--accent)}
+.qz-q{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.qz-txt{font-size:13.5px;font-weight:600;line-height:1.6;color:var(--text-primary)}
+.qz.open .qz-txt{color:var(--accent-pale)}
+.qz-arr{font-size:16px;transition:transform .25s;flex-shrink:0;color:var(--text-dim)}
+.qz.open .qz-arr{transform:rotate(180deg)}
+.qz-a{margin-top:11px;padding:11px 13px;background:var(--bg-cell);border-radius:7px;border-right:3px solid var(--accent);font-size:13px;color:var(--text-muted);line-height:1.85}
 
 /* ════════ FOOTER ════════ */
-footer{background:linear-gradient(135deg,var(--navy-900),var(--navy-800));color:rgba(255,255,255,.82);border-top:3px solid var(--gold-deep);padding:32px 20px;text-align:center}
-.footer-course{font-family:'El Messiri',serif;font-size:16px;color:#fff;margin-bottom:8px}
-.footer-people{font-size:13.5px;color:var(--gold-soft);margin-bottom:12px}
-footer a{color:#fff;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:13px;direction:ltr;unicode-bidi:isolate;display:inline-block;border-bottom:1px solid var(--gold-deep);padding-bottom:1px;transition:.2s}
-footer a:hover{color:var(--gold-soft)}
+footer{text-align:center;padding:18px;color:var(--text-dim);font-size:11px;border-top:1px solid var(--border-divider)}
+footer a{color:var(--accent-pale);text-decoration:none}
 
 /* ════════ RESPONSIVE ════════ */
-@media (max-width:560px){
-  .hero-inner{padding:14px 14px 28px}
-  .content{padding:22px 14px 60px;gap:14px}
-  .brand-text .uni{font-size:13px}
-  .brand-text .branch{font-size:11px}
+@media (max-width:480px){
+  .logo-box img{height:32px}
   .logo-box{padding:6px 10px}
-  .logo-box img{height:36px}
-  .theme-btn{width:40px;height:40px;font-size:17px}
-  .tab{padding:13px 14px;font-size:13px}
-  .hero-desc{font-size:14px}
-  .phase-num{width:40px;height:40px;font-size:18px}
-  .phase-title{font-size:16.5px}
-  .g-row{gap:8px}
-  .g-test{font-size:13px;padding:7px 13px}
-  .path{font-size:12px;padding:7px 11px}
+  .theme-btn{width:38px;height:38px;font-size:16px}
+  .mtab{min-width:100px;font-size:12px;padding:12px 6px}
+  .content{padding:16px 12px 60px}
 }
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="hero-inner">
-    <div class="hero-top">
-      <div class="brand">
-        <div class="logo-box" id="logoBox">
-          <img src="aou-logo.png" alt="شعار الجامعة العربية المفتوحة" onerror="this.onerror=null;this.parentNode.innerHTML='<span class=&quot;logo-txt&quot;>AOU</span>'"/>
-        </div>
-        <div class="brand-text">
-          <div class="uni">الجامعة العربية المفتوحة</div>
-          <div class="branch">فرع سلطنة عُمان</div>
-        </div>
-      </div>
-      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="تبديل الوضع الليلي/النهاري" title="تبديل الوضع">🌙</button>
+<header class="hdr">
+  <div class="hdr-top">
+    <div class="logo-box">
+      <img src="aou-logo.png" alt="شعار الجامعة العربية المفتوحة" onerror="this.outerHTML='<span class=&quot;logo-fallback&quot;>AOU</span>'"/>
     </div>
-    <div class="hero-body">
-      <div class="kicker">الملخص التفاعلي · <span class="en">ED641</span></div>
-      <h1>تطبيقات الكمبيوتر في التحليل الإحصائي</h1>
-      <p class="hero-desc">مرجع دراسي ومراجعة للامتحان — التسلسل الزمني لأدوات التحليل عبر أسابيع الفصل، ودليل خطوات <span class="en">SPSS</span>، والمفاهيم الأساسية، وقاعدة اختيار الاختبار المناسب.</p>
-      <div class="instructor">
-        <span class="ins-lbl">محاضر المقرر</span>
-        <span class="ins-name">د. سامي المزروعي</span>
-      </div>
-      <div class="badges">
-        <span class="badge b1">المرحلة 1 · الوصف والتحقق</span>
-        <span class="badge b2">المرحلة 2 · اختبار الفروق</span>
-        <span class="badge b3">المرحلة 3 · التنبؤ</span>
-      </div>
-    </div>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="تبديل الوضع الليلي/النهاري" title="تبديل الوضع">🌙</button>
+  </div>
+  <div class="hdr-badge">ED641 · فرع سلطنة عُمان</div>
+  <h1>الدليل الشامل للتحليلات الإحصائية</h1>
+  <div class="hdr-sub">خطوات SPSS · الخيارات الأساسية · قراءة النتائج · الصياغة الأكاديمية</div>
+  <div class="instructor">
+    <span class="instructor-label">محاضر المقرر:</span>
+    <span class="instructor-name">د. سامي المزروعي</span>
+  </div>
+  <div class="tma-badges">
+    <span class="tma-badge" style="background:rgba(14,165,233,.22);color:#38bdf8;border-color:rgba(14,165,233,.4)">● TMA1: وصفي + T + ارتباط</span>
+    <span class="tma-badge" style="background:rgba(16,185,129,.22);color:#34d399;border-color:rgba(16,185,129,.4)">● TMA2: T + ANOVA + انحدار</span>
+    <span class="tma-badge" style="background:rgba(99,102,241,.22);color:#a5b4fc;border-color:rgba(99,102,241,.4)">● مشترك: ثبات + طبيعية</span>
   </div>
 </header>
 
-<nav class="tabs" id="tabs">
-  <button class="tab active" data-tab="timeline">التسلسل الزمني</button>
-  <button class="tab" data-tab="spss">دليل <span class="en">SPSS</span></button>
-  <button class="tab" data-tab="concepts">المفاهيم</button>
-  <button class="tab" data-tab="golden">قاعدة الذهب</button>
-  <button class="tab" data-tab="review">المراجعة</button>
+<nav class="main-tabs">
+  <button class="mtab active" onclick="mainTab('ref',this)">📋 مرجع سريع</button>
+  <button class="mtab" onclick="mainTab('timeline',this)">🗓️ التسلسل الزمني</button>
+  <button class="mtab" onclick="mainTab('guide',this)">🔬 دليل SPSS</button>
+  <button class="mtab" onclick="mainTab('concepts',this)">🧠 المفاهيم</button>
+  <button class="mtab" onclick="mainTab('explain',this)">📘 شروحات</button>
+  <button class="mtab" onclick="mainTab('quiz',this)">✅ مراجعة</button>
 </nav>
 
-<main>
-
-<!-- ════════ TAB 1 — TIMELINE ════════ -->
-<section id="timeline" class="panel active">
-  <div class="content stagger run">
-    <div class="section-intro">
-      يبدأ المقرر بـ <b>وصف البيانات وتجهيزها</b>، ثم <b>اختبار الفروق بين المجموعات</b>، وينتهي بـ <b>التنبؤ بالعلاقات بين المتغيرات</b>. اضغط أي أداة لعرض وصفها واستخدامها.
-    </div>
-
-    <!-- Phase 1 -->
-    <div class="phase" style="--pc:var(--p1)">
-      <div class="phase-head">
-        <div class="phase-num">1</div>
-        <div>
-          <div class="phase-title">التحليل الوصفي والتحقق من جودة البيانات</div>
-          <div class="phase-weeks">الأسابيع 2 – 3</div>
-        </div>
-      </div>
-      <div class="tl-cards">
-        <div class="tl-card">
-          <div class="tl-head"><div class="tl-names"><span class="tl-ar">التكرارات</span><span class="en tl-en">Frequencies</span></div><span class="tl-arrow">▾</span></div>
-          <div class="tl-body"><div class="tl-body-inner">
-            <div class="tl-desc">فهم توزيع البيانات ومعرفة القيم الأكثر شيوعاً، وخطوة أساسية لفحص سلامة البيانات.</div>
-            <div class="tl-note"><span class="tl-note-lbl">تُستخدم لـ</span>البيانات الاسمية والترتيبية وفحص القيم المفقودة.</div>
-          </div></div>
-        </div>
-        <div class="tl-card">
-          <div class="tl-head"><div class="tl-names"><span class="tl-ar">التوزيع الطبيعي</span><span class="en tl-en">Normal Distribution</span></div><span class="tl-arrow">▾</span></div>
-          <div class="tl-body"><div class="tl-body-inner">
-            <div class="tl-desc">التحقق من اتباع الدرجات للمنحنى الجرسي عبر <span class="en">Shapiro-Wilk</span> و <span class="en">Kolmogorov-Smirnov</span>.</div>
-            <div class="tl-note"><span class="tl-note-lbl">تُستخدم لـ</span>شرط أساسي للاختبارات البارامترية؛ <span class="en">Sig &gt; 0.05</span> = طبيعي.</div>
-          </div></div>
-        </div>
-        <div class="tl-card">
-          <div class="tl-head"><div class="tl-names"><span class="tl-ar">معامل الثبات</span><span class="en tl-en">Cronbach's Alpha</span></div><span class="tl-arrow">▾</span></div>
-          <div class="tl-body"><div class="tl-body-inner">
-            <div class="tl-desc">قياس اتساق فقرات المقياس واستقرار نتائجه عند إعادة التطبيق.</div>
-            <div class="tl-note"><span class="tl-note-lbl">تُستخدم لـ</span>المعيار: فوق 0.70 جيد، أقل من 0.60 ضعيف.</div>
-          </div></div>
-        </div>
-        <div class="tl-card">
-          <div class="tl-head"><div class="tl-names"><span class="tl-ar">تجانس التباين</span><span class="en tl-en">Homogeneity of Variance</span></div><span class="tl-arrow">▾</span></div>
-          <div class="tl-body"><div class="tl-body-inner">
-            <div class="tl-desc">التأكد من تساوي التباينات بين المجموعات عبر اختبار <span class="en">Levene</span>.</div>
-            <div class="tl-note"><span class="tl-note-lbl">تُستخدم لـ</span>القاعدة: <span class="en">Sig &gt; 0.05</span> = متجانسة.</div>
-          </div></div>
-        </div>
-        <div class="tl-card">
-          <div class="tl-head"><div class="tl-names"><span class="tl-ar">معامل الارتباط</span><span class="en tl-en">Correlation</span></div><span class="tl-arrow">▾</span></div>
-          <div class="tl-body"><div class="tl-body-inner">
-            <div class="tl-desc">قياس قوة واتجاه العلاقة الخطية بين متغيرين كميين (من <span class="en">-1</span> إلى <span class="en">+1</span>).</div>
-            <div class="tl-note"><span class="tl-note-lbl">تُستخدم لـ</span>بيرسون للمتغيرات الكمية ذات التوزيع الطبيعي.</div>
-          </div></div>
-        </div>
-        <div class="tl-card">
-          <div class="tl-head"><div class="tl-names"><span class="tl-ar">كاي تربيع</span><span class="en tl-en">Chi-Square</span></div><span class="tl-arrow">▾</span></div>
-          <div class="tl-body"><div class="tl-body-inner">
-            <div class="tl-desc">اختبار لا معلمي لتحليل العلاقة بين المتغيرات النوعية (اسمية/رتبية).</div>
-            <div class="tl-note"><span class="tl-note-lbl">تُستخدم لـ</span>لا يشترط التوزيع الطبيعي.</div>
-          </div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Phase 2 -->
-    <div class="phase" style="--pc:var(--p2)">
-      <div class="phase-head">
-        <div class="phase-num">2</div>
-        <div>
-          <div class="phase-title">اختبار الفرضيات والمقارنة بين المتوسطات</div>
-          <div class="phase-weeks">الأسابيع 4 – 11</div>
-        </div>
-      </div>
-      <div class="tl-cards">
-        <div class="tl-card">
-          <div class="tl-head"><div class="tl-names"><span class="tl-ar">ت للعينة الواحدة</span><span class="en tl-en">One-Sample T-Test</span></div><span class="tl-arrow">▾</span></div>
-          <div class="tl-body"><div class="tl-body-inner">
-            <div class="tl-desc">مقارنة متوسط عينة واحدة بقيمة مرجعية (<span class="en">Test Value</span>).</div>
-            <div class="tl-note"><span class="tl-note-lbl">ملاحظة</span>مثال: هل يختلف متوسط الصف عن 50؟</div>
-          </div></div>
-        </div>
-        <div class="tl-card">
-          <div class="tl-head"><div class="tl-names"><span class="tl-ar">ت للعينات المستقلة</span><span class="en tl-en">Independent Samples T-Test</span></div><span class="tl-arrow">▾</span></div>
-          <div class="tl-body"><div class="tl-body-inner">
-            <div class="tl-desc">مقارنة متوسطات مجموعتين منفصلتين (ذكور/إناث).</div>
-            <div class="tl-note"><span class="tl-note-lbl">ملاحظة</span>مجموعتان مستقلتان.</div>
-          </div></div>
-        </div>
-        <div class="tl-card">
-          <div class="tl-head"><div class="tl-names"><span class="tl-ar">ت للعينات المرتبطة</span><span class="en tl-en">Paired Samples T-Test</span></div><span class="tl-arrow">▾</span></div>
-          <div class="tl-body"><div class="tl-body-inner">
-            <div class="tl-desc">مقارنة نفس المجموعة في حالتين (قبلي/بعدي).</div>
-            <div class="tl-note"><span class="tl-note-lbl">ملاحظة</span>نفس الأفراد قبل وبعد.</div>
-          </div></div>
-        </div>
-        <div class="tl-card">
-          <div class="tl-head"><div class="tl-names"><span class="tl-ar">تحليل التباين الأحادي</span><span class="en tl-en">One-Way ANOVA</span></div><span class="tl-arrow">▾</span></div>
-          <div class="tl-body"><div class="tl-body-inner">
-            <div class="tl-desc">مقارنة متوسطات 3 مجموعات أو أكثر لمتغير مستقل واحد.</div>
-            <div class="tl-note"><span class="tl-note-lbl">ملاحظة</span>3 مجموعات فأكثر.</div>
-          </div></div>
-        </div>
-        <div class="tl-card">
-          <div class="tl-head"><div class="tl-names"><span class="tl-ar">تحليل التباين الثنائي</span><span class="en tl-en">Two-Way ANOVA</span></div><span class="tl-arrow">▾</span></div>
-          <div class="tl-body"><div class="tl-body-inner">
-            <div class="tl-desc">أثر متغيرين مستقلين معاً على متغير تابع.</div>
-            <div class="tl-note"><span class="tl-note-lbl">ملاحظة</span>يكشف التفاعل.</div>
-          </div></div>
-        </div>
-        <div class="tl-card">
-          <div class="tl-head"><div class="tl-names"><span class="tl-ar">التحليل البعدي</span><span class="en tl-en">Post Hoc (Tukey / Scheffé)</span></div><span class="tl-arrow">▾</span></div>
-          <div class="tl-body"><div class="tl-body-inner">
-            <div class="tl-desc">تحديد المجموعات التي بينها فروق دالة بعد <span class="en">ANOVA</span>.</div>
-            <div class="tl-note"><span class="tl-note-lbl">ملاحظة</span><span class="en">Tukey</span> للمتساوية · <span class="en">Scheffé</span> لغير المتساوية.</div>
-          </div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Phase 3 -->
-    <div class="phase" style="--pc:var(--p3)">
-      <div class="phase-head">
-        <div class="phase-num">3</div>
-        <div>
-          <div class="phase-title">أدوات التنبؤ</div>
-          <div class="phase-weeks">الأسبوع 12</div>
-        </div>
-      </div>
-      <div class="tl-cards">
-        <div class="tl-card">
-          <div class="tl-head"><div class="tl-names"><span class="tl-ar">الانحدار الخطي البسيط</span><span class="en tl-en">Simple Linear Regression</span></div><span class="tl-arrow">▾</span></div>
-          <div class="tl-body"><div class="tl-body-inner">
-            <div class="tl-desc">معرفة أثر متغير مستقل <span class="en">X</span> على تابع <span class="en">Y</span> وبناء معادلة تنبؤ <span class="en">Y = a + bX</span>.</div>
-            <div class="tl-note"><span class="tl-note-lbl">يعطي</span>معامل <span class="en">B</span> ومعامل التحديد <span class="en">R²</span>.</div>
-          </div></div>
-        </div>
-      </div>
-    </div>
+<section id="ref" class="panel active">
+  <div class="content">
+    <div class="lead">جدول مقارنة سريع لكل اختبار: <b>متى تستخدمه</b>، <b>الشروط</b>، <b>المتغيرات</b>، و<b>تفسير النتيجة</b>. صفِّ حسب نوع الاختبار من الأزرار أدناه.</div>
+    <div class="q-filter" id="qfilter"></div>
+    <div class="q-cards" id="qcards"></div>
   </div>
 </section>
 
-<!-- ════════ TAB 2 — SPSS GUIDE ════════ -->
-<section id="spss" class="panel">
-  <div class="content accordion stagger">
-    <div class="section-intro">
-      دليل خطوات <span class="en">SPSS</span> وقراءة النتائج. لكل عنصر: <b>مسار القائمة</b> ثم <b>خطوات مرقّمة</b> ثم <b>سطر القراءة والتفسير</b>. اضغط العنوان لفتح الإجابة.
-    </div>
-
-    <div class="acc">
-      <button class="acc-head"><div class="acc-head-l"><div class="acc-badge">A</div><div class="acc-titles"><span class="acc-ar">حساب المتوسطات</span><span class="en acc-en">Means</span></div></div><span class="acc-arrow">▾</span></button>
-      <div class="acc-body"><div class="acc-body-inner">
-        <div class="spss-path"><span class="path">Analyze → Compare Means → Means…</span></div>
-        <div class="steps">
-          <div class="step"><div class="step-n">1</div><div class="step-t">ضع المتغير الكمي في <code>Dependent List</code>.</div></div>
-          <div class="step"><div class="step-n">2</div><div class="step-t">ضع المتغير التصنيفي في <code>Independent List</code>.</div></div>
-          <div class="step"><div class="step-n">3</div><div class="step-t">من <code>Options</code> اختر: <code>Mean, N, Std. Deviation, Min/Max</code>.</div></div>
-        </div>
-        <div class="read"><span class="read-lbl">القراءة</span>خطوة وصفية تمهيدية لفهم سلوك البيانات قبل الاختبارات الاستدلالية.</div>
-      </div></div>
-    </div>
-
-    <div class="acc">
-      <button class="acc-head"><div class="acc-head-l"><div class="acc-badge">B</div><div class="acc-titles"><span class="acc-ar">الثبات</span><span class="en acc-en">Reliability (Cronbach's Alpha)</span></div></div><span class="acc-arrow">▾</span></button>
-      <div class="acc-body"><div class="acc-body-inner">
-        <div class="spss-path"><span class="path">Analyze → Scale → Reliability Analysis</span></div>
-        <div class="steps">
-          <div class="step"><div class="step-n">1</div><div class="step-t">انقل فقرات المقياس إلى <code>Items</code>.</div></div>
-          <div class="step"><div class="step-n">2</div><div class="step-t">اختر <code>Model: Alpha</code> (أو <code>Split-half</code>).</div></div>
-          <div class="step"><div class="step-n">3</div><div class="step-t">اضغط <code>OK</code>.</div></div>
-        </div>
-        <div class="read"><span class="read-lbl">القراءة</span>‏≥0.90 ممتاز · 0.80–0.89 جيد جداً · 0.70–0.79 جيد · 0.60–0.69 مقبول تربوياً · &lt;0.60 ضعيف. وراجع <code>Corrected Item-Total Correlation</code> (المقبول &gt; 0.30).</div>
-      </div></div>
-    </div>
-
-    <div class="acc">
-      <button class="acc-head"><div class="acc-head-l"><div class="acc-badge">C</div><div class="acc-titles"><span class="acc-ar">التوزيع الطبيعي</span><span class="en acc-en">Normality</span></div></div><span class="acc-arrow">▾</span></button>
-      <div class="acc-body"><div class="acc-body-inner">
-        <div class="spss-path"><span class="path">Analyze → Descriptive Statistics → Explore</span></div>
-        <div class="steps">
-          <div class="step"><div class="step-n">1</div><div class="step-t">ضع المتغير في <code>Dependent List</code>.</div></div>
-          <div class="step"><div class="step-n">2</div><div class="step-t">من <code>Plots</code> فعّل <code>Normality plots with tests</code>.</div></div>
-          <div class="step"><div class="step-n">3</div><div class="step-t">اقرأ جدول <code>Tests of Normality</code> (<span class="en">Shapiro-Wilk</span> / <span class="en">Kolmogorov-Smirnov</span>).</div></div>
-        </div>
-        <div class="read"><span class="read-lbl">القراءة</span><span class="en">Sig &gt; 0.05</span> ⟵ توزيع طبيعي يجيز الاختبارات البارامترية، ويدعمه المدرّج الجرسي.</div>
-      </div></div>
-    </div>
-
-    <div class="acc">
-      <button class="acc-head"><div class="acc-head-l"><div class="acc-badge">1</div><div class="acc-titles"><span class="acc-ar">ت للعينة الواحدة</span><span class="en acc-en">One-Sample T-Test</span></div></div><span class="acc-arrow">▾</span></button>
-      <div class="acc-body"><div class="acc-body-inner">
-        <div class="spss-path"><span class="path">Analyze → Compare Means → One-Sample T Test</span></div>
-        <div class="steps">
-          <div class="step"><div class="step-n">1</div><div class="step-t">اختر المتغير الكمي.</div></div>
-          <div class="step"><div class="step-n">2</div><div class="step-t">اكتب القيمة المرجعية في <code>Test Value</code>.</div></div>
-          <div class="step"><div class="step-n">3</div><div class="step-t">اضغط <code>OK</code>.</div></div>
-        </div>
-        <div class="read"><span class="read-lbl">القراءة</span><span class="en">Sig (2-tailed) &lt; 0.05</span> ⟵ فرق دال عن القيمة المرجعية.</div>
-      </div></div>
-    </div>
-
-    <div class="acc">
-      <button class="acc-head"><div class="acc-head-l"><div class="acc-badge">2</div><div class="acc-titles"><span class="acc-ar">ت للعينات المستقلة</span><span class="en acc-en">Independent T-Test</span></div></div><span class="acc-arrow">▾</span></button>
-      <div class="acc-body"><div class="acc-body-inner">
-        <div class="spss-path"><span class="path">Analyze → Compare Means → Independent-Samples T Test</span></div>
-        <div class="steps">
-          <div class="step"><div class="step-n">1</div><div class="step-t">المتغير التابع في <code>Test Variable(s)</code>.</div></div>
-          <div class="step"><div class="step-n">2</div><div class="step-t">المتغير المستقل في <code>Grouping Variable</code>.</div></div>
-          <div class="step"><div class="step-n">3</div><div class="step-t">اضغط <code>Define Groups</code> وحدّد رمزي المجموعتين (1 و2)، ثم <code>OK</code>.</div></div>
-        </div>
-        <div class="read"><span class="read-lbl">القراءة</span>اقرأ <code>Levene's Test</code> أولاً (<span class="en">Sig &gt; 0.05</span> ⟵ تباينات متساوية، اعتمد السطر الأول)، ثم <span class="en">Sig (2-tailed) &lt; 0.05</span> ⟵ فرق دال.</div>
-      </div></div>
-    </div>
-
-    <div class="acc">
-      <button class="acc-head"><div class="acc-head-l"><div class="acc-badge">3</div><div class="acc-titles"><span class="acc-ar">ت للعينات المرتبطة</span><span class="en acc-en">Paired T-Test</span></div></div><span class="acc-arrow">▾</span></button>
-      <div class="acc-body"><div class="acc-body-inner">
-        <div class="spss-path"><span class="path">Analyze → Compare Means → Paired-Samples T Test</span></div>
-        <div class="steps">
-          <div class="step"><div class="step-n">1</div><div class="step-t">لكل فرد صف واحد يحوي <code>Pre</code> و<code>Post</code>.</div></div>
-          <div class="step"><div class="step-n">2</div><div class="step-t">ضع الزوجين في <code>Paired Variables</code>.</div></div>
-          <div class="step"><div class="step-n">3</div><div class="step-t">اضغط <code>OK</code>.</div></div>
-        </div>
-        <div class="read"><span class="read-lbl">القراءة</span><span class="en">Sig (2-tailed) &lt; 0.05</span> ⟵ فرق دال بين القياسين.</div>
-      </div></div>
-    </div>
-
-    <div class="acc">
-      <button class="acc-head"><div class="acc-head-l"><div class="acc-badge">4</div><div class="acc-titles"><span class="acc-ar">تحليل التباين الأحادي</span><span class="en acc-en">One-Way ANOVA</span></div></div><span class="acc-arrow">▾</span></button>
-      <div class="acc-body"><div class="acc-body-inner">
-        <div class="spss-path"><span class="path">Analyze → Compare Means → One-Way ANOVA</span></div>
-        <div class="steps">
-          <div class="step"><div class="step-n">1</div><div class="step-t">المتغير الكمي (التابع) في <code>Dependent List</code>.</div></div>
-          <div class="step"><div class="step-n">2</div><div class="step-t">المتغير النوعي (المستقل) في <code>Factor</code>.</div></div>
-          <div class="step"><div class="step-n">3</div><div class="step-t">من <code>Post Hoc</code> اختر <code>Tukey</code> أو <code>Scheffé</code>.</div></div>
-          <div class="step"><div class="step-n">4</div><div class="step-t">من <code>Options</code> فعّل <code>Descriptive</code> و<code>Homogeneity of variance test</code>.</div></div>
-        </div>
-        <div class="read"><span class="read-lbl">القراءة</span><span class="en">Sig &lt; 0.05</span> ⟵ فروق دالة، ثم جدول <code>Multiple Comparisons</code> يحدد المجموعات المختلفة.</div>
-      </div></div>
-    </div>
-
-    <div class="acc">
-      <button class="acc-head"><div class="acc-head-l"><div class="acc-badge">5</div><div class="acc-titles"><span class="acc-ar">الارتباط</span><span class="en acc-en">Pearson Correlation</span></div></div><span class="acc-arrow">▾</span></button>
-      <div class="acc-body"><div class="acc-body-inner">
-        <div class="spss-path"><span class="path">Analyze → Correlate → Bivariate</span></div>
-        <div class="steps">
-          <div class="step"><div class="step-n">1</div><div class="step-t">انقل المتغيرين الكميين إلى <code>Variables</code>.</div></div>
-          <div class="step"><div class="step-n">2</div><div class="step-t">تأكد من تفعيل <code>Pearson</code>.</div></div>
-          <div class="step"><div class="step-n">3</div><div class="step-t">اضغط <code>OK</code>.</div></div>
-        </div>
-        <div class="read"><span class="read-lbl">القراءة</span>القيمة من <span class="en">-1</span> إلى <span class="en">+1</span>؛ الإشارة = الاتجاه، القيمة = القوة، <span class="en">Sig &lt; 0.05</span> ⟵ ارتباط دال.</div>
-      </div></div>
-    </div>
-
-    <div class="acc">
-      <button class="acc-head"><div class="acc-head-l"><div class="acc-badge">6</div><div class="acc-titles"><span class="acc-ar">الانحدار الخطي البسيط</span><span class="en acc-en">Linear Regression</span></div></div><span class="acc-arrow">▾</span></button>
-      <div class="acc-body"><div class="acc-body-inner">
-        <div class="spss-path"><span class="path">Analyze → Regression → Linear</span></div>
-        <div class="steps">
-          <div class="step"><div class="step-n">1</div><div class="step-t">المتغير التابع في <code>Dependent</code>، المستقل في <code>Independent(s)</code>.</div></div>
-          <div class="step"><div class="step-n">2</div><div class="step-t">اضغط <code>OK</code>.</div></div>
-        </div>
-        <div class="read"><span class="read-lbl">القراءة</span><span class="en">R²</span> = نسبة التباين المفسَّر في <span class="en">Y</span>، <span class="en">B</span> = مقدار الأثر، ومعادلة التنبؤ <span class="en">Y = a + bX</span>.</div>
-      </div></div>
-    </div>
+<section id="timeline" class="panel">
+  <div class="content">
+    <div class="lead">يبدأ المقرر بـ <b>وصف البيانات وتجهيزها</b>، ثم <b>اختبار الفروق بين المجموعات</b>، وينتهي بـ <b>التنبؤ بالعلاقات</b>. اضغط أي أداة لعرض وصفها.</div>
+    <div id="timeline-content"></div>
   </div>
 </section>
 
-<!-- ════════ TAB 3 — CONCEPTS ════════ -->
+<section id="guide" class="panel">
+  <nav class="anav" id="anav"></nav>
+  <div class="content" id="aguide-content"></div>
+</section>
+
 <section id="concepts" class="panel">
-  <div class="content stagger">
-    <div class="section-intro">المفاهيم الأساسية التي يقوم عليها التحليل الإحصائي في المقرر.</div>
-    <div class="con-grid stagger">
-      <div class="con-card">
-        <div class="con-head"><div class="con-num">1</div><div class="con-term">تعريف الإحصاء وأنواعه</div></div>
-        <div class="con-def">فرع رياضي لجمع وتصنيف ووصف وتفسير البيانات الرقمية. وصفي (<span class="en">Descriptive</span>) للتلخيص · استدلالي (<span class="en">Inferential</span>) للتعميم من العينة للمجتمع.</div>
-      </div>
-      <div class="con-card">
-        <div class="con-head"><div class="con-num">2</div><div class="con-term">تصنيف المتغيرات</div></div>
-        <div class="con-def">حسب الدور (مستقل/تابع/معدِّل) · حسب القياس: اسمي (<span class="en">Nominal</span>) · رتبي (<span class="en">Ordinal</span>) · كمي (<span class="en">Scale</span>).</div>
-      </div>
-      <div class="con-card">
-        <div class="con-head"><div class="con-num">3</div><div class="con-term">الثبات</div></div>
-        <div class="con-def">اتساق نتائج الأداة عند الإعادة، يُحسب بألفا كرونباخ؛ فوق 0.70 جيد، أقل من 0.60 ضعيف.</div>
-      </div>
-      <div class="con-card">
-        <div class="con-head"><div class="con-num">4</div><div class="con-term">التوزيع الطبيعي</div></div>
-        <div class="con-def">منحنى جرسي متماثل حول المتوسط، يُفحص بشابيرو-ويلك وكولموجوروف-سميرنوف.</div>
-      </div>
-      <div class="con-card">
-        <div class="con-head"><div class="con-num">5</div><div class="con-term">حجم الأثر — مربع إيتا <span class="en">η²</span></div></div>
-        <div class="con-def">نسبة التباين المفسَّر؛ 0.01 ضعيف · 0.06 متوسط · 0.14 فأكثر قوي (<span class="en">Cohen 1988</span>).</div>
-      </div>
-      <div class="con-card">
-        <div class="con-head"><div class="con-num">6</div><div class="con-term">اختبار ليفين <span class="en">Levene</span></div></div>
-        <div class="con-def">يُجرى قبل <span class="en">T</span> و <span class="en">ANOVA</span> لتجانس التباين؛ <span class="en">Sig &gt; 0.05</span> ⟵ متجانسة.</div>
+  <div class="content">
+    <div class="lead">المفاهيم الأساسية التي يقوم عليها التحليل الإحصائي في المقرر.</div>
+    <div class="con-grid" id="concepts-grid"></div>
+    <div class="golden">
+      <div class="golden-title">🧭 قاعدة الذهب لاختيار الاختبار</div>
+      <div class="golden-row">
+        <span style="color:#f59e0b;font-weight:700">بيانات نوعية؟</span> ← مربع كاي أو سبيرمان<br>
+        <span style="color:#0ea5e9;font-weight:700">مجموعتان مستقلتان؟</span> ← اختبار T المستقل<br>
+        <span style="color:#8b5cf6;font-weight:700">نفس المجموعة قبلي/بعدي؟</span> ← اختبار T المرتبط<br>
+        <span style="color:#10b981;font-weight:700">3 شُعب أو أكثر؟</span> ← ANOVA + Tukey<br>
+        <span style="color:#8b5cf6;font-weight:700">علاقة بين متغيرين كميين؟</span> ← ارتباط بيرسون<br>
+        <span style="color:#ef4444;font-weight:700">تنبؤ بمتغير من آخر؟</span> ← انحدار خطي بسيط<br>
+        <span style="color:var(--accent);font-weight:700">اتساق فقرات المقياس؟</span> ← ألفا كرونباخ
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════ TAB 4 — GOLDEN RULE ════════ -->
-<section id="golden" class="panel">
-  <div class="content stagger">
-    <div class="section-intro">قاعدة الذهب لاختيار الاختبار المناسب — شجرة قرار سريعة: اقرأ الشرط ثم اتبع السهم للاختبار الموافق.</div>
-    <div class="golden stagger">
-      <div class="g-row"><div class="g-cond"><span class="g-q">؟</span>بيانات نوعية؟ (اسمية/رتبية)</div><span class="g-arrow">←</span><span class="g-test"><span class="en">Chi-Square</span> / سبيرمان</span></div>
-      <div class="g-row"><div class="g-cond"><span class="g-q">؟</span>مجموعتان مستقلتان؟ (ذكور/إناث)</div><span class="g-arrow">←</span><span class="g-test">اختبار <span class="en">T</span> المستقل</span></div>
-      <div class="g-row"><div class="g-cond"><span class="g-q">؟</span>نفس المجموعة قبلي/بعدي؟</div><span class="g-arrow">←</span><span class="g-test">اختبار <span class="en">T</span> المرتبط</span></div>
-      <div class="g-row"><div class="g-cond"><span class="g-q">؟</span>ثلاث شُعب أو أكثر؟</div><span class="g-arrow">←</span><span class="g-test"><span class="en">ANOVA</span> + <span class="en">Tukey</span></span></div>
-      <div class="g-row"><div class="g-cond"><span class="g-q">؟</span>علاقة بين متغيرين كميين؟</div><span class="g-arrow">←</span><span class="g-test">ارتباط <span class="en">Pearson</span></span></div>
-      <div class="g-row"><div class="g-cond"><span class="g-q">؟</span>تنبؤ بمتغير من آخر؟</div><span class="g-arrow">←</span><span class="g-test">انحدار خطي بسيط</span></div>
-      <div class="g-row"><div class="g-cond"><span class="g-q">؟</span>اتساق فقرات المقياس؟</div><span class="g-arrow">←</span><span class="g-test">ألفا كرونباخ</span></div>
-    </div>
+<section id="explain" class="panel">
+  <div class="content">
+    <div class="lead">شروحات تفصيلية موسّعة لأهم المفاهيم — اضغط عنوان الشرح لعرض المحتوى الكامل.</div>
+    <div class="exp-grid" id="explain-grid"></div>
   </div>
 </section>
 
-<!-- ════════ TAB 5 — REVIEW ════════ -->
-<section id="review" class="panel">
-  <div class="content accordion stagger">
-    <p class="review-hint">المراجعة السريعة — اضغط السؤال لإظهار الإجابة.</p>
-
-    <div class="acc">
-      <button class="acc-head"><div class="acc-head-l"><div class="acc-badge">1</div><span class="acc-q">ما دلالة <span class="en">Sig</span>؟</span></div><span class="acc-arrow">▾</span></button>
-      <div class="acc-body"><div class="acc-body-inner"><div class="acc-a"><span class="en">Sig &lt; 0.05</span> ⟵ دلالة إحصائية (نرفض الصفري ونقبل البديل)؛ أكبر من 0.05 ⟵ لا فرق دال.</div></div></div>
-    </div>
-
-    <div class="acc">
-      <button class="acc-head"><div class="acc-head-l"><div class="acc-badge">2</div><span class="acc-q">الفرق بين <span class="en">Levene</span> و <span class="en">T</span>؟</span></div><span class="acc-arrow">▾</span></button>
-      <div class="acc-body"><div class="acc-body-inner"><div class="acc-a"><span class="en">Levene</span> يفحص تجانس التباين (شرط قبلي)، <span class="en">T</span> يقارن المتوسطات؛ تُقرأ نتيجة <span class="en">Levene</span> أولاً لاختيار السطر الصحيح.</div></div></div>
-    </div>
-
-    <div class="acc">
-      <button class="acc-head"><div class="acc-head-l"><div class="acc-badge">3</div><span class="acc-q">ماذا يعني <span class="en">R²</span>؟</span></div><span class="acc-arrow">▾</span></button>
-      <div class="acc-body"><div class="acc-body-inner"><div class="acc-a">نسبة التباين في التابع التي يفسرها المستقل؛ كلما اقترب من 1 قويت القدرة التنبؤية.</div></div></div>
-    </div>
-
-    <div class="acc">
-      <button class="acc-head"><div class="acc-head-l"><div class="acc-badge">4</div><span class="acc-q">متى <span class="en">ANOVA</span> بدل <span class="en">T</span>؟</span></div><span class="acc-arrow">▾</span></button>
-      <div class="acc-body"><div class="acc-body-inner"><div class="acc-a">عند مقارنة 3 مجموعات أو أكثر، ثم <span class="en">Post Hoc</span> (<span class="en">Tukey/Scheffé</span>) لتحديد مصدر الفرق.</div></div></div>
-    </div>
-
-    <div class="acc">
-      <button class="acc-head"><div class="acc-head-l"><div class="acc-badge">5</div><span class="acc-q">لماذا حجم الأثر مع الدلالة؟</span></div><span class="acc-arrow">▾</span></button>
-      <div class="acc-body"><div class="acc-body-inner"><div class="acc-a">الدلالة تخبر بـ«وجود» الفرق، وحجم الأثر يخبر بـ«قوته العملية».</div></div></div>
-    </div>
-
-    <div class="tip">
-      <div class="tip-title">💡 نصيحة الامتحان</div>
-      <div class="tip-body">الأسئلة الأشيع: شروط التطبيق، تفسير <span class="en">Sig</span>، الفرق بين <span class="en">Levene</span> و <span class="en">T</span>، ومعنى <span class="en">R²</span>. تذكّر التسلسل: وصف ← تحقق من الشروط ← اختبار الفرق ← حجم الأثر ← التفسير التربوي.</div>
+<section id="quiz" class="panel">
+  <div class="content">
+    <p style="color:var(--text-dim);font-size:12px;text-align:center;margin-bottom:14px">اضغط على السؤال لإظهار الإجابة</p>
+    <div class="quiz-cards" id="quiz-cards"></div>
+    <div class="alert al-g" style="margin-top:16px">
+      💡 <strong>نصيحة الامتحان:</strong> الأسئلة الأكثر شيوعاً تتمحور حول: شروط التطبيق، تفسير Sig، الفرق بين Levene وT، ومعنى R² في الانحدار.
     </div>
   </div>
 </section>
-
-</main>
 
 <footer>
-  <div class="footer-course"><span class="en">ED641</span> · تطبيقات الكمبيوتر في التحليل الإحصائي</div>
-  <div class="footer-people">إعداد محمد الحضرمي · إشراف د. سامي المزروعي</div>
+  ED641 · إعداد: محمد الحضرمي · إشراف: د. سامي المزروعي<br>
   <a href="https://github.com/mohdhadhrami/ED641" target="_blank" rel="noopener">github.com/mohdhadhrami/ED641</a>
 </footer>
 
 <script>
-// ════════ TABS ════════
-function recomputeOpen(){
-  document.querySelectorAll('.acc.open .acc-body, .tl-card.open .tl-body').forEach(function(b){
+// ════════ THEME MANAGEMENT ════════
+const THEME_KEY = 'ed641-theme';
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeBtn').textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+function toggleTheme(){
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  try { localStorage.setItem(THEME_KEY, next); } catch(e) {}
+  // recompute open expandables
+  requestAnimationFrame(recomputeOpenHeights);
+}
+(function initTheme(){
+  let saved = 'dark';
+  try { saved = localStorage.getItem(THEME_KEY) || 'dark'; } catch(e) {}
+  applyTheme(saved);
+})();
+
+function recomputeOpenHeights(){
+  document.querySelectorAll('.tl-card.open .tl-body, .exp-card.open .exp-body').forEach(b => {
     b.style.maxHeight = b.scrollHeight + 'px';
   });
 }
-function runStagger(panel){
-  panel.querySelectorAll('.stagger').forEach(function(s){
-    s.classList.remove('run');
-    void s.offsetWidth; // force reflow to restart animation
-    s.classList.add('run');
+window.addEventListener('resize', recomputeOpenHeights);
+
+// ════════ DATA: TESTS ════════
+const TESTS = [
+  {
+    id:"desc", name:"الإحصاء الوصفي + الرسوم", en:"Descriptive Statistics & Charts",
+    type:"وصفي", color:"#3b82f6", tma:["tma1","tma2"],
+    when:"تلخيص البيانات وتوزيعها — أول خطوة دائماً",
+    vars:"أي متغيرات كمية أو نوعية",
+    cond:"لا شروط — يسبق كل التحليلات",
+    sig:"المتوسط والانحراف — لا توجد قيمة Sig هنا",
+    steps:[
+      {t:"<span class='path'>Analyze → Descriptive Statistics → Frequencies</span>"},
+      {t:"انقل المتغيرات إلى <strong>Variable(s)</strong>"},
+      {t:"اضغط <strong>Statistics</strong> ← فعّل: <span class='tick'>Mean · Std. Deviation · Min · Max · Skewness · Kurtosis</span>"},
+      {t:"اضغط <strong>Charts</strong> ← فعّل: <span class='tick'>Bar charts</span> أو <span class='tick'>Histograms</span> — لاستخراج الرسوم البيانية للتكليف"},
+      {t:"اضغط <strong>Continue → OK</strong>"}
+    ],
+    opts:[
+      {n:"✅ Mean + Std. Deviation", d:"المتوسط والانحراف المعياري"},
+      {n:"✅ Skewness + Kurtosis", d:"الالتواء والتفلطح لفحص الطبيعية"},
+      {n:"✅ Bar Charts", d:"رسوم شريطية لمتوسطات المحاور — مطلوبة في التكليف"},
+      {n:"✅ Histograms", d:"توزيع البيانات بصرياً"}
+    ],
+    read:[
+      {c:"Mean", m:"المتوسط الحسابي", q:"قارنه بمنتصف المقياس (3 في ليكرت الخماسي)"},
+      {c:"Std. Deviation", m:"الانحراف المعياري", q:"قريب من 0 = تجانس | كبير = تشتت"},
+      {c:"Skewness", m:"الالتواء", q:"بين ±1 يُقبل توزيعياً"},
+      {c:"Kurtosis", m:"التفلطح", q:"بين ±3 توزيع مقبول"}
+    ],
+    fmls:[{
+      lbl:"نموذج وصف المحاور",
+      txt:"أظهرت نتائج الإحصاء الوصفي أن متوسط استجابات أفراد العينة على محور <span class='v'>[اسم المحور]</span> بلغ <span class='s'>(M = __, SD = __)</span>، وقد جاء هذا المتوسط <span class='v'>[مرتفعاً/متوسطاً/منخفضاً]</span> على مقياس ليكرت الخماسي، مما يشير إلى <span class='v'>[التفسير]</span>."
+    }],
+    alerts:[{type:"b", txt:"💡 لاستخراج الرسم البياني مباشرةً: Graphs → Chart Builder → اختر Bar → اسحب المتغير → OK"}]
+  },
+  {
+    id:"reliability", name:"الثبات — ألفا كرونباخ", en:"Cronbach's Alpha",
+    type:"ثبات", color:"#6366f1", tma:["tma1","tma2"],
+    when:"التحقق من اتساق فقرات المقياس",
+    vars:"فقرات المقياس (ترتيبية أو فترية)",
+    cond:"فقرات تقيس نفس البُعد",
+    sig:"α ≥ 0.70 مقبول | ≥ 0.80 جيد | ≥ 0.90 ممتاز",
+    steps:[
+      {t:"<span class='path'>Analyze → Scale → Reliability Analysis</span>"},
+      {t:"انقل جميع فقرات المحور إلى <strong>Items</strong>"},
+      {t:"تأكد أن النموذج = <span class='tick'>Alpha</span>"},
+      {t:"اضغط <strong>Statistics</strong> ← فعّل: <span class='tick'>Scale if item deleted · Corrected Item-Total · Descriptives for Scale</span>"},
+      {t:"اضغط <strong>Continue → OK</strong>"}
+    ],
+    opts:[
+      {n:"✅ Scale if item deleted", d:"الأهم — يُظهر ألفا لو حُذفت كل فقرة"},
+      {n:"✅ Corrected Item-Total", d:"ارتباط الفقرة بالمجموع — يجب أن يكون > 0.30"},
+      {n:"✅ Descriptives for Scale", d:"متوسط وانحراف المقياس ككل"}
+    ],
+    read:[
+      {c:"Cronbach's Alpha", m:"معامل الثبات الكلي", q:"≥ 0.90 ممتاز | ≥ 0.80 جيد جداً | ≥ 0.70 مقبول"},
+      {c:"Alpha if Item Deleted", m:"ألفا عند حذف الفقرة", q:"إذا ارتفع كثيراً ← راجع الفقرة أو احذفها"},
+      {c:"Corrected Item-Total", m:"ارتباط الفقرة بالمجموع", q:"يجب أن يكون > 0.30"}
+    ],
+    fmls:[{
+      lbl:"نموذج الثبات",
+      txt:"للتحقق من ثبات أداة الدراسة، استُخدم معامل ألفا كرونباخ (Cronbach's Alpha)، وقد بلغت قيمته للمقياس ككل <span class='s'>(α = __)</span>، وهي قيمة <span class='v'>[مرتفعة/جيدة/مقبولة]</span> تدل على ثبات الأداة ويُجيز استخدامها في الدراسة."
+    }],
+    alerts:[{type:"g", txt:"💡 للتجزئة النصفية (Split-Half): نفس المسار ← غيّر النموذج من Alpha إلى Split-Half"}]
+  },
+  {
+    id:"normality", name:"التوزيع الطبيعي", en:"Normality Test — K-S / Shapiro-Wilk",
+    type:"افتراض", color:"#f59e0b", tma:["tma1","tma2"],
+    when:"شرط يُفحص قبل أي اختبار معلمي (T أو ANOVA)",
+    vars:"المتغير الكمي التابع",
+    cond:"لا شروط مسبقة",
+    sig:"Sig > 0.05 = توزيع طبيعي ✓ | Sig ≤ 0.05 = غير طبيعي",
+    steps:[
+      {t:"<span class='path'>Analyze → Descriptive Statistics → Explore</span>"},
+      {t:"انقل المتغير إلى <strong>Dependent List</strong>"},
+      {t:"اضغط <strong>Plots</strong> ← فعّل <span class='tick'>Normality plots with tests</span>"},
+      {t:"اضغط <strong>Continue → OK</strong>"}
+    ],
+    opts:[
+      {n:"Shapiro-Wilk", d:"✅ للعينات الصغيرة n < 50 — أكثر دقة"},
+      {n:"Kolmogorov-Smirnov", d:"✅ للعينات الكبيرة n ≥ 50"}
+    ],
+    read:[
+      {c:"Sig > 0.05", m:"توزيع طبيعي", q:"✅ تابع مع الاختبارات المعلمية (T · ANOVA)"},
+      {c:"Sig ≤ 0.05", m:"ليس طبيعياً", q:"⚠️ استخدم بدائل: سبيرمان / مان-ويتني"}
+    ],
+    fmls:[{
+      lbl:"نموذج اجتياز الاختبار",
+      txt:"أشارت نتائج اختبار <span class='s'>Shapiro-Wilk</span> إلى أن بيانات المتغير تتوزع توزيعاً طبيعياً <span class='s'>(W = __, p = __)</span>، مما يُجيز استخدام الاختبارات الإحصائية المعلمية."
+    }],
+    alerts:[{type:"b", txt:"💡 عند n > 30 يمكن الاستناد إلى مبرهنة النهاية المركزية وقبول الطبيعية تقريبياً."}]
+  },
+  {
+    id:"t1", name:"ت للعينة الواحدة", en:"One-Sample T-Test",
+    type:"معلمي", color:"#0ea5e9", tma:["tma1","tma2"],
+    when:"مقارنة متوسط العينة بقيمة معيارية (3 في ليكرت)",
+    vars:"متغير كمي واحد",
+    cond:"توزيع طبيعي | بيانات كمية | n ≥ 30",
+    sig:"Sig < 0.05 ← فروق دالة عن القيمة المعيارية",
+    steps:[
+      {t:"<span class='path'>Analyze → Compare Means → One-Sample T Test</span>"},
+      {t:"انقل المتغير إلى <strong>Test Variable(s)</strong>"},
+      {t:"في <strong>Test Value</strong> اكتب: <span class='tick'>3</span> (منتصف ليكرت الخماسي)"},
+      {t:"اضغط <strong>OK</strong>"}
+    ],
+    opts:[
+      {n:"Test Value = 3", d:"منتصف مقياس ليكرت الخماسي"},
+      {n:"Confidence Interval 95%", d:"الفترة الافتراضية — لا تغيّرها"}
+    ],
+    read:[
+      {c:"t", m:"قيمة الاختبار", q:"موجبة = المتوسط أعلى من المعياري | سالبة = أدنى"},
+      {c:"df", m:"درجات الحرية", q:"= N - 1"},
+      {c:"Sig (2-tailed)", m:"مستوى الدلالة", q:"< 0.05 ← الفرق دال إحصائياً"},
+      {c:"Mean Difference", m:"الفرق عن القيمة المعيارية", q:"موجب = المتوسط فوق 3"}
+    ],
+    fmls:[
+      {lbl:"عند وجود دلالة", txt:"أظهر اختبار (t) للعينة الواحدة أن متوسط استجابات أفراد العينة على محور <span class='v'>[المحور]</span> <span class='s'>(M = __, SD = __)</span> يختلف اختلافاً دالاً إحصائياً عن المتوسط المعياري (3) <span class='s'>(t(df) = __, p = __)</span>، مما يدل على مستوى <span class='v'>[مرتفع/منخفض]</span>."},
+      {lbl:"عند عدم الدلالة", txt:"لم تُظهر نتائج اختبار (t) للعينة الواحدة فروقاً دالة إحصائياً بين متوسط استجابات العينة والمتوسط المعياري <span class='s'>(t(df) = __, p = __)</span>، وعليه يُقبل الفرض الصفري."}
+    ]
+  },
+  {
+    id:"t2", name:"ت للمجموعات المستقلة", en:"Independent Samples T-Test",
+    type:"معلمي", color:"#0ea5e9", tma:["tma1","tma2"],
+    when:"مقارنة مجموعتين منفصلتين تماماً (ذكور/إناث)",
+    vars:"مستقل اسمي (فئتان) + تابع كمي",
+    cond:"توزيع طبيعي | تجانس التباين (Levene > 0.05)",
+    sig:"Sig < 0.05 ← فروق دالة بين المجموعتين",
+    steps:[
+      {t:"<span class='path'>Analyze → Compare Means → Independent-Samples T Test</span>"},
+      {t:"انقل الدرجة/المحور (كمي) إلى <strong>Test Variable(s)</strong>"},
+      {t:"انقل الجنس/التصنيف إلى <strong>Grouping Variable</strong>"},
+      {t:"اضغط <strong>Define Groups</strong> ← <span class='tick'>Group 1 = 1</span> | <span class='tick'>Group 2 = 2</span>"},
+      {t:"اضغط <strong>Continue → OK</strong>"}
+    ],
+    opts:[
+      {n:"⚠️ الخطوة الأولى: Levene", d:"يحدد أي صف تقرأ قبل أي شيء آخر"},
+      {n:"Sig > 0.05 ← الصف الأول", d:"Equal variances assumed"},
+      {n:"Sig ≤ 0.05 ← الصف الثاني", d:"Equal variances not assumed"}
+    ],
+    read:[
+      {c:"Levene Sig > 0.05", m:"تباينات متجانسة", q:"← اقرأ صف: Equal variances assumed"},
+      {c:"Levene Sig ≤ 0.05", m:"تباينات غير متجانسة", q:"← اقرأ صف: Equal variances not assumed"},
+      {c:"t + Sig (2-tailed)", m:"نتيجة المقارنة", q:"< 0.05 ← فروق دالة بين المجموعتين"},
+      {c:"Mean Difference", m:"الفرق بين المتوسطين", q:"موجب = المجموعة 1 أعلى | سالب = المجموعة 2 أعلى"}
+    ],
+    fmls:[{
+      lbl:"TMA1: جنس × الكفاءة الرقمية — نتيجة لا فروق",
+      txt:"أشارت نتائج اختبار ليفين إلى تجانس التباين بين مجموعتَي الذكور والإناث <span class='s'>(F = __, p > .05)</span>. وأظهر اختبار (t) للمجموعات المستقلة عدم وجود فروق دالة إحصائياً بين الذكور <span class='s'>(M = __, SD = __)</span> والإناث <span class='s'>(M = __, SD = __)</span> في <span class='v'>[المتغير]</span> <span class='s'>(t(59) = -0.80, p = .43)</span>، وعليه يُقبل الفرض الصفري."
+    }],
+    alerts:[{type:"y", txt:"⚠️ TMA1: t = -0.80, Sig = 0.426 ← لا فروق دالة بين الجنسين في استخدام منصة نور. تم قبول الفرض الصفري."}]
+  },
+  {
+    id:"t3", name:"ت للعينات المرتبطة", en:"Paired Samples T-Test",
+    type:"معلمي", color:"#8b5cf6", tma:["tma2"],
+    when:"مقارنة نفس المجموعة في قياسين (قبلي/بعدي)",
+    vars:"قياسان للمتغير نفسه — نفس الأفراد",
+    cond:"توزيع طبيعي للفروق | نفس الأشخاص",
+    sig:"Sig < 0.05 ← تحسّن/تراجع دال",
+    steps:[
+      {t:"<span class='path'>Analyze → Compare Means → Paired-Samples T Test</span>"},
+      {t:"اختر متغير القياس القبلي في <strong>Variable 1</strong>"},
+      {t:"اختر متغير القياس البعدي في <strong>Variable 2</strong>"},
+      {t:"اضغط السهم لنقلهما كزوج واحد إلى <strong>Paired Variables</strong>"},
+      {t:"اضغط <strong>OK</strong>"}
+    ],
+    opts:[
+      {n:"Variable 1 = القبلي", d:"الدرجة قبل التدخل/البرنامج"},
+      {n:"Variable 2 = البعدي", d:"الدرجة بعد التدخل/البرنامج"}
+    ],
+    read:[
+      {c:"Mean (الفروق)", m:"متوسط الفرق بين القياسين", q:"موجب = البعدي أعلى من القبلي"},
+      {c:"t + Sig (2-tailed)", m:"دلالة التغيير", q:"< 0.05 ← تحسّن دال إحصائياً"}
+    ],
+    fmls:[{
+      lbl:"نموذج دراسة قبلي-بعدي",
+      txt:"أظهر اختبار (t) للعينات المرتبطة وجود فروق دالة إحصائياً بين القياسين القبلي والبعدي في <span class='v'>[التحصيل]</span> <span class='s'>(t(df) = __, p = __)</span>، إذ ارتفع المتوسط من <span class='s'>(M_قبلي = __)</span> إلى <span class='s'>(M_بعدي = __)</span>، مما يدل على <span class='d'>فاعلية</span> البرنامج في تحسين <span class='v'>[المتغير]</span>."
+    }]
+  },
+  {
+    id:"anova", name:"تحليل التباين الأحادي", en:"One-Way ANOVA",
+    type:"معلمي", color:"#10b981", tma:["tma2"],
+    when:"مقارنة 3 شُعب/مجموعات فأكثر (TMA2)",
+    vars:"مستقل اسمي (3+ فئات) + تابع كمي",
+    cond:"توزيع طبيعي | تجانس التباين | استقلالية",
+    sig:"F Sig < 0.05 ← يتبعه Tukey فوراً",
+    steps:[
+      {t:"<span class='path'>Analyze → Compare Means → One-Way ANOVA</span>"},
+      {t:"انقل درجات التحصيل إلى <strong>Dependent List</strong>"},
+      {t:"انقل رقم الشعبة (1/2/3) إلى <strong>Factor</strong>"},
+      {t:"اضغط <strong>Options</strong> ← فعّل: <span class='tick'>Descriptive + Homogeneity of variance test</span>"},
+      {t:"اضغط <strong>Post Hoc</strong> ← فعّل: <span class='tick'>Tukey</span> ← <strong>Continue</strong>"},
+      {t:"اضغط <strong>OK</strong>"}
+    ],
+    opts:[
+      {n:"✅ Descriptive Statistics", d:"متوسطات كل شعبة — ضروري للكتابة"},
+      {n:"✅ Homogeneity (Levene)", d:"تجانس التباين — يجب Sig > 0.05"},
+      {n:"✅ Post-Hoc Tukey", d:"يحدد أي شعبتين تختلفان تحديداً"}
+    ],
+    read:[
+      {c:"Levene Sig", m:"تجانس التباين", q:"يجب > 0.05 للمتابعة"},
+      {c:"F + Sig (ANOVA)", m:"دلالة الفروق الكلية", q:"< 0.05 ← فروق دالة بين الشُعب"},
+      {c:"Post-Hoc Tukey", m:"مصدر الفروق", q:"انظر Sig لكل زوج — < 0.05 = فرق دال"}
+    ],
+    fmls:[{
+      lbl:"نموذج TMA2: 3 شُعب دراسية",
+      txt:"أظهرت نتائج تحليل التباين الأحادي (One-Way ANOVA) وجود فروق دالة إحصائياً بين الشُعب الثلاث في <span class='v'>[التحصيل]</span> <span class='s'>(F(2, N-3) = __, p = __)</span>. وللكشف عن مصدر الفروق، أُجريت المقارنات البعدية باستخدام اختبار توكي (Tukey)، وتبيّن أن الفروق الدالة كانت بين <span class='v'>[الشعبة أ]</span> <span class='s'>(M = __)</span> و<span class='v'>[الشعبة ب]</span> <span class='s'>(M = __)</span> لصالح الأعلى متوسطاً."
+    }],
+    alerts:[{type:"b", txt:"💡 إذا كانت Levene Sig ≤ 0.05 استخدم Welch ANOVA بدلاً من ANOVA الكلاسيكي."}]
+  },
+  {
+    id:"chi", name:"مربع كاي", en:"Chi-Square Test",
+    type:"غير معلمي", color:"#f59e0b", tma:[],
+    when:"العلاقة بين متغيرين نوعيين (اسمي × اسمي)",
+    vars:"متغيران اسميان أو رتبيان",
+    cond:"تكرار متوقع ≥ 5 في كل خلية",
+    sig:"Sig < 0.05 ← علاقة دالة",
+    steps:[
+      {t:"<span class='path'>Analyze → Descriptive Statistics → Crosstabs</span>"},
+      {t:"ضع متغيراً في <strong>Row(s)</strong> وآخر في <strong>Column(s)</strong>"},
+      {t:"اضغط <strong>Statistics</strong> ← فعّل: <span class='tick'>Chi-square + Phi and Cramer's V</span>"},
+      {t:"اضغط <strong>Cells</strong> ← فعّل: <span class='tick'>Observed + Expected + Row %</span>"},
+      {t:"اضغط <strong>Continue → OK</strong>"}
+    ],
+    opts:[
+      {n:"✅ Chi-square", d:"الاختبار الرئيسي"},
+      {n:"✅ Cramer's V", d:"قوة العلاقة: 0.1 ضعيفة | 0.3 متوسطة | 0.5 قوية"},
+      {n:"✅ Expected Count", d:"تأكد لا توجد خلية < 5"}
+    ],
+    read:[
+      {c:"Pearson Chi-Square + Sig", m:"دلالة العلاقة", q:"< 0.05 ← علاقة دالة بين المتغيرين"},
+      {c:"Cramer's V", m:"قوة العلاقة", q:"0.1 ضعيفة | 0.3 متوسطة | 0.5 قوية"}
+    ],
+    fmls:[{
+      lbl:"نموذج الكتابة",
+      txt:"أشارت نتائج اختبار مربع كاي إلى وجود علاقة دالة إحصائياً بين <span class='v'>[المتغير أ]</span> و<span class='v'>[المتغير ب]</span> <span class='s'>(χ²(df) = __, p = __)</span>، وأشار معامل كرامر V إلى أن قوة العلاقة <span class='v'>[ضعيفة/متوسطة/قوية]</span> <span class='s'>(V = __)</span>."
+    }]
+  },
+  {
+    id:"corr", name:"معامل الارتباط", en:"Pearson / Spearman Correlation",
+    type:"معلمي", color:"#8b5cf6", tma:["tma1"],
+    when:"قياس قوة العلاقة بين متغيرين كميين (TMA1)",
+    vars:"متغيران كميان (بيرسون) أو رتبيان (سبيرمان)",
+    cond:"بيرسون: توزيع طبيعي + فترية | سبيرمان: بلا شروط",
+    sig:"Sig < 0.05 ← ارتباط دال | * = 0.05 | ** = 0.01",
+    steps:[
+      {t:"<span class='path'>Analyze → Correlate → Bivariate</span>"},
+      {t:"انقل المتغيرين إلى <strong>Variables</strong>"},
+      {t:"اختر: <span class='tick'>Pearson</span> (طبيعي) أو <span class='tick'>Spearman</span> (رتبي/غير طبيعي)"},
+      {t:"فعّل <span class='tick'>Flag significant correlations</span>"},
+      {t:"اضغط <strong>OK</strong>"}
+    ],
+    opts:[
+      {n:"✅ Pearson", d:"للبيانات الكمية ذات التوزيع الطبيعي"},
+      {n:"✅ Spearman", d:"للبيانات الرتبية أو غير الطبيعية"},
+      {n:"✅ Flag significant", d:"يضع * و ** على الارتباطات الدالة"}
+    ],
+    read:[
+      {c:"r = 0.00–0.19", m:"لا ارتباط أو ضعيف جداً", q:"—"},
+      {c:"r = 0.20–0.39", m:"ضعيف", q:"—"},
+      {c:"r = 0.40–0.59", m:"متوسط", q:"—"},
+      {c:"r = 0.60–0.79", m:"قوي", q:"—"},
+      {c:"r = 0.80–1.00", m:"قوي جداً", q:"—"}
+    ],
+    fmls:[{
+      lbl:"TMA1: نتيجة لا ارتباط دال",
+      txt:"أشارت نتائج معامل ارتباط بيرسون إلى عدم وجود علاقة ارتباطية دالة إحصائياً بين <span class='v'>[الكفاءة الرقمية للمعلم]</span> و<span class='v'>[استخدام منصة نور]</span> <span class='s'>(r = -0.035, p = .787)</span>، وعليه يُقبل الفرض الصفري بعدم وجود علاقة ذات دلالة إحصائية بين المتغيرين."
+    }],
+    alerts:[{type:"y", txt:"⚠️ TMA1: r = -0.035, Sig = 0.787 ← لا ارتباط دال. النجمة (*) تعني دال عند 0.05 والنجمتان (**) تعنيان دال عند 0.01."}]
+  },
+  {
+    id:"reg", name:"الانحدار الخطي البسيط", en:"Simple Linear Regression",
+    type:"تنبؤي", color:"#ef4444", tma:["tma2"],
+    when:"التنبؤ بالتحصيل من خلال متغير مستقل (TMA2)",
+    vars:"مستقل كمي (X) + تابع كمي (Y)",
+    cond:"خطية العلاقة | طبيعية البواقي | استقلالية",
+    sig:"F Sig < 0.05 ← النموذج دال | R² = نسبة التفسير",
+    steps:[
+      {t:"<span class='path'>Analyze → Regression → Linear</span>"},
+      {t:"انقل التحصيل (التابع) إلى <strong>Dependent</strong>"},
+      {t:"انقل الدافعية أو معامل الذكاء (المستقل) إلى <strong>Independent(s)</strong>"},
+      {t:"اضغط <strong>Statistics</strong> ← فعّل: <span class='tick'>Estimates + Model fit + Descriptives</span>"},
+      {t:"اضغط <strong>Continue → OK</strong>"}
+    ],
+    opts:[
+      {n:"✅ Model Summary", d:"يُظهر R و R² — نسبة التفسير الأهم"},
+      {n:"✅ ANOVA Table", d:"دلالة النموذج ككل — يجب F Sig < 0.05"},
+      {n:"✅ Coefficients (B + Beta + Sig)", d:"B معادلة التنبؤ | Beta المعياري | Sig دلالة المتغير"}
+    ],
+    read:[
+      {c:"R²", m:"معامل التحديد", q:"R²=0.45 ← المستقل يفسّر 45% من التباين في التابع"},
+      {c:"F + Sig (ANOVA)", m:"دلالة النموذج ككل", q:"< 0.05 ← النموذج دال إحصائياً"},
+      {c:"B (Constant)", m:"الثابت في معادلة التنبؤ", q:"Y = الثابت + B × X"},
+      {c:"B (Variable)", m:"معامل الانحدار", q:"الزيادة في التابع لكل وحدة زيادة في المستقل"},
+      {c:"Beta (β)", m:"المعامل المعياري", q:"لمقارنة قوة عدة متغيرات مستقلة"}
+    ],
+    fmls:[
+      {lbl:"TMA2: الدافعية ← التحصيل", txt:"أُجري تحليل الانحدار الخطي البسيط للتحقق من قدرة <span class='v'>[الدافعية]</span> في التنبؤ بـ<span class='v'>[التحصيل]</span>. وأظهر النموذج دلالة إحصائية <span class='s'>(F(1, df) = __, p = __)</span>، وأسهمت الدافعية في تفسير <span class='s'>(R² = __)</span> من التباين الكلي في التحصيل. وبلغت قيمة معامل الانحدار المعياري <span class='s'>(β = __, p = __)</span>."},
+      {lbl:"معادلة التنبؤ", txt:"يمكن التعبير عن نموذج التنبؤ بالمعادلة: <span class='s'>التحصيل = __ + __ × الدافعية</span><br>حيث الثابت هو قيمة B للـ Constant ومعامل الانحدار هو قيمة B للمتغير المستقل."}
+    ],
+    alerts:[{type:"b", txt:"💡 TMA2 يتطلب انحداراً لكل متغير مستقل على حدة: (1) الدافعية ← التحصيل (2) معامل الذكاء ← التحصيل."}]
+  }
+];
+
+// ════════ DATA: TIMELINE ════════
+const TIMELINE = [
+  {
+    num:1, color:"#3b82f6",
+    title:"التحليل الوصفي والتحقق من جودة البيانات",
+    weeks:"الأسابيع 2 – 3",
+    tools:[
+      {ar:"التكرارات", en:"Frequencies", desc:"فهم توزيع البيانات ومعرفة القيم الأكثر شيوعاً، وخطوة أساسية لفحص سلامة البيانات.", use:"البيانات الاسمية والترتيبية وفحص القيم المفقودة."},
+      {ar:"التوزيع الطبيعي", en:"Normal Distribution", desc:"التحقق من اتباع الدرجات للمنحنى الجرسي عبر Shapiro-Wilk و Kolmogorov-Smirnov.", use:"شرط أساسي للاختبارات البارامترية؛ Sig > 0.05 = طبيعي."},
+      {ar:"الثبات — ألفا كرونباخ", en:"Cronbach's Alpha", desc:"قياس اتساق فقرات المقياس واستقرار نتائجه عند إعادة التطبيق.", use:"المعيار: فوق 0.70 جيد، أقل من 0.60 ضعيف."},
+      {ar:"تجانس التباين", en:"Homogeneity of Variance", desc:"التأكد من تساوي التباينات بين المجموعات عبر اختبار Levene.", use:"القاعدة: Sig > 0.05 = متجانسة."},
+      {ar:"معامل الارتباط", en:"Correlation", desc:"قياس قوة واتجاه العلاقة الخطية بين متغيرين كميين (من -1 إلى +1).", use:"بيرسون للمتغيرات الكمية ذات التوزيع الطبيعي."},
+      {ar:"كاي تربيع", en:"Chi-Square", desc:"اختبار لا معلمي لتحليل العلاقة بين المتغيرات النوعية (اسمية/رتبية).", use:"لا يشترط التوزيع الطبيعي."}
+    ]
+  },
+  {
+    num:2, color:"#10b981",
+    title:"اختبار الفرضيات والمقارنة بين المتوسطات",
+    weeks:"الأسابيع 4 – 11",
+    tools:[
+      {ar:"ت للعينة الواحدة", en:"One-Sample T-Test", desc:"مقارنة متوسط عينة واحدة بقيمة مرجعية (Test Value).", use:"مثال: هل يختلف متوسط الصف عن 50؟"},
+      {ar:"ت للعينات المستقلة", en:"Independent Samples T-Test", desc:"مقارنة متوسطات مجموعتين منفصلتين (ذكور/إناث).", use:"مجموعتان مستقلتان."},
+      {ar:"ت للعينات المرتبطة", en:"Paired Samples T-Test", desc:"مقارنة نفس المجموعة في حالتين (قبلي/بعدي).", use:"نفس الأفراد قبل وبعد."},
+      {ar:"تحليل التباين الأحادي", en:"One-Way ANOVA", desc:"مقارنة متوسطات 3 مجموعات أو أكثر لمتغير مستقل واحد.", use:"3 مجموعات فأكثر."},
+      {ar:"تحليل التباين الثنائي", en:"Two-Way ANOVA", desc:"أثر متغيرين مستقلين معاً على متغير تابع.", use:"يكشف التفاعل."},
+      {ar:"التحليل البعدي", en:"Post Hoc (Tukey / Scheffé)", desc:"تحديد المجموعات التي بينها فروق دالة بعد ANOVA.", use:"Tukey للمتساوية · Scheffé لغير المتساوية."}
+    ]
+  },
+  {
+    num:3, color:"#ef4444",
+    title:"أدوات التنبؤ",
+    weeks:"الأسبوع 12",
+    tools:[
+      {ar:"الانحدار الخطي البسيط", en:"Simple Linear Regression", desc:"معرفة أثر متغير مستقل X على تابع Y وبناء معادلة تنبؤ Y = a + bX.", use:"يعطي معامل B ومعامل التحديد R²."}
+    ]
+  }
+];
+
+// ════════ DATA: CONCEPTS (10) ════════
+const CONCEPTS = [
+  {term:"الفرضية الصفرية H₀", def:"تفترض عدم وجود فروق أو علاقات — نقطة الانطلاق في كل اختبار — نرفضها إذا Sig < 0.05."},
+  {term:"مستوى الدلالة (Sig / p-value)", def:"< 0.05 ← نرفض H₀ ونقبل الفرضية البديلة ← يعني وجود أثر حقيقي وليس مجرد صدفة."},
+  {term:"حجم الأثر η²", def:"يوضح الأهمية العملية: > 0.14 كبير | 0.06 متوسط | 0.01 صغير — مختلف عن الدلالة الإحصائية."},
+  {term:"معامل التحديد R²", def:"في الانحدار: نسبة التباين في التابع يفسرها المستقل — R²=0.50 يعني 50% مفسَّرة."},
+  {term:"مستويات القياس الأربعة", def:"اسمي (فئات) ← ترتيبي (رُتَب) ← فتري (مسافات متساوية) ← نسبي (صفر مطلق) — يحدد نوع الاختبار."},
+  {term:"التوزيع الطبيعي", def:"شرط الاختبارات المعلمية — Shapiro-Wilk للصغيرة (n<50) | K-S للكبيرة (n≥50)."},
+  {term:"تجانس التباين — Levene", def:"شرط لـ T والتباين — Sig > 0.05 يعني التباينات متجانسة ← اقرأ الصف الأول في T."},
+  {term:"الإحصاء الوصفي vs الاستدلالي", def:"الوصفي يصف العينة (متوسط، انحراف) — الاستدلالي يعمّم على المجتمع (T، ANOVA، ارتباط)."},
+  {term:"معامل ألفا كرونباخ α", def:"يقيس ثبات المقياس — α > 0.70 مقبول | 0.80 جيد جداً | 0.90 ممتاز."},
+  {term:"Post-Hoc Tests (توكي)", def:"اختبارات بعدية بعد ANOVA لتحديد أي مجموعتين تختلفان — أشهرها Tukey و Scheffé."}
+];
+
+// ════════ DATA: EXPLAIN (4) ════════
+const EXPLAIN = [
+  {
+    title:"ما الفرق بين المتغير المستقل والتابع والمعدِّل؟",
+    body:`
+      <p>تُصنف المتغيرات حسب الدور في العلاقة الإحصائية إلى ثلاثة أنواع:</p>
+      <h4>المتغير المستقل (Independent Variable)</h4>
+      <p>المتغير الذي يُعتقد أنه المسبب أو المؤثر، ويتحكم فيه الباحث أو يصنّفه لدراسة أثره. في الدراسات التجريبية غالباً نوعي/تصنيفي (مثل «طريقة التدريس»)، وفي الانحدار يُسمى «المتنبئ» (Predictor) ويُرمز له (X). أمثلة: ضغط الغاز، عدد ساعات الدراسة، نوع المدرسة (حكومية/خاصة).</p>
+      <h4>المتغير التابع (Dependent Variable)</h4>
+      <p>المتغير الذي يمثل النتيجة أو الأثر، ويقيسه الباحث ليرى تأثره بالمستقل. يجب أن يكون كمياً قابلاً للقياس في معظم الاختبارات الاستدلالية (ت، ANOVA)، ويُرمز له (Y). أمثلة: حجم الغاز، التحصيل الدراسي، مستوى الرضا، التفكير العلمي.</p>
+      <h4>المتغير المعدِّل (Moderating Variable)</h4>
+      <p>متغير ثانٍ يختبر ما إذا كان يغيّر قوة أو اتجاه العلاقة بين المستقل والتابع، ويوضّح الظروف التي يتغير فيها الأثر؛ فمثلاً قد تختلف فعالية طريقة تدريس (مستقل) على التحصيل (تابع) باختلاف جنس الطالب (معدِّل). أمثلة: الجنس، البيئة الاجتماعية، المستوى الاقتصادي.</p>
+      <div class="alert al-b" style="margin-top:14px"><b>الخلاصة:</b> المستقل هو «المؤثر»، والتابع هو «المتأثر»، والمعدِّل هو الذي «يعدّل» شكل العلاقة بينهما.</div>
+    `
+  },
+  {
+    title:"الفرق بين المتغيرات الاسمية والرتبية والكمية",
+    body:`
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <tr><th>المستوى</th><th>التعريف والخصائص</th><th>أمثلة</th><th>التحليل المناسب</th></tr>
+          <tr><td><b>اسمي (Nominal)</b></td><td>أبسط مستويات القياس؛ أرقام كرموز للتصنيف فقط دون معنى كمي ولا ترتيب — «متشابه/مختلف»</td><td>الجنس، اللون، الجنسية، الرقم الجامعي</td><td>التكرارات والنسب والاختبارات غير المعلمية</td></tr>
+          <tr><td><b>رتبي (Ordinal)</b></td><td>يوجد ترتيب بين الفئات لكن الفوارق غير متساوية أو غير معروفة بدقة</td><td>المستوى التعليمي، التقديرات (ضعيف→ممتاز)، درجة الألم</td><td>تقنيات غير معلمية (مثل ويلكوكسون)</td></tr>
+          <tr><td><b>كمي (Scale)</b></td><td>يشمل <b>الفتري (Interval):</b> مسافات متساوية بلا صفر حقيقي (الحرارة، الذكاء)؛ و<b>النسبي (Ratio):</b> مسافات متساوية مع صفر حقيقي يتيح كل العمليات (الوزن، الطول، الزمن، الدخل)</td><td>درجات الحرارة، الوزن، الدخل</td><td>الاختبارات المعلمية</td></tr>
+        </table>
+      </div>
+      <p><b>لماذا التمييز؟</b> (1) اختيار الاختبار المناسب، (2) دقة التحليل وتجنّب الاستنتاجات الخاطئة، (3) اختيار الرسم البياني (شريطي/دائري للاسمي، خطي للكمي).</p>
+    `
+  },
+  {
+    title:"الفرق بين التوزيع الطبيعي وغير الطبيعي وكيفية فحصه",
+    body:`
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <tr><th>وجه المقارنة</th><th>التوزيع الطبيعي (Normal)</th><th>غير الطبيعي (Non-Normal)</th></tr>
+          <tr><td><b>الشكل العام</b></td><td>جرسي متماثل حول المتوسط</td><td>انحرافات واضحة، مائل أو متعدد القمم</td></tr>
+          <tr><td><b>النزعة المركزية</b></td><td>يتساوى المتوسط والوسيط والمنوال</td><td>تختلف هذه المقاييس</td></tr>
+          <tr><td><b>الالتواء والتفلطح</b></td><td>قيمتهما صفر أو قريبة منه</td><td>قيم مرتفعة/منخفضة جداً</td></tr>
+          <tr><td><b>الاستخدام</b></td><td>شرط للاختبارات المعلمية (T، ANOVA)</td><td>يستلزم اختبارات لا معلمية أو تحويل البيانات</td></tr>
+        </table>
+      </div>
+      <p><b>علامات عدم الطبيعية:</b> التواء عالٍ (|Skewness| > 1) · تفلطح غير طبيعي (تجاوز Kurtosis لـ ±2) · قيم متطرفة (Outliers) · البيانات الاسمية/الرتبية · عينة صغيرة جداً (< 30).</p>
+      <h4>الفحص في SPSS</h4>
+      <p><span class="path">Analyze → Descriptive Statistics → Explore → Plots → فعّل Normality plots with tests</span></p>
+      <p>وتُقرأ النتائج بثلاث طرق:</p>
+      <p><b>1) الاختبارات الإحصائية (الأدق):</b> Shapiro-Wilk (للصغيرة) وKolmogorov-Smirnov — <b>القاعدة: Sig > 0.05 ⟵ طبيعي</b>، وأقل من 0.05 ⟵ غير طبيعي.</p>
+      <p><b>2) الالتواء والتفلطح:</b> يُقبل تربوياً بين (±1) وأحياناً (±2).</p>
+      <p><b>3) الفحص البصري:</b> المدرّج التكراري يقترب من الجرس، ونقاط Q-Q Plot قريبة من الخط المائل.</p>
+    `
+  },
+  {
+    title:"استخدام SPSS للتحليل الوصفي واختبار التكرارات (Frequencies)",
+    body:`
+      <p>اختبار التكرارات من أهم التحليلات الوصفية؛ لفهم توزيع البيانات ومعرفة الأكثر شيوعاً ونسب الفئات.</p>
+      <h4>الخطوات</h4>
+      <p>1. <span class="path">Analyze → Descriptive Statistics → Frequencies</span></p>
+      <p>2. انقل المتغيرات (مثل الجنس/التخصص) إلى <b>Variable(s)</b> بالسهم.</p>
+      <p>3. تأكد من تفعيل <b>Display frequency tables</b>.</p>
+      <p>4. اضغط <b>OK</b>.</p>
+      <h4>الخيارات الإضافية</h4>
+      <p><b>Statistics:</b> النزعة المركزية (Mean, Median, Mode) والتشتت (Std. Deviation, Range, Min/Max).</p>
+      <p><b>Charts:</b> Bar Charts (أعمدة لمقارنة الفئات) · Pie Charts (قطاعات للنسب المئوية).</p>
+      <h4>متى نستخدمه؟</h4>
+      <p>مع البيانات الاسمية (الجنس، التخصص) والرتبية (المستوى التعليمي، درجة الرضا).</p>
+      <h4>تفسير المخرجات (أعمدة الجدول)</h4>
+      <p><b>Frequency:</b> عدد الحالات في كل فئة · <b>Percent:</b> نسبة الفئة من الكل · <b>Valid Percent:</b> النسبة بعد استبعاد المفقودة — <b>الأهم</b> عند كتابة النتائج.</p>
+      <div class="alert al-g" style="margin-top:14px"><b>نصيحة:</b> استخدم التكرارات في بداية أي تحليل لفحص سلامة البيانات والقيم الشاذة/المفقودة قبل الاختبارات الاستدلالية.</div>
+    `
+  }
+];
+
+// ════════ DATA: QUIZ (10) ════════
+const QUIZ = [
+  {q:"ما الفرق بين اختبار T للمجموعات المستقلة وتحليل ANOVA؟", a:"T للمقارنة بين مجموعتين فقط (ذكور/إناث)، بينما ANOVA للمقارنة بين 3 مجموعات فأكثر كـ 3 شُعب دراسية في TMA2."},
+  {q:"في TMA1، اختبار T أعطى Sig = 0.426 — ماذا يعني؟", a:"Sig > 0.05 ← لا توجد فروق دالة إحصائياً بين الذكور والإناث في استخدام المنصة ← نقبل الفرض الصفري."},
+  {q:"في TMA1، الارتباط أعطى r = -0.035 و Sig = 0.787 — ما التفسير؟", a:"Sig > 0.05 ← لا توجد علاقة ارتباطية دالة بين الكفاءة الرقمية واستخدام المنصة ← نقبل الفرض الصفري."},
+  {q:"ما أول خطوة عملية قبل قراءة نتيجة T للمجموعات المستقلة؟", a:"الاطلاع على اختبار Levene أولاً — Sig > 0.05 اقرأ الصف الأول | Sig ≤ 0.05 اقرأ الصف الثاني."},
+  {q:"لماذا نحتاج Tukey بعد ANOVA في TMA2؟", a:"ANOVA تثبت وجود فروق بين الشُعب الثلاث لكن لا تحدد أي شعبتين تختلفان — Tukey يحل هذه المشكلة."},
+  {q:"ماذا يعني R² = 0.45 في الانحدار (TMA2)؟", a:"متغير الدافعية يُفسّر 45% من التباين الكلي في التحصيل الدراسي."},
+  {q:"متى تستخدم Shapiro-Wilk ومتى K-S؟", a:"Shapiro-Wilk للعينات الصغيرة (n < 50) لأنه أدق — K-S للعينات الكبيرة (n ≥ 50)."},
+  {q:"كيف تستخرج الرسوم البيانية من SPSS (مطلب TMA1)؟", a:"Analyze → Descriptive Statistics → Frequencies → Charts → Bar charts → Continue → OK."},
+  {q:"ما الفرق بين معامل B و Beta في الانحدار؟", a:"B هو معامل الانحدار غير المعياري لبناء معادلة التنبؤ (Y = ثابت + B × X) — Beta المعياري لمقارنة قوة عدة متغيرات."},
+  {q:"ما شروط تطبيق ANOVA للشُعب الثلاث في TMA2؟", a:"(1) توزيع طبيعي في كل مجموعة (2) تجانس التباين Levene Sig > 0.05 (3) استقلالية الملاحظات بين الشُعب."}
+];
+
+const TC = {"وصفي":"#3b82f6","ثبات":"#6366f1","افتراض":"#f59e0b","معلمي":"#0ea5e9","غير معلمي":"#f59e0b","تنبؤي":"#ef4444"};
+const TK = {tma1:{color:"#0ea5e9",label:"TMA1"},tma2:{color:"#10b981",label:"TMA2"}};
+
+// ════════ TAB MANAGEMENT ════════
+function mainTab(id, btn){
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.mtab').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+  requestAnimationFrame(recomputeOpenHeights);
+}
+
+// ════════ QUICK REFERENCE ════════
+function buildRef(){
+  const types = ['الكل', ...new Set(TESTS.map(t => t.type))];
+  const qf = document.getElementById('qfilter');
+  types.forEach(tp => {
+    const b = document.createElement('button');
+    b.className = 'qf-btn';
+    b.textContent = tp;
+    b.style.borderColor = (TC[tp] || '#6366f1') + '55';
+    b.onclick = () => {
+      document.querySelectorAll('.qf-btn').forEach(x => { x.style.background = 'var(--bg-card)'; });
+      b.style.background = (TC[tp] || '#6366f1') + '22';
+      renderCards(tp);
+    };
+    if (tp === 'الكل'){
+      b.style.background = 'rgba(99,102,241,.13)';
+      b.style.borderColor = 'rgba(99,102,241,.4)';
+    }
+    qf.appendChild(b);
+  });
+  renderCards('الكل');
+}
+
+function renderCards(filter){
+  const cont = document.getElementById('qcards');
+  cont.innerHTML = '';
+  TESTS.filter(t => filter === 'الكل' || t.type === filter).forEach(t => {
+    const c = TC[t.type] || '#6366f1';
+    const th = t.tma.map(k => `<span style="background:${TK[k].color}22;color:${TK[k].color};border:1px solid ${TK[k].color}44;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700">${TK[k].label}</span>`).join(' ');
+    cont.innerHTML += `<div class="qcard" style="border-right:4px solid ${c}">
+      <div class="qcard-name">${t.name}</div>
+      <div class="qcard-en">${t.en}</div>
+      <div class="q-metas">
+        <span class="q-type" style="background:${c}22;color:${c};border-color:${c}44">${t.type}</span>
+        ${th}
+      </div>
+      <div class="q-grid">
+        <div class="q-cell"><div class="q-cell-lbl">متى تستخدمه</div><div class="q-cell-val">${t.when}</div></div>
+        <div class="q-cell"><div class="q-cell-lbl">الشروط</div><div class="q-cell-val">${t.cond}</div></div>
+        <div class="q-cell"><div class="q-cell-lbl">المتغيرات</div><div class="q-cell-val">${t.vars}</div></div>
+        <div class="q-cell"><div class="q-cell-lbl">تفسير النتيجة</div><div class="q-cell-val">${t.sig}</div></div>
+      </div>
+    </div>`;
   });
 }
-document.querySelectorAll('.tab').forEach(function(tab){
-  tab.addEventListener('click', function(){
-    document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
-    document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
-    tab.classList.add('active');
-    var panel = document.getElementById(tab.dataset.tab);
-    panel.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    runStagger(panel);
-  });
-});
 
-// ════════ TIMELINE CARDS (independent toggle) ════════
-document.querySelectorAll('.tl-card').forEach(function(card){
-  card.querySelector('.tl-head').addEventListener('click', function(){
-    var body = card.querySelector('.tl-body');
-    var open = card.classList.toggle('open');
-    body.style.maxHeight = open ? body.scrollHeight + 'px' : null;
+// ════════ TIMELINE ════════
+function buildTimeline(){
+  const cont = document.getElementById('timeline-content');
+  TIMELINE.forEach(phase => {
+    const cards = phase.tools.map(tool => `
+      <div class="tl-card">
+        <div class="tl-head">
+          <div class="tl-names">
+            <span class="tl-ar">${tool.ar}</span>
+            <span class="tl-en">${tool.en}</span>
+          </div>
+          <span class="tl-arrow">▾</span>
+        </div>
+        <div class="tl-body"><div class="tl-body-inner">
+          <div class="tl-desc">${tool.desc}</div>
+          <div class="tl-note"><b>تُستخدم لـ ·</b> ${tool.use}</div>
+        </div></div>
+      </div>`).join('');
+    cont.insertAdjacentHTML('beforeend', `
+      <div class="phase" style="--pc:${phase.color}">
+        <div class="phase-head">
+          <div class="phase-num">${phase.num}</div>
+          <div>
+            <div class="phase-title">${phase.title}</div>
+            <div class="phase-weeks">${phase.weeks}</div>
+          </div>
+        </div>
+        <div class="tl-cards">${cards}</div>
+      </div>`);
   });
-});
-
-// ════════ ACCORDIONS (single-open per container) ════════
-document.querySelectorAll('.accordion').forEach(function(container){
-  container.querySelectorAll('.acc').forEach(function(acc){
-    acc.querySelector('.acc-head').addEventListener('click', function(){
-      var body = acc.querySelector('.acc-body');
-      var isOpen = acc.classList.contains('open');
-      container.querySelectorAll('.acc.open').forEach(function(o){
-        o.classList.remove('open');
-        o.querySelector('.acc-body').style.maxHeight = null;
-      });
-      if (!isOpen){
-        acc.classList.add('open');
-        body.style.maxHeight = body.scrollHeight + 'px';
-      }
+  // wire up expandables
+  document.querySelectorAll('#timeline-content .tl-card').forEach(card => {
+    card.querySelector('.tl-head').addEventListener('click', () => {
+      const body = card.querySelector('.tl-body');
+      const open = card.classList.toggle('open');
+      body.style.maxHeight = open ? body.scrollHeight + 'px' : null;
     });
   });
-});
-
-// ════════ DARK MODE (no storage) ════════
-function toggleTheme(){
-  var html = document.documentElement;
-  var dark = html.getAttribute('data-theme') === 'dark';
-  var next = dark ? 'light' : 'dark';
-  html.setAttribute('data-theme', next);
-  document.getElementById('themeBtn').textContent = next === 'dark' ? '☀️' : '🌙';
-  requestAnimationFrame(recomputeOpen);
 }
 
-// recompute open heights on resize (content reflow)
-window.addEventListener('resize', recomputeOpen);
+// ════════ SPSS GUIDE ════════
+function buildGuide(){
+  const nav = document.getElementById('anav');
+  const cont = document.getElementById('aguide-content');
+  TESTS.forEach((t, i) => {
+    const c = TC[t.type] || '#6366f1';
+    const td = t.tma.length
+      ? t.tma.map(k => `<span class="tma-dot" style="background:${TK[k].color}"></span>${TK[k].label}`).join(' ')
+      : `<span class="tma-dot" style="background:var(--text-faint)"></span>`;
+
+    const btn = document.createElement('button');
+    btn.className = 'anav-btn' + (i === 0 ? ' active' : '');
+    btn.innerHTML = `${td} ${t.name}`;
+    btn.onclick = () => {
+      document.querySelectorAll('.anav-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.apanel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('ap_' + t.id).classList.add('active');
+      btn.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+    };
+    nav.appendChild(btn);
+
+    const panel = document.createElement('div');
+    panel.className = 'apanel' + (i === 0 ? ' active' : '');
+    panel.id = 'ap_' + t.id;
+
+    const sh = t.steps.map((s, j) => `<div class="step"><div class="sn">${j+1}</div><div class="st">${s.t}</div></div>`).join('');
+    const oh = t.opts.map(o => `<div class="opt"><div class="opt-n">${o.n}</div><div class="opt-d">${o.d}</div></div>`).join('');
+    const rh = t.read.map(r => `<tr><td>${r.c}</td><td>${r.m}</td><td>${r.q}</td></tr>`).join('');
+    const fh = t.fmls.map(f => `<div class="fml"><div class="fml-lbl">${f.lbl}</div><div class="fml-txt">${f.txt}</div></div>`).join('');
+    const ah = (t.alerts || []).map(a => `<div class="alert al-${a.type}">${a.txt}</div>`).join('');
+    const th2 = t.tma.map(k => `<span class="tma-badge" style="background:${TK[k].color}22;color:${TK[k].color};border-color:${TK[k].color}44">${TK[k].label}</span>`).join(' ');
+
+    panel.innerHTML = `<div class="card">
+      <div class="card-hdr">
+        <div class="card-ico" style="background:linear-gradient(135deg,${c},${c}99)">${t.id.slice(0,2).toUpperCase()}</div>
+        <div>
+          <div class="card-title">${t.name}</div>
+          <div class="card-sub">${t.en}</div>
+          <div style="display:flex;gap:6px;margin-top:6px">${th2}</div>
+        </div>
+      </div>
+      <div class="sec"><div class="sec-lbl">خطوات SPSS</div><div class="steps">${sh}</div></div>
+      <div class="sec"><div class="sec-lbl">أهم الخيارات المُفعَّلة</div><div class="opts">${oh}</div></div>
+      <div class="sec"><div class="sec-lbl">كيف تقرأ النتائج</div><div class="tbl-wrap"><table class="tbl"><tr><th>العمود / القيمة</th><th>المعنى</th><th>ما تبحث عنه</th></tr>${rh}</table></div>${ah}</div>
+      <div class="sec"><div class="sec-lbl">الصياغة الأكاديمية</div>${fh}</div>
+    </div>`;
+    cont.appendChild(panel);
+  });
+}
+
+// ════════ CONCEPTS ════════
+function buildConcepts(){
+  const g = document.getElementById('concepts-grid');
+  CONCEPTS.forEach((c, i) => {
+    g.innerHTML += `<div class="con-item">
+      <div class="con-num">${i+1}</div>
+      <div><div class="con-term">${c.term}</div><div class="con-def">${c.def}</div></div>
+    </div>`;
+  });
+}
+
+// ════════ EXPLAIN ════════
+function buildExplain(){
+  const g = document.getElementById('explain-grid');
+  EXPLAIN.forEach((e, i) => {
+    const card = document.createElement('div');
+    card.className = 'exp-card';
+    card.innerHTML = `
+      <div class="exp-head">
+        <div class="exp-head-l">
+          <div class="exp-num">${i+1}</div>
+          <div class="exp-title">${e.title}</div>
+        </div>
+        <span class="exp-arrow">▾</span>
+      </div>
+      <div class="exp-body"><div class="exp-body-inner">${e.body}</div></div>`;
+    card.querySelector('.exp-head').addEventListener('click', () => {
+      const body = card.querySelector('.exp-body');
+      const open = card.classList.toggle('open');
+      body.style.maxHeight = open ? body.scrollHeight + 'px' : null;
+    });
+    g.appendChild(card);
+  });
+}
+
+// ════════ QUIZ ════════
+function buildQuiz(){
+  const c = document.getElementById('quiz-cards');
+  QUIZ.forEach((q, i) => {
+    const d = document.createElement('div');
+    d.className = 'qz';
+    d.innerHTML = `<div class="qz-q"><div class="qz-txt">${i+1}. ${q.q}</div><span class="qz-arr">▾</span></div>`;
+    d.onclick = () => {
+      const was = d.classList.contains('open');
+      d.classList.toggle('open');
+      if (!was){
+        const a = document.createElement('div');
+        a.className = 'qz-a';
+        a.textContent = '✅ ' + q.a;
+        d.appendChild(a);
+      } else {
+        const a = d.querySelector('.qz-a');
+        if (a) d.removeChild(a);
+      }
+    };
+    c.appendChild(d);
+  });
+}
+
+// ════════ INIT ════════
+buildRef();
+buildTimeline();
+buildGuide();
+buildConcepts();
+buildExplain();
+buildQuiz();
 </script>
 </body>
 </html>
